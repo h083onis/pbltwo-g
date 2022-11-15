@@ -26,6 +26,16 @@ if (isset($_GET['m'])) {
     $m = date('m');
 }
 
+
+#$yと$mが一致する月のシフト状況をデータベースから取得する
+
+
+
+
+
+
+
+
 //月の最後の日を入手する
 $lastday = date("t", mktime(0, 0, 0, $m, 1, $y));
 
@@ -110,15 +120,33 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
             color: black;
         }
 
-        /* input[type="number"] {
-            width: 35px;
-        } */
+        .contents_cel {
+            text-align: center;
+            height: 50px;
+            width: 150px;
+            padding:10px;
+        }
+        .contents_link{
+            display:block;
+            width:100%;
+            height:100%;
+        }
     </style>
 </head>
 
 <body>
     <header>
-        
+        <h1>バイト管理アプリ</h1>
+        <table align='center'>
+            <tr>
+                <td class='contents_cel'><span><a href='home.php'>ホーム画面</ho-mu></a></span>            
+                <td class='contents_cel'><span><a href='edit_job_inf.php'>バイト情報編集</a></span>
+                <td class='contents_cel'><span><a href=''>給与計算</a></span></td>
+                <td class='contents_cel'><span><a href=''>個人情報</a></span></td>
+                <td class='contents_cel'><span><a href=''>ヘルプ</a></span></td>
+                <td class='contents_cel'><span><a href=''>ログアウト</a></span></td>
+            </tr>
+        </table>
     </header>
     <main>
         <div class="area" align="center">
@@ -155,7 +183,7 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
 
                 for ($d = 1; $d <= $lastday; $d++) {
 
-                    echo '<td class = "day"><a href=\'home.php\'>' . $d. '</a>';
+                    echo '<td class = "day"><a href=\'add_shift.php?y=' . $y . '&m=' . $m . '&d=' . $d . '\'>' . $d . '</a>';
                     echo '<br>';
                     echo '<br>';
 
