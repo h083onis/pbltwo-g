@@ -6,9 +6,9 @@
 // $id = $_SESSION['id'];
 
 date_default_timezone_set('Asia/Tokyo'); //東京時間にする
-if(isset($_GET['y'])){
+if (isset($_GET['y'])) {
     $y = $_GET['y'];
-}else{
+} else {
     $y = date('Y');
 }
 
@@ -29,8 +29,8 @@ if (isset($_GET['m'])) {
 //月の最後の日を入手する
 $lastday = date("t", mktime(0, 0, 0, $m, 1, $y));
 
-$prev_y = date('Y', mktime(0, 0, 0, $m, 1, $y-1));
-$next_y = date('Y', mktime(0, 0, 0, $m, 1, $y+1));
+$prev_y = date('Y', mktime(0, 0, 0, $m, 1, $y - 1));
+$next_y = date('Y', mktime(0, 0, 0, $m, 1, $y + 1));
 //前月・次月を入手
 $prev_m = date('m', mktime(0, 0, 0, $m - 1, 1, $y));
 $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
@@ -51,11 +51,13 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
             text-align: center;
             height: 50px;
         }
-        .sunday{
+
+        .sunday {
             color: red;
             background-color: #ffb6c1;
         }
-        .saturday{
+
+        .saturday {
             color: blue;
             background-color: #e0ffff;
         }
@@ -78,8 +80,8 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
             width: 100px;
         }
 
- 
-        
+
+
 
         .text_style {
             white-space: pre-wrap;
@@ -114,28 +116,28 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
     </style>
 </head>
 
-<body bgcolor="white">
+<body>
+    <header>
+        
+    </header>
     <main>
         <div class="area" align="center">
             <h3>
-              <a href="?y=<?php echo $prev_y; ?>">&lt;</a><span><?php echo $y; ?></span>年<a href="?y=<?php echo $next_y; ?>">&gt;</a><br>
-              <a href="?m=<?php echo $prev_m; ?>">&lt;</a><span><?php echo $m; ?></span>月 <a href="?m=<?php echo $next_m; ?>">&gt;</a>
+                <a href="?y=<?php echo $prev_y; ?>">&lt;</a><span><?php echo $y; ?></span>年<a href="?y=<?php echo $next_y; ?>">&gt;</a><br>
+                <a href="?m=<?php echo $prev_m; ?>">&lt;</a><span><?php echo $m; ?></span>月 <a href="?m=<?php echo $next_m; ?>">&gt;</a>
             </h3>
             <table class="calendar">
                 <tr>
                     <?php
                     //$week配列の中の$weeksという要素を繰り返し処理する(日曜日から土曜日まで)
                     foreach ($week as $weeks) {
-                        if($weeks == '日'){
+                        if ($weeks == '日') {
                             echo '<td class = "week sunday">' . $weeks . '</td>';
-                        }
-                        else if($weeks =='土'){
+                        } else if ($weeks == '土') {
                             echo '<td class = "week saturday">' . $weeks . '</td>';
-                        }
-                        else{
+                        } else {
                             echo '<td class = "week">' . $weeks . '</td>';
                         }
-                       
                     }
                     ?>
                 </tr>
@@ -153,7 +155,7 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
 
                 for ($d = 1; $d <= $lastday; $d++) {
 
-                    echo '<td class = "day">' . $d;
+                    echo '<td class = "day"><a href=\'home.php\'>' . $d. '</a>';
                     echo '<br>';
                     echo '<br>';
 
