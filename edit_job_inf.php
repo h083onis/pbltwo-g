@@ -27,10 +27,15 @@
 
   ?>
   バイト項目<input type='text'><br>
-  時給入力<input type='number' name='money'>
-  日給入力<input type='number' name='money'>
-  週休入力<input type='number' name='money'>
-  月給入力<input type='number' name='money'>
+  <select>
+    <option>時給</option>
+    <option>日給</option>
+    <option>週給</option>
+    <option>月給</option>
+  </select>
+  金額入力<input type='number' name='money'><br>
+  締め日<input type='date'><br>
+  給料日<input type='date'><br>
   <input type='button'value='登録'>
 
 </body>
