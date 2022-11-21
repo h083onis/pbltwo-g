@@ -12,36 +12,24 @@ if (isset($_GET['y'])) {
     $y = date('Y');
 }
 
-// echo 'console.log(',$y,')';
-//曜日を配列で渡している
 $week = ['日', '月', '火', '水', '木', '金', '土'];
 //mktimeは第一引数から、（時間,分,秒,月,日,年)
 //date関数の指定できるフォーマット文字を参照,Y(西暦4桁),y(西暦2桁),t(指定した月の日数)...
 
-// 前月・次月リンクが押された場合は、GETパラメーターから月を取得、それ以外は今月を入手
 if (isset($_GET['m'])) {
     $m = $_GET['m'];
 } else {
-    // 今月を表示
     $m = date('m');
 }
-
-
+if (isset($_GET['sel_d'])) {
+    $sel_d = $_GET['sel_d'];
+}
 #$yと$mが一致する月のシフト状況をデータベースから取得する
 
-
-
-
-
-
-
-
-//月の最後の日を入手する
 $lastday = date("t", mktime(0, 0, 0, $m, 1, $y));
 
 $prev_y = date('Y', mktime(0, 0, 0, $m, 1, $y - 1));
 $next_y = date('Y', mktime(0, 0, 0, $m, 1, $y + 1));
-//前月・次月を入手
 $prev_m = date('m', mktime(0, 0, 0, $m - 1, 1, $y));
 $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
 ?>
@@ -124,12 +112,59 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
             text-align: center;
             height: 50px;
             width: 150px;
-            padding:10px;
+            padding: 10px;
         }
-        .contents_link{
-            display:block;
-            width:100%;
-            height:100%;
+
+        .contents_link {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .open {
+            cursor: pointer;
+        }
+
+        #pop-up {
+            display: none;
+        }
+
+        .overlay {
+            display: none;
+        }
+
+        .overlay {
+            display: none;
+            z-index: 9999;
+            background-color: #00000070;
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            top: 0;
+            left: 0;
+        }
+
+        .window {
+            width: 600px;
+            max-width: 600px;
+            height: 500px;
+            background-color: #ffffff;
+            border-radius: 6px;
+            /* display: flex; */
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .close {
+            cursor: pointer;
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            font-size: 20px;
         }
     </style>
 </head>
@@ -139,7 +174,7 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
         <h1>バイト管理アプリ</h1>
         <table align='center'>
             <tr>
-                <td class='contents_cel'><span><a href='home.php'>ホーム画面</ho-mu></a></span>            
+                <td class='contents_cel'><span><a href='home.php'>ホーム画面</ho-mu></a></span>
                 <td class='contents_cel'><span><a href='edit_job_inf.php'>バイト情報編集</a></span>
                 <td class='contents_cel'><span><a href=''>給与計算</a></span></td>
                 <td class='contents_cel'><span><a href=''>個人情報</a></span></td>
@@ -182,23 +217,18 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
                 $n = 0;
 
                 for ($d = 1; $d <= $lastday; $d++) {
-
-                    echo '<td class = "day"><a href=\'add_shift.php?y=' . $y . '&m=' . $m . '&d=' . $d . '\'>' . $d . '</a>';
+                    echo '<td class = "day"><a class="open" href="?y=' . $y . '&m=' . $m . '&sel_d=' . $d . '">' . $d . '</a>';
                     echo '<br>';
                     echo '<br>';
 
-                    // $db = new PDO("sqlite:circle.db");
-                    // $result = $db->query("select * from calendar where id = $id and month = $m and day = $d");
+                    // $db = new PDO("sqlite:manage-part-time.db");
+                    // $result = $db->query("select * from calendar where id = $id and year = $y month = $m and day = $d");
                     // $db = null;
                     // foreach ($result as $value) :
 
-                    //     echo '<span class = text_style>', htmlspecialchars($value['content']), '</span>';
+                    //     echo '<span class = text_style>.$value['startTime'].'~'.$value['endTime].'</span>';
                     // endforeach;
-
                     echo "</td>";
-
-                    //day=$dで絞り込んだ時になかった場合の処理
-                    //echo "<td> '.$d.' </td>"   空白の予定だったけど、無くてもうまくいった。
                     if (date("w", mktime(0, 0, 0, $m, $d, $y)) == 6) {
                         // 週を終了
                         echo "</tr>";
@@ -218,7 +248,54 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
                 ?>
             </table>
         </div>
+
+        <div id="popup" class='overlay'>
+            <div class='window'>
+                <?= $y ?>年<?= $m ?>月<?= $sel_d ?>日<br>
+                <label class='close' id="no" onclick="close_popup()">×</label><br>
+                <form action='add_schedule.php' method='post'>
+                    バイト項目
+                    <select name='items' required>
+                        <option disabled selected>選択してください</option>
+                        <option>コンビニ</option>
+                        <option>ニトリ</option>
+                        <!-- <?php
+                        foreach ($list as $value) {
+                            echo '<option>' . $value . '</option>';
+                        }
+                        ?> -->
+
+                    </select>
+                    時間
+                    <input type='time' name='start_time' style='width:80px' step='60'>
+                    ~
+                    <input type='time' name='end_time' style='width:80px' step='60'>
+                    <input type='hidden' name='year' value='<?= $y?>'>
+                    <input type='hidden' name='month' value='<?= $m?>'>
+                    <input type='hidden' name='day' value='<?= $sel_d?>'>
+                    <input type='submit' value='追加'>
+                </form>
+                <!-- すでに追加されている情報を表示する欄 -->
+            </div>
+        </div>
     </main>
 </body>
+
+<script>
+    function print_popup() {
+        document.getElementById('popup').style.display = 'block';
+        return false;
+    }
+
+    function close_popup() {
+        document.getElementById('popup').style.display = 'none';
+        // location.href = 'bulletin.php?sel=' + sel;
+    }
+</script>
+<?php
+if (isset($_GET['sel_d'])) {
+    echo '<script>', 'print_popup();', '</script>';
+}
+?>
 
 </html>

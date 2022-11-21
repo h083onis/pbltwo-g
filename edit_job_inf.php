@@ -22,21 +22,19 @@
       <td class='contents_cel'><span><a href=''>ログアウト</a></span></td>
     </tr>
   </table>
-  <!-- バイトの登録情報の表示する位置 -->
+  <!-- バイトの登録情報を表示する位置 -->
   <?php
 
   ?>
   バイト項目<input type='text'><br>
-  <select>
-    <option>時給</option>
-    <option>日給</option>
-    <option>週給</option>
-    <option>月給</option>
-  </select>
-  金額入力<input type='number' name='money'><br>
+  時給入力<input type='number' name='money'><br>
   締め日<input type='date'><br>
   給料日<input type='date'><br>
-  <input type='button'value='登録'>
+  <input type='button' value='登録'>
+  深夜手当
+  <input type='time' name='shift_time' style='width:80px' step='60'>
+  ~
+  <input type='time' name='shift_time' style='width:80px' step='60'>
 
 </body>
 
