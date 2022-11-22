@@ -22,19 +22,23 @@
       <td class='contents_cel'><span><a href=''>ログアウト</a></span></td>
     </tr>
   </table>
-  <!-- バイトの登録情報を表示する位置 -->
+  <!-- 既に登録されているバイトの登録情報を表示する -->
   <?php
 
   ?>
-  バイト項目<input type='text'><br>
-  時給入力<input type='number' name='money'><br>
-  締め日<input type='date'><br>
-  給料日<input type='date'><br>
-  <input type='button' value='登録'>
-  深夜手当
-  <input type='time' name='shift_time' style='width:80px' step='60'>
-  ~
-  <input type='time' name='shift_time' style='width:80px' step='60'>
+  <form action='add_inf.php' method='post'>
+    バイト項目<input type='text' name='job_name' required><br>
+    時給入力<input type='number' name='money' min='0' required><br>
+    締め日<input type='number' name='cutoff_day' min='1' max='31' required><br>
+    給料日<input type='number' name='payment_day' min='1' max='31' required><br>
+    <!-- 深夜手当在りだと欄が増えるようにする -->
+    深夜手当時給入力<input type='number' name='mid_money' min='0'><br>
+    深夜手当時間
+    <input type='time' name='start_mid_time' style='width:80px' step='60'>
+    ~
+    <input type='time' name='end_mid_time' style='width:80px' step='60'>
+    <input type='submit' value='登録'>
+  </form>
 
 </body>
 
