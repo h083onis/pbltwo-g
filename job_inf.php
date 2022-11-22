@@ -1,5 +1,19 @@
 <?php
 #データベースからバイトの情報を取得
+$db = new PDO("sqlite:circle.db");
+$result = $db->query("select * from part_time_job_inf where id = $id");
+$count = $db->query("select count(*) from part_time_job_inf where id = $id");
+
+if (isset($_GET['sel_job'])) {
+  $sel_job = $_GET['sel_job'];
+  $result2 = $db->query("select * from part_time_job_inf where id = $id and job_name = $sel_job");
+}
+if(isset($_GET['delete_job'])){
+  $sel_job = $_GET['delete_job'];
+  $result3 = $db->query("select * from part_time_job_inf where id = $id and job_name = $delete_job");
+}
+
+$db = null;
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -9,6 +23,56 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    .open {
+      cursor: pointer;
+    }
+
+    #pop-up1 {
+      display: none;
+    }
+    #pop-up2 {
+      display: none;
+    }
+
+    .overlay {
+      display: none;
+    }
+
+    .overlay {
+      display: none;
+      z-index: 9999;
+      background-color: #00000070;
+      position: fixed;
+      width: 100%;
+      height: 100vh;
+      top: 0;
+      left: 0;
+    }
+
+    .window {
+      width: 600px;
+      max-width: 600px;
+      height: 500px;
+      background-color: #ffffff;
+      border-radius: 6px;
+      /* display: flex; */
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .close {
+      cursor: pointer;
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      font-size: 20px;
+    }
+  </style>
 </head>
 
 <body>
@@ -24,10 +88,30 @@
   </table>
   <!-- 既に登録されているバイトの登録情報を表示する -->
   <?php
-
+  if ($count != 0) {
+    echo '<table>';
+    echo '<tr>';
+    echo '<td>バイト名</td><td>時給</td><td>締め日</td><td>給料日</td><td>深夜手当時給</td><td>深夜手当時間</td>';
+    echo '</tr>';
+    foreach ($result as $value) {
+      echo '<tr>';
+      echo '<td>' . $value['job_name'] . '</td><td>' . $value['money'] . '</td><td>' . $value['cutoff_day'] . '</td><td>' . $value['payment_day'] . '</td>';
+      if ($value['mid_money'] != '') {
+        echo '<td>' . $value['mid_money'] . '</td><td?>' . $value['start_mid_time'] . '~' . $value['end_mid_time'] . '</td>';
+      } else {
+        echo '<td>なし</td><td>なし</td>';
+      }
+      echo '<td><input type="button" value="編集" onClick=\'location.href=\'index.php?sel_job='.$value['job_name'].'\'></td>';
+      echo '<td><input type="button" value="削除" onClick=\'location.href=\'index.php?delete_job='.$value['job_name'].'\'></td>';
+      echo '</tr>';
+    }
+    echo '</table>';
+  } else {
+    echo '登録情報はありません。';
+  }
   ?>
   <form action='add_inf.php' method='post'>
-    バイト項目<input type='text' name='job_name' required><br>
+    バイト名<input type='text' name='job_name' required><br>
     時給入力<input type='number' name='money' min='0' required><br>
     締め日<input type='number' name='cutoff_day' min='1' max='31' required><br>
     給料日<input type='number' name='payment_day' min='1' max='31' required><br>
@@ -39,7 +123,67 @@
     <input type='time' name='end_mid_time' style='width:80px' step='60'>
     <input type='submit' value='登録'>
   </form>
-
+  <!-- 編集画面 -->
+  <div id="popup1" class='overlay'>
+    <div class='window'>
+      <label class='close' id="no" onclick="close_popup1()">×</label><br>
+      <form action='edit_inf.php' method='post'>
+        <?php
+        foreach($result2 as $value){
+          echo 'バイト名<input type=\'text\' value=',$value['job_name'],'>';
+          echo '時給入力<input type=\'number\' name=\'money\' min=\'0\' value=',$value['money'],' required><br>';
+          echo '締め日<input type=\'number\' name=\'cutoff_day\' min=\'1\' max=\'31\' value=',$value['cutoff_day'],'required><br>';
+          echo '給料日<input type=\'number\' name=\'payment_day\' min=\'1\' max=\'31\' value=',$value['payment_day'],'required><br>';
+          echo '深夜手当時給入力<input type=\'number\' name=\'mid_money\' min=\'0\'><br>';
+          echo '深夜手当時間';
+          echo '<input type=\'time\' name=\'start_mid_time\' style=\'width:80px\' step=\'60\'>~';
+          echo '<input type=\'time\' name=\'end_mid_time\' style=\'width:80px\' step=\'60\'>';
+          echo '<input type=\'hidden name=\'job_id\' value=',$value['job_id'],'>';
+        }
+        ?>
+        <input type='submit' value='変更'>
+      </form>
+    </div>
+  </div>
+  <!-- 削除前の確認画面 -->
+  <div id="popup2" class='overlay'>
+    <div class='window'>
+      <form id='delete' action='delete_inf.php' method='post'>
+        <input type='hidden' value= <?= $value['job_id']?>>
+      </form>
+      <input type='submit' value='はい' form='delete'>
+      <input type='button' value='いいえ' onclick="close_popup()"><br>
+    </div>
+  </div>
 </body>
+<script>
+  function print_popup1() {
+    document.getElementById('popup1').style.display = 'block';
+    return false;
+  }
+
+  function close_popup1() {
+    document.getElementById('popup1').style.display = 'none';
+    // location.href = 'bulletin.php?sel=' + sel;
+  }
+
+  function print_popup2() {
+    document.getElementById('popup2').style.display = 'block';
+    return false;
+  }
+
+  function close_popup2() {
+    document.getElementById('popup2').style.display = 'none';
+    // location.href = 'bulletin.php?sel=' + sel;
+  }
+</script>
+<?php
+if (isset($_GET['sel_job'])) {
+  echo '<script>', 'print_popup1();', '</script>';
+}
+if (isset($_GET['delete_job'])) {
+  echo '<script>', 'print_popup2();', '</script>';
+}
+?>
 
 </html>
