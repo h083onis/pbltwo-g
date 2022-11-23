@@ -112,6 +112,7 @@ $db = null;
   } else {
     echo '登録情報はありません。';
   }
+  // 追加や編集によるエラー内容の表示
   if(isset($_GET['e'])){
     echo '同じバイト名は登録できません';
   }
@@ -121,7 +122,6 @@ $db = null;
     時給入力<input type='number' name='hourly_wage' min='0' required><br>
     締め日<input type='number' name='cutoff_day' min='1' max='31' required><br>
     給料日<input type='number' name='payment_day' min='1' max='31' required><br>
-    <!-- 深夜手当在りだと欄が増えるようにする -->
     深夜手当時給入力<input type='number' name='mid_wage' min='0'><br>
     深夜手当時間
     <input type='time' name='start_mid_time' style='width:80px' step='60'>
