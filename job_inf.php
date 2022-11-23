@@ -1,16 +1,19 @@
 <?php
 #データベースからバイトの情報を取得
-$db = new PDO("sqlite:circle.db");
-$result = $db->query("select * from part_time_job_inf where id = $id");
-$count = $db->query("select count(*) from part_time_job_inf where id = $id");
+// session_start();
+// $id = $_SESSION['user_id'];
+$user_id = 1;
+$db = new PDO("sqlite:part-time-job.db");
+$result = $db->query("select * from part_time_job_inf where user_id = $user_id");
+$count = $db->query("select count(*) from part_time_job_inf where user_id = $user_id");
 
 if (isset($_GET['sel_job'])) {
   $sel_job = $_GET['sel_job'];
-  $result2 = $db->query("select * from part_time_job_inf where id = $id and job_name = $sel_job");
+  $result2 = $db->query("select * from part_time_job_inf where user_id = $user_id and job_name = '$sel_job'");
 }
 if(isset($_GET['delete_job'])){
-  $sel_job = $_GET['delete_job'];
-  $result3 = $db->query("select * from part_time_job_inf where id = $id and job_name = $delete_job");
+  $delete_job = $_GET['delete_job'];
+  $result3 = $db->query("select * from part_time_job_inf where user_id = $user_id and job_name = '$delete_job'");
 }
 
 $db = null;
@@ -89,34 +92,37 @@ $db = null;
   <!-- 既に登録されているバイトの登録情報を表示する -->
   <?php
   if ($count != 0) {
-    echo '<table>';
+    echo '<table border=1>';
     echo '<tr>';
-    echo '<td>バイト名</td><td>時給</td><td>締め日</td><td>給料日</td><td>深夜手当時給</td><td>深夜手当時間</td>';
+    echo '<td>バイト名</td><td>時給</td><td>締め日</td><td>給料日</td><td>深夜手当時給</td><td>深夜手当時間</td><td colspan=2>編集・削除</td>';
     echo '</tr>';
     foreach ($result as $value) {
       echo '<tr>';
-      echo '<td>' . $value['job_name'] . '</td><td>' . $value['money'] . '</td><td>' . $value['cutoff_day'] . '</td><td>' . $value['payment_day'] . '</td>';
-      if ($value['mid_money'] != '') {
-        echo '<td>' . $value['mid_money'] . '</td><td?>' . $value['start_mid_time'] . '~' . $value['end_mid_time'] . '</td>';
+      echo '<td>' . $value['job_name'] . '</td><td>' . $value['hourly_wage'] . '</td><td>' . $value['cutoff_day'] . '</td><td>' . $value['payment_day'] . '</td>';
+      if ($value['mid_wage'] != 0) {
+        echo '<td>' . $value['mid_wage'] . '</td><td>' . $value['start_mid_time'] . '~' . $value['end_mid_time'] . '</td>';
       } else {
         echo '<td>なし</td><td>なし</td>';
       }
-      echo '<td><input type="button" value="編集" onClick=\'location.href=\'index.php?sel_job='.$value['job_name'].'\'></td>';
-      echo '<td><input type="button" value="削除" onClick=\'location.href=\'index.php?delete_job='.$value['job_name'].'\'></td>';
+      echo '<td><input type="button" value="編集" onClick="location.href=\'job_inf.php?sel_job='.$value['job_name'].'\'"></td>';
+      echo '<td><input type="button" value="削除" onClick="location.href=\'job_inf.php?delete_job='.$value['job_name'].'\'"></td>';
       echo '</tr>';
     }
     echo '</table>';
   } else {
     echo '登録情報はありません。';
   }
+  if(isset($_GET['e'])){
+    echo '同じバイト名は登録できません';
+  }
   ?>
   <form action='add_inf.php' method='post'>
     バイト名<input type='text' name='job_name' required><br>
-    時給入力<input type='number' name='money' min='0' required><br>
+    時給入力<input type='number' name='hourly_wage' min='0' required><br>
     締め日<input type='number' name='cutoff_day' min='1' max='31' required><br>
     給料日<input type='number' name='payment_day' min='1' max='31' required><br>
     <!-- 深夜手当在りだと欄が増えるようにする -->
-    深夜手当時給入力<input type='number' name='mid_money' min='0'><br>
+    深夜手当時給入力<input type='number' name='mid_wage' min='0'><br>
     深夜手当時間
     <input type='time' name='start_mid_time' style='width:80px' step='60'>
     ~
@@ -130,15 +136,15 @@ $db = null;
       <form action='edit_inf.php' method='post'>
         <?php
         foreach($result2 as $value){
-          echo 'バイト名<input type=\'text\' value=',$value['job_name'],'>';
-          echo '時給入力<input type=\'number\' name=\'money\' min=\'0\' value=',$value['money'],' required><br>';
-          echo '締め日<input type=\'number\' name=\'cutoff_day\' min=\'1\' max=\'31\' value=',$value['cutoff_day'],'required><br>';
-          echo '給料日<input type=\'number\' name=\'payment_day\' min=\'1\' max=\'31\' value=',$value['payment_day'],'required><br>';
-          echo '深夜手当時給入力<input type=\'number\' name=\'mid_money\' min=\'0\'><br>';
+          echo 'バイト名<input type=\'text\' name=\'job_name\'value=',$value['job_name'],'>';
+          echo '時給入力<input type=\'number\' name=\'hourly_wage\' min=\'0\' value=',$value['hourly_wage'],' required><br>';
+          echo '締め日<input type=\'number\' name=\'cutoff_day\' min=\'1\' max=\'31\' value=',$value['cutoff_day'],' required><br>';
+          echo '給料日<input type=\'number\' name=\'payment_day\' min=\'1\' max=\'31\' value=',$value['payment_day'],' required><br>';
+          echo '深夜手当時給入力<input type=\'number\' name=\'mid_wage\' min=\'0\' value=',$value['mid_wage'],'><br>';
           echo '深夜手当時間';
-          echo '<input type=\'time\' name=\'start_mid_time\' style=\'width:80px\' step=\'60\'>~';
-          echo '<input type=\'time\' name=\'end_mid_time\' style=\'width:80px\' step=\'60\'>';
-          echo '<input type=\'hidden name=\'job_id\' value=',$value['job_id'],'>';
+          echo '<input type=\'time\' name=\'start_mid_time\' style=\'width:80px\' step=\'60\' value=',$value['start_mid_time'],'>~';
+          echo '<input type=\'time\' name=\'end_mid_time\' style=\'width:80px\' step=\'60\' value=',$value['end_mid_time'],'>';
+          echo '<input type=\'hidden\' name=\'pre_name\' value=',$value['job_name'],'>';        
         }
         ?>
         <input type='submit' value='変更'>
@@ -148,11 +154,12 @@ $db = null;
   <!-- 削除前の確認画面 -->
   <div id="popup2" class='overlay'>
     <div class='window'>
+      <span>バイト名：<?= $value['job_name']?>に関係する全ての情報が削除されますがよろしいでしょうか？</span>
       <form id='delete' action='delete_inf.php' method='post'>
-        <input type='hidden' value= <?= $value['job_id']?>>
+        <input type='hidden' name='job_name' value= <?= $value['job_name']?>>
       </form>
       <input type='submit' value='はい' form='delete'>
-      <input type='button' value='いいえ' onclick="close_popup()"><br>
+      <input type='button' value='いいえ' onclick="close_popup2()"><br>
     </div>
   </div>
 </body>
