@@ -212,7 +212,7 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
         <div class="area" align="center">
             <h3>
                 <a href="?y=<?php echo $prev_y; ?>">&lt;</a><span><?php echo $y; ?></span>年<a href="?y=<?php echo $next_y; ?>">&gt;</a><br>
-                <a href="?m=<?php echo $prev_m; ?>">&lt;</a><span><?php echo $m; ?></span>月 <a href="?m=<?php echo $next_m; ?>">&gt;</a>
+                <a href="?m=<?php echo $prev_m; ?>">&lt;</a><span><?php echo $m; ?></span>月<a href="?m=<?php echo $next_m; ?>">&gt;</a>
             </h3>
             <table class="calendar">
                 <tr>
@@ -281,15 +281,13 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
                     バイト項目
                     <select name='job_name' required>
                         <option disabled selected>選択してください</option>
-                        <!-- <option>コンビニ</option>
-                        <option>ニトリ</option> -->
                         <?php
                         foreach ($result2 as $value):
                             echo '<option>' . $value['job_name'] . '</option>';
                         endforeach;
                         ?>
                     </select>
-                    時間
+                    時間帯
                     <input type='time' name='start_time' style='width:80px' step='60'>
                     ~
                     <input type='time' name='end_time' style='width:80px' step='60'>
@@ -300,6 +298,14 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
                 </form>
                 <!-- すでに追加されている情報を表示する欄 -->
                 <?php
+                if (isset($_GET['e'])) {
+                    if($_GET['e']== 1){
+                        echo '時間帯の入力が間違っています';
+                    }
+                    else{
+                        echo '他のバイトと時間帯がかぶっています';
+                    }
+                }
                 if ($count != 0) {
                     echo '<table class=sel_d_inf border=1>';
                     echo '<tr>';
