@@ -3,29 +3,33 @@
 // if (isset($_SESSION['idname']) == 0) {
 //     header("Location:index.php"); //ログイン画面に飛ばす
 // }
-// $id = $_SESSION['id'];
+// $user_id = $_SESSION['user_id'];
+$user_id = 1;
 $y = $_POST['year'];
 $m = $_POST['month'];
 $d = $_POST['day'];
 
-$date = strval($y) .'-'. strval($m) .'-'. strval($d);
-echo $date;
-$item = $_POST['items'];
+$job_date = strval($y) .'-'. strval($m) .'-'. strval($d);
+$job_name = $_POST['job_name'];
 $start_time = $_POST['start_time'];
 $end_time = $_POST['end_time'];
 
-// $db = new PDO("sqlite:circle.db");
-// $money = $db->query("select money from bulletin where id='$id' and items='$item'");
+$db = new PDO("sqlite:part-time-job.db");
+$current_hourly_wage = $db->query("select hourly_wage from part_time_job_inf where user_id=$user_id and job_name='$job_name'");
+// echo($current_hourly_wage);
+$wage = $current_hourly_wage->fetchColumn();
+echo $wage;
 
-// $sql = "insert into bulletin(id, date, startTime, endTime, money) values(:id, :date, :startTime, :endTime, :money)"; //idはint型として代入
-// if ($stmt = $db->prepare($sql)) {
-//   $stmt->bindValue(':id', $name, PDO::PARAM_STR);
-//   $stmt->bindValue(':date', $date, PDO::PARAM_STR);
-//   $stmt->bindValue(':startTime', $start_time, PDO::PARAM_STR);
-//   $stmt->bindValue(':endTime', $end_time, PDO::PARAM_STR);
-//   $stmt->bindValue(':money', $money, PDO::PARAM_STR);
-//   $stmt->execute();
-// }
-// $db = null;
+$sql = "insert into job_schedule(user_id, job_name, job_date, start_time, end_time, current_hourly_wage) values(:user_id, :job_name,:job_date, :start_time, :end_time, :current_hourly_wage)";
+if ($stmt = $db->prepare($sql)) {
+  $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+  $stmt->bindValue(':job_name', $job_name, PDO::PARAM_STR);
+  $stmt->bindValue(':job_date', $job_date, PDO::PARAM_STR);
+  $stmt->bindValue(':start_time', $start_time, PDO::PARAM_STR);
+  $stmt->bindValue(':end_time', $end_time, PDO::PARAM_STR);
+  $stmt->bindValue(':current_hourly_wage', $wage, PDO::PARAM_INT);
+  $stmt->execute();
+}
+$db = null;
 
-// header("Location:home.php?y=$y&m=$m");
+header("Location:home.php?y=$y&m=$m");

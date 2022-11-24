@@ -11,7 +11,7 @@ if (isset($_GET['sel_job'])) {
   $sel_job = $_GET['sel_job'];
   $result2 = $db->query("select * from part_time_job_inf where user_id = $user_id and job_name = '$sel_job'");
 }
-if(isset($_GET['delete_job'])){
+if (isset($_GET['delete_job'])) {
   $delete_job = $_GET['delete_job'];
   $result3 = $db->query("select * from part_time_job_inf where user_id = $user_id and job_name = '$delete_job'");
 }
@@ -26,6 +26,27 @@ $db = null;
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <script>
+    function print_popup1() {
+      document.getElementById('popup1').style.display = 'block';
+      return false;
+    }
+
+    function close_popup1() {
+      document.getElementById('popup1').style.display = 'none';
+      // location.href = 'bulletin.php?sel=' + sel;
+    }
+
+    function print_popup2() {
+      document.getElementById('popup2').style.display = 'block';
+      return false;
+    }
+
+    function close_popup2() {
+      document.getElementById('popup2').style.display = 'none';
+      // location.href = 'bulletin.php?sel=' + sel;
+    }
+  </script>
   <style>
     .open {
       cursor: pointer;
@@ -34,6 +55,7 @@ $db = null;
     #pop-up1 {
       display: none;
     }
+
     #pop-up2 {
       display: none;
     }
@@ -104,8 +126,8 @@ $db = null;
       } else {
         echo '<td>なし</td><td>なし</td>';
       }
-      echo '<td><input type="button" value="編集" onClick="location.href=\'job_inf.php?sel_job='.$value['job_name'].'\'"></td>';
-      echo '<td><input type="button" value="削除" onClick="location.href=\'job_inf.php?delete_job='.$value['job_name'].'\'"></td>';
+      echo '<td><input type="button" value="編集" onClick="location.href=\'job_inf.php?sel_job=' . $value['job_name'] . '\'"></td>';
+      echo '<td><input type="button" value="削除" onClick="location.href=\'job_inf.php?delete_job=' . $value['job_name'] . '\'"></td>';
       echo '</tr>';
     }
     echo '</table>';
@@ -113,7 +135,7 @@ $db = null;
     echo '登録情報はありません。';
   }
   // 追加や編集によるエラー内容の表示
-  if(isset($_GET['e'])){
+  if (isset($_GET['e'])) {
     echo '同じバイト名は登録できません';
   }
   ?>
@@ -135,16 +157,16 @@ $db = null;
       <label class='close' id="no" onclick="close_popup1()">×</label><br>
       <form action='edit_inf.php' method='post'>
         <?php
-        foreach($result2 as $value){
-          echo 'バイト名<input type=\'text\' name=\'job_name\'value=',$value['job_name'],'>';
-          echo '時給入力<input type=\'number\' name=\'hourly_wage\' min=\'0\' value=',$value['hourly_wage'],' required><br>';
-          echo '締め日<input type=\'number\' name=\'cutoff_day\' min=\'1\' max=\'31\' value=',$value['cutoff_day'],' required><br>';
-          echo '給料日<input type=\'number\' name=\'payment_day\' min=\'1\' max=\'31\' value=',$value['payment_day'],' required><br>';
-          echo '深夜手当時給入力<input type=\'number\' name=\'mid_wage\' min=\'0\' value=',$value['mid_wage'],'><br>';
+        foreach ($result2 as $value) {
+          echo 'バイト名<input type=\'text\' name=\'job_name\'value=', $value['job_name'], '>';
+          echo '時給入力<input type=\'number\' name=\'hourly_wage\' min=\'0\' value=', $value['hourly_wage'], ' required><br>';
+          echo '締め日<input type=\'number\' name=\'cutoff_day\' min=\'1\' max=\'31\' value=', $value['cutoff_day'], ' required><br>';
+          echo '給料日<input type=\'number\' name=\'payment_day\' min=\'1\' max=\'31\' value=', $value['payment_day'], ' required><br>';
+          echo '深夜手当時給入力<input type=\'number\' name=\'mid_wage\' min=\'0\' value=', $value['mid_wage'], '><br>';
           echo '深夜手当時間';
-          echo '<input type=\'time\' name=\'start_mid_time\' style=\'width:80px\' step=\'60\' value=',$value['start_mid_time'],'>~';
-          echo '<input type=\'time\' name=\'end_mid_time\' style=\'width:80px\' step=\'60\' value=',$value['end_mid_time'],'>';
-          echo '<input type=\'hidden\' name=\'pre_name\' value=',$value['job_name'],'>';        
+          echo '<input type=\'time\' name=\'start_mid_time\' style=\'width:80px\' step=\'60\' value=', $value['start_mid_time'], '>~';
+          echo '<input type=\'time\' name=\'end_mid_time\' style=\'width:80px\' step=\'60\' value=', $value['end_mid_time'], '>';
+          echo '<input type=\'hidden\' name=\'pre_name\' value=', $value['job_name'], '>';
         }
         ?>
         <input type='submit' value='変更'>
@@ -154,36 +176,16 @@ $db = null;
   <!-- 削除前の確認画面 -->
   <div id="popup2" class='overlay'>
     <div class='window'>
-      <span>バイト名：<?= $value['job_name']?>に関係する全ての情報が削除されますがよろしいでしょうか？</span>
+      <span>バイト名：<?= $value['job_name'] ?>に関係する全ての情報が削除されますがよろしいでしょうか？</span>
       <form id='delete' action='delete_inf.php' method='post'>
-        <input type='hidden' name='job_name' value= <?= $value['job_name']?>>
+        <input type='hidden' name='job_name' value=<?= $value['job_name'] ?>>
       </form>
       <input type='submit' value='はい' form='delete'>
       <input type='button' value='いいえ' onclick="close_popup2()"><br>
     </div>
   </div>
 </body>
-<script>
-  function print_popup1() {
-    document.getElementById('popup1').style.display = 'block';
-    return false;
-  }
 
-  function close_popup1() {
-    document.getElementById('popup1').style.display = 'none';
-    // location.href = 'bulletin.php?sel=' + sel;
-  }
-
-  function print_popup2() {
-    document.getElementById('popup2').style.display = 'block';
-    return false;
-  }
-
-  function close_popup2() {
-    document.getElementById('popup2').style.display = 'none';
-    // location.href = 'bulletin.php?sel=' + sel;
-  }
-</script>
 <?php
 if (isset($_GET['sel_job'])) {
   echo '<script>', 'print_popup1();', '</script>';

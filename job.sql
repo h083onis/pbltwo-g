@@ -19,8 +19,8 @@ create table part_time_job_inf(
 );
 
 create table job_schedule(
-  user_id VARCHAR(8) NOT NULL.
-  job_name BIGINT UNSIGNED NOT NULL,
+  user_id VARCHAR(8) NOT NULL,
+  job_name TEXT NOT NULL,
   job_date DATE NOT NULL,
   start_time TIME NOT NULL,
   end_time TIME NOT NULL,
