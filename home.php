@@ -288,9 +288,9 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
                         ?>
                     </select>
                     時間帯
-                    <input type='time' name='start_time' style='width:80px' step='60'>
+                    <input type='time' name='start_time' style='width:80px' step='60' required>
                     ~
-                    <input type='time' name='end_time' style='width:80px' step='60'>
+                    <input type='time' name='end_time' style='width:80px' step='60' required>
                     <input type='hidden' name='year' value='<?= $y ?>'>
                     <input type='hidden' name='month' value='<?= $m ?>'>
                     <input type='hidden' name='day' value='<?= $sel_d ?>'>
@@ -300,7 +300,7 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
                 <?php
                 if (isset($_GET['e'])) {
                     if($_GET['e']== 1){
-                        echo '時間帯の入力が間違っています';
+                        echo '全ての項目を入力してください';
                     }
                     else{
                         echo '他のバイトと時間帯がかぶっています';
