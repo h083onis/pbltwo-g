@@ -1,3 +1,8 @@
+<?php
+session_start();
+unset($_SESSION['user_id']);
+unset($_SESSION['pass']);
+?>
 <!DOCTYPE html>
 <html lang="ja">
 
