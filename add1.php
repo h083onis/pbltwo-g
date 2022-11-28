@@ -12,6 +12,7 @@ if ($stmt = $db->prepare($sql)) {
 }
 $db = null;
 ?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
