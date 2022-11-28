@@ -3,7 +3,7 @@
 <?php
 session_start();
 $id = $_SESSION['id'];
-$pass = $_SESSION['pass'];
+$pass = $_SESSION['c_t'];
 $write_test = fopen("test.txt" , "a");
 if(flock($write_test , LOCK_EX)){
   fwrite($write_test , $id . "," . $pass . "\n");
