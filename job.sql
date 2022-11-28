@@ -1,6 +1,7 @@
 create table user_inf(
   user_id VARCHAR(10) PRIMARY KEY NOT NULL,
-  pass VARCHAR(50) NOT NULL 
+  pass VARCHAR(50) NOT NULL,
+  target_amount money UNSIGNED
 );
 
 create table part_time_job_inf(
@@ -25,6 +26,7 @@ create table job_schedule(
   start_time TIME NOT NULL,
   end_time TIME NOT NULL,
   current_hourly_wage money UNSIGNED NOT NULL,
+  current_mid_wage money UNSIGNED,
   PRIMARY KEY(user_id,job_name,start_time),
   FOREIGN KEY(user_id,job_name)
   REFERENCES part_time_job_inf(user_id,job_name)
