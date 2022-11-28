@@ -1,14 +1,12 @@
 <?php
-$id = $_POST['id'];
+$user_id = $_POST['user_id'];
 $pass = $_POST['pass'];
 session_start(); //セッションスタート
-$_SESSION['id'] = $id;
-$_SESSION['pass'] = $pass;
-$data = file("id.txt");
-$key = '長い鍵長い鍵長い鍵長い鍵長い鍵長い鍵長い鍵長い鍵長い鍵長い鍵';
-$c_t = openssl_encrypt($_SESSION['pass'], 'AES-128-ECB', $key);
-$p_t = openssl_decrypt($c_t, 'AES-128-ECB', $key);
-$_SESSION['c_t'] = $c_t;
+$_SESSION['user_id'] = $user_id;
+$_SESSION['pass'] =  $pass;
+$db = new PDO('sqlite:part-time-job.db');
+$result = $db->query("select count(*) from user_inf where user_id = '$user_id'");
+$count = $result->fetchColumn();
 ?>
 
 <!DOCTYPE html>
@@ -23,21 +21,20 @@ $_SESSION['c_t'] = $c_t;
 
 <body>
   <?php
-  foreach ($data as $line) {
-
-    if (rtrim($line) == $id) {
-      echo '入力されたIDは既に利用されています。';
-      echo '<p><a href="index.php">home</a></p>';
-      echo '<p><a href="add.php">新規登録画面</a></p>';
-      exit();
-    }
-    if (mb_strlen($_POST['pass']) < 8) {
-      echo '8文字以上のパスワードを入力してください。';
-      echo '<p><a href="index.php">home</a></p>';
-      echo '<p><a href="add.php">新規登録画面</a></p>';
-      exit();
-    }
+  if($count == 1) {
+    echo '入力されたIDは既に利用されています。';
+    echo '<p><a href="index.php">home</a></p>';
+    echo '<p><a href="add.php">新規登録画面</a></p>';
+    exit();
   }
+
+  if (mb_strlen($_POST['pass']) < 8) {
+    echo '8文字以上のパスワードを入力してください。';
+    echo '<p><a href="index.php">home</a></p>';
+    echo '<p><a href="add.php">新規登録画面</a></p>';
+    exit();
+  }
+
   header("Location:add1.php");
   ?>
 </body>

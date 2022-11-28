@@ -1,3 +1,17 @@
+<?php
+session_start();
+$user_id = $_SESSION['user_id'];
+$pass = $_SESSION['pass'];
+$encryptedPw = password_hash($pass, PASSWORD_DEFAULT);
+$db = new PDO('sqlite:part-time-job.db');
+$sql = "insert into user_inf(user_id, pass) values(:user_id, :pass)"; //idはint型として代入
+if ($stmt = $db->prepare($sql)) {
+  $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+  $stmt->bindValue(':pass', $encryptedPw, PDO::PARAM_STR);
+  $stmt->execute();
+}
+$db = null;
+?>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -10,23 +24,7 @@
 
 <body>
   <h1>登録完了しました。</h1>
-  <?php
-  session_start();
-  $id = $_SESSION['id'];
-  $pass = $_SESSION['c_t'];
-  $write_test = fopen("test.txt", "a");
-  if (flock($write_test, LOCK_EX)) {
-    fwrite($write_test, $id . "," . $pass . "\n");
-  }
-  fclose($write_test);
-  $write_id = fopen("id.txt", "a");
-  if (flock($write_id, LOCK_EX)) {
-    fwrite($write_id, $id . "\n");
-  }
-  fclose($write_id);
-  ?>
   <p><a href="index.php">home</a></p>
-
 </body>
 
 </html>

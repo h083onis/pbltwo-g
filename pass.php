@@ -1,9 +1,9 @@
 <?php
-$key = '長い鍵長い鍵長い鍵長い鍵長い鍵長い鍵長い鍵長い鍵長い鍵長い鍵';
-$id = $_POST['id'];
-$pass = openssl_encrypt($_POST['pass'], 'AES-128-ECB', $key);
-$id_pass = $id . "," . $pass;
-$data = file("test.txt");
+$user_id = $_POST['user_id'];
+$pass = $_POST['pass'];
+
+$db = new PDO('sqlite:part-time-job.db');
+$result = $db->query("select pass from user_inf where user_id = '$user_id'")
 ?>
 
 <!DOCTYPE html>
@@ -18,8 +18,8 @@ $data = file("test.txt");
 
 <body>
   <?php
-  foreach ($data as $line) {
-    if (rtrim($line) == $id_pass) {
+  foreach ($result as $value) {
+    if (password_verify($pass, $value['pass'])) {
       header("Location:home1.php");
       exit();
     }

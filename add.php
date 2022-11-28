@@ -17,7 +17,7 @@
       </tr>
       <tr class="">
         <th><label for="id">ID</label></th>
-        <td><input type="text" name="id" required></td>
+        <td><input type="text" name="user_id" required></td>
       </tr>
       <tr class="">
         <th><label for="pass">パスワード</label></th>

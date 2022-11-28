@@ -1,3 +1,8 @@
+<?php
+session_start();
+unset($_SESSION['user_id']);
+unset($_SESSION['pass']);
+?>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -17,7 +22,7 @@
 			</tr>
 			<tr class="">
 				<th><label for="id">ID</label></th>
-				<td><input type="text" name="id" required></td>
+				<td><input type="text" name="user_id" required></td>
 			</tr>
 			<tr class="">
 				<th><label for="pass">パスワード</label></th>
