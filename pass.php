@@ -20,7 +20,7 @@ $result = $db->query("select pass from user_inf where user_id = '$user_id'")
   <?php
   foreach ($result as $value) {
     if (password_verify($pass, $value['pass'])) {
-      header("Location:home1.php");
+      header("Location:home.php");
       exit();
     }
   }
