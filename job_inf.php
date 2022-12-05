@@ -4,16 +4,17 @@
 // $id = $_SESSION['user_id'];
 $user_id = 1;
 $db = new PDO("sqlite:part-time-job.db");
-$result = $db->query("select * from part_time_job_inf where user_id = $user_id");
-$count = $db->query("select count(*) from part_time_job_inf where user_id = $user_id");
+$result = $db->query("select * from part_time_job_inf where user_id = '$user_id'");
+$count = $db->query("select count(*) from part_time_job_inf where us'er_id = '$user_id'");
+$target = $db->query("select target_amount from user_inf where id = '$user_id'")
 
 if (isset($_GET['sel_job'])) {
   $sel_job = $_GET['sel_job'];
-  $result2 = $db->query("select * from part_time_job_inf where user_id = $user_id and job_name = '$sel_job'");
+  $result2 = $db->query("select * from part_time_job_inf where user_id = '$user_id' and job_name = '$sel_job'");
 }
 if (isset($_GET['delete_job'])) {
   $delete_job = $_GET['delete_job'];
-  $result3 = $db->query("select * from part_time_job_inf where user_id = $user_id and job_name = '$delete_job'");
+  $result3 = $db->query("select * from part_time_job_inf where user_id = '$user_id' and job_name = '$delete_job'");
 }
 
 $db = null;
@@ -111,6 +112,7 @@ $db = null;
       <td class='contents_cel'><span><a href=''>ログアウト</a></span></td>
     </tr>
   </table>
+  <h1>今月の目標金額</h1><span><?= $target ?>円</span>
   <!-- 既に登録されているバイトの登録情報を表示する -->
   <?php
   if ($count != 0) {
