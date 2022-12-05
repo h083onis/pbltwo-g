@@ -5,8 +5,10 @@
 $user_id = 1;
 $db = new PDO("sqlite:part-time-job.db");
 $result = $db->query("select * from part_time_job_inf where user_id = '$user_id'");
-$count = $db->query("select count(*) from part_time_job_inf where us'er_id = '$user_id'");
-$target = $db->query("select target_amount from user_inf where id = '$user_id'")
+$count = $db->query("select count(*) from part_time_job_inf where user_id = '$user_id'");
+$target_amount = $db->query("select target_amount from user_inf where user_id = '$user_id'");
+$target = $target_amount->fetchColumn();
+echo $target;
 
 if (isset($_GET['sel_job'])) {
   $sel_job = $_GET['sel_job'];
@@ -112,7 +114,28 @@ $db = null;
       <td class='contents_cel'><span><a href=''>ログアウト</a></span></td>
     </tr>
   </table>
-  <h1>今月の目標金額</h1><span><?= $target ?>円</span>
+  <h1><?= $user_id?></h1>
+  <?php
+  if(isset($_GET['e']) && $_GET['e']==2){
+    echo'パスワードが間違っています';
+  }
+  ?>
+  <form id = 'check_pass' action='check_pass.php' method='post'>
+    <input type='password'name='pass' required>
+  </form>
+  <input type='button' value='パスワードの変更' form='check_pass'></br>
+  <?php
+  if($target != ''){
+    echo '<h1>今月の目標金額</h1><span>'. $target. '円</span>';
+  }
+  else{
+    echo '目標金額が設定されていません';
+  }
+  ?>
+  <form id='edit_target' action = 'edit_target_amount' method = 'post'>
+    <input type ='number' name ='target_amount' min = 1 required>
+  </form>
+  <input type='submit' value='目標金額の変更' id ='edit_target'>
   <!-- 既に登録されているバイトの登録情報を表示する -->
   <?php
   if ($count != 0) {
@@ -137,7 +160,7 @@ $db = null;
     echo '登録情報はありません。';
   }
   // 追加や編集によるエラー内容の表示
-  if (isset($_GET['e'])) {
+  if (isset($_GET['e']) && $_GET['e']==1) {
     echo '同じバイト名は登録できません';
   }
   ?>
@@ -182,8 +205,20 @@ $db = null;
       <form id='delete' action='delete_inf.php' method='post'>
         <input type='hidden' name='job_name' value=<?= $value['job_name'] ?>>
       </form>
-      <input type='submit' value='はい' form='delete'>
       <input type='button' value='いいえ' onclick="close_popup2()"><br>
+      <input type='submit' value='はい' form='delete'>
+    </div>
+  </div>
+  <!-- パスワード編集用の画面 -->
+  <div id="popup3" class='overlay'>
+    <div class='window'>
+      <span>変更したいパスワードを2回入力してください</span>
+      <form id='delete' action='ch_pass.php' method='post'>
+        <input type='text' name='first_pass' required>
+        <input type='text' name='second_pass' required>
+      </form>
+      <input type='button' value='やめる' onclick="close_popup2()"><br>
+      <input type='submit' value='変更' form='delete'>
     </div>
   </div>
 </body>
@@ -194,6 +229,9 @@ if (isset($_GET['sel_job'])) {
 }
 if (isset($_GET['delete_job'])) {
   echo '<script>', 'print_popup2();', '</script>';
+}
+if (isset($_GET['ch_pass'])) {
+  echo '<script>', 'print_popup3();', '</script>';
 }
 ?>
 
