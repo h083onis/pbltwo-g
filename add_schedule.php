@@ -15,7 +15,7 @@ $start_time = $_POST['start_time'];
 $end_time = $_POST['end_time'];
 $db = new PDO("sqlite:part-time-job.db");
 
-$result = $db->query("select * from job_schedule where user_id = $user_id");
+$result = $db->query("select * from job_schedule where user_id = $user_id and job_date = '$job_date'");
 $check_st_time = new DateTime($start_time);
 $check_en_time = new DateTime($end_time);
 
