@@ -149,29 +149,7 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
 
         <div id="popup" class='overlay'>
             <div class='window'>
-                <?= $y ?>年<?= $m ?>月<?= $sel_d ?>日<br>
-                <label class='close' id="no" onclick="close_popup()">×</label><br>
-                <form action='add_schedule.php' method='post'>
-                    バイト項目
-                    <select name='job_name' required>
-                        <option disabled selected>選択してください</option>
-                        <!-- <option>コンビニ</option>
-                        <option>ニトリ</option> -->
-                        <?php
-                        foreach ($result2 as $value):
-                            echo '<option>' . $value['job_name'] . '</option>';
-                        endforeach;
-                        ?>
-                    </select>
-                    時間
-                    <input type='time' name='start_time' style='width:80px' step='60'>
-                    ~
-                    <input type='time' name='end_time' style='width:80px' step='60'>
-                    <input type='hidden' name='year' value='<?= $y ?>'>
-                    <input type='hidden' name='month' value='<?= $m ?>'>
-                    <input type='hidden' name='day' value='<?= $sel_d ?>'>
-                    <input type='submit' value='追加'>
-                </form>
+                <div class='date-popup'><?= $y ?>年<?= $m ?>月<?= $sel_d ?>日</div>
                 <!-- すでに追加されている情報を表示する欄 -->
                 <?php
                 if (isset($_GET['e'])) {
