@@ -19,7 +19,7 @@ $result = $db->query("select * from job_schedule where user_id = $user_id");
 $check_st_time = new DateTime($start_time);
 $check_en_time = new DateTime($end_time);
 
-#時間帯の入力がおかしい場合のエラー
+#入力がおかしい場合のエラー
 if($job_name == '' || $start_time == '' || $end_time == ''){
   $db = null;
   header("Location:home.php?e=1&y=$y&m=$m&sel_d=$d"); //エラーを返す

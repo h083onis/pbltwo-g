@@ -8,7 +8,6 @@ $result = $db->query("select * from part_time_job_inf where user_id = '$user_id'
 $count = $db->query("select count(*) from part_time_job_inf where user_id = '$user_id'");
 $target_amount = $db->query("select target_amount from user_inf where user_id = '$user_id'");
 $target = $target_amount->fetchColumn();
-echo $target;
 
 if (isset($_GET['sel_job'])) {
   $sel_job = $_GET['sel_job'];
@@ -47,6 +46,15 @@ $db = null;
 
     function close_popup2() {
       document.getElementById('popup2').style.display = 'none';
+      // location.href = 'bulletin.php?sel=' + sel;
+    }
+    function print_popup3() {
+      document.getElementById('popup3').style.display = 'block';
+      return false;
+    }
+
+    function close_popup3() {
+      document.getElementById('popup3').style.display = 'none';
       // location.href = 'bulletin.php?sel=' + sel;
     }
   </script>
@@ -119,11 +127,14 @@ $db = null;
   if(isset($_GET['e']) && $_GET['e']==2){
     echo'パスワードが間違っています';
   }
+  if(isset($_GET['check_pass']) && $_GET['check_pass'] == 'complete'){
+    echo 'パスワードの変更が完了しました';
+  }
   ?>
   <form id = 'check_pass' action='check_pass.php' method='post'>
-    <input type='password'name='pass' required>
+    <input type='password'name='pass' minlength='8' required>
   </form>
-  <input type='button' value='パスワードの変更' form='check_pass'></br>
+  <input type='submit' value='パスワードの変更' form='check_pass'></br>
   <?php
   if($target != ''){
     echo '<h1>今月の目標金額</h1><span>'. $target. '円</span>';
@@ -132,10 +143,10 @@ $db = null;
     echo '目標金額が設定されていません';
   }
   ?>
-  <form id='edit_target' action = 'edit_target_amount' method = 'post'>
+  <form id='edit_target' action = 'edit_target.php' method = 'post'>
     <input type ='number' name ='target_amount' min = 1 required>
   </form>
-  <input type='submit' value='目標金額の変更' id ='edit_target'>
+  <input type='submit' value='目標金額の変更' form ='edit_target'>
   <!-- 既に登録されているバイトの登録情報を表示する -->
   <?php
   if ($count != 0) {
@@ -213,12 +224,12 @@ $db = null;
   <div id="popup3" class='overlay'>
     <div class='window'>
       <span>変更したいパスワードを2回入力してください</span>
-      <form id='delete' action='ch_pass.php' method='post'>
-        <input type='text' name='first_pass' required>
-        <input type='text' name='second_pass' required>
+      <form id='edit_pass' action='edit_pass.php' method='post'>
+        <input type='password' name='first_pass' minlength='8' required></br>
+        <input type='password' name='second_pass' minlength='8' required> 
       </form>
-      <input type='button' value='やめる' onclick="close_popup2()"><br>
-      <input type='submit' value='変更' form='delete'>
+      <input type='button' value='やめる' onclick="close_popup3()"><br>
+      <input type='submit' value='変更' form='edit_pass'>
     </div>
   </div>
 </body>
@@ -230,7 +241,7 @@ if (isset($_GET['sel_job'])) {
 if (isset($_GET['delete_job'])) {
   echo '<script>', 'print_popup2();', '</script>';
 }
-if (isset($_GET['ch_pass'])) {
+if (isset($_GET['check_pass']) && $_GET['check_pass'] == 'correct') {
   echo '<script>', 'print_popup3();', '</script>';
 }
 ?>
