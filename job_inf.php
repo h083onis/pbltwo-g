@@ -123,6 +123,7 @@ $db = null;
     </tr>
   </table>
   <h1><?= $user_id?></h1>
+  <span>パスワードを変更したい場合は現時点のパスワードをここに入力する</span>
   <?php
   if(isset($_GET['e']) && $_GET['e']==2){
     echo'パスワードが間違っています';
