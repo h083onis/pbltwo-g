@@ -45,6 +45,8 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="common.css">
     <title>スケジュール編集ページ</title>
     <script>
         function print_popup() {
@@ -57,162 +59,34 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
             // location.href = 'bulletin.php?sel=' + sel;
         }
     </script>
-    <style>
-        .month {
-            text-align: center;
-        }
-
-        .week {
-            text-align: center;
-            height: 50px;
-        }
-
-        .sunday {
-            color: red;
-            background-color: #ffb6c1;
-        }
-
-        .saturday {
-            color: blue;
-            background-color: #e0ffff;
-        }
-
-        .day {
-            /* width: 72px;
-            height: 32px; */
-            text-align: left;
-            vertical-align: top;
-        }
-
-        th,
-        td {
-            padding: 20px;
-            border: solid 1px;
-        }
-
-        td {
-            height: 100px;
-            width: 100px;
-        }
-
-
-
-
-        .text_style {
-            white-space: pre-wrap;
-            background-color: aliceblue;
-            border: 1px black;
-            color: black;
-        }
-
-
-        .area {
-            position: relative;
-            width: 1000px;
-            margin: auto;
-        }
-
-        .view {
-            position: absolute;
-        }
-
-        .edit {
-            position: absolute;
-            top: 20px;
-            left: 600px;
-            font-size: 120%;
-        }
-
-        h3 {
-            color: black;
-        }
-
-        .contents_cel {
-            text-align: center;
-            height: 50px;
-            width: 150px;
-            padding: 10px;
-        }
-
-        .contents_link {
-            display: block;
-            width: 100%;
-            height: 100%;
-        }
-
-        .open {
-            cursor: pointer;
-        }
-
-        #pop-up {
-            display: none;
-        }
-
-        .overlay {
-            display: none;
-        }
-
-        .overlay {
-            display: none;
-            z-index: 9999;
-            background-color: #00000070;
-            position: fixed;
-            width: 100%;
-            height: 100vh;
-            top: 0;
-            left: 0;
-        }
-
-        .window {
-            width: 800px;
-            /* max-width: 600px; */
-            height: 800px;
-            background-color: #ffffff;
-            border-radius: 6px;
-            /* display: flex; */
-            justify-content: center;
-            align-items: center;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .close {
-            cursor: pointer;
-            position: absolute;
-            top: 4px;
-            right: 4px;
-            font-size: 20px;
-        }
-
-        table.sel_d_inf td {
-            text-align: center;
-            height: 20px;
-            width: 100px;
-        }
-    </style>
 </head>
 
 <body>
-    <header>
-        <h1>バイト管理アプリ</h1>
-        <table align='center'>
-            <tr>
-                <td class='contents_cel'><span><a href='home.php'>ホーム画面</ho-mu></a></span>
-                <td class='contents_cel'><span><a href='edit_job_inf.php'>バイト情報編集</a></span>
-                <td class='contents_cel'><span><a href=''>給与計算</a></span></td>
-                <td class='contents_cel'><span><a href=''>個人情報</a></span></td>
-                <td class='contents_cel'><span><a href=''>ヘルプ</a></span></td>
-                <td class='contents_cel'><span><a href=''>ログアウト</a></span></td>
-            </tr>
-        </table>
-    </header>
-    <main>
+    <div class="main">
+        <div class="side-menu">
+            <!--<nav>
+                <ul>
+                    <li><a href='home.php' class="navi info-icon">個人情報</a></li>
+                    <li><a href='edit_job_inf.php' class="navi calender-icon">カレンダー</a></li>
+                    <li><a href='' class="navi money-icon">給料計算</a></li>
+                    <li><a href='' class="navi logout-icon">ログアウト</a></li>
+                </ul>
+            </nav>-->
+
+            <nav>
+                <ul>
+                    <li><a href='' class="navi info-icon"><img src="./img/information.svg" alt="個人情報" width="70px" height="40spx" /></a></li>
+                    <li><a href='home.php' class="navi calender-icon"><img src="./img/calender.svg" alt="カレンダー" width="70px" height="40px" /></a></li>
+                    <li><a href='' class="navi money-icon"><img src="./img/money.svg" alt="給料計算" width="70px" height="40px" /></a></li>
+                    <li><a href='' class="navi logout-icon"><img src="./img/logout.svg" alt="ログアウト" width="70px" height="40px" /></a></li>
+                </ul>
+            </nav>
+        </div>    
+    
         <div class="area" align="center">
             <h3>
-                <a href="?y=<?php echo $prev_y; ?>">&lt;</a><span><?php echo $y; ?></span>年<a href="?y=<?php echo $next_y; ?>">&gt;</a><br>
-                <a href="?m=<?php echo $prev_m; ?>">&lt;</a><span><?php echo $m; ?></span>月<a href="?m=<?php echo $next_m; ?>">&gt;</a>
+                <a href="?y=<?php echo $prev_y; ?>" class="move-mo">&lt;</a><span class="years"><?php echo $y; ?>年</span><a href="?y=<?php echo $next_y; ?>" class="move-mo">&gt;</a><br>
+                <a href="?m=<?php echo $prev_m; ?>" class="move-mo">&lt;</a><span class="months"><?php echo $m; ?></span>月 <a href="?m=<?php echo $next_m; ?>" class="move-mo">&gt;</a>
             </h3>
             <table class="calendar">
                 <tr>
@@ -224,7 +98,7 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
                         } else if ($weeks == '土') {
                             echo '<td class = "week saturday">' . $weeks . '</td>';
                         } else {
-                            echo '<td class = "week">' . $weeks . '</td>';
+                            echo '<td class = "week weekday">' . $weeks . '</td>';
                         }
                     }
                     ?>
@@ -234,7 +108,7 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
                 $wd1 = date("w", mktime(0, 0, 0, $m, 1, $y));
                 // その数だけ空白を表示
                 for ($i = 1; $i <= $wd1; $i++) {
-                    echo "<td></td>";
+                    echo '<td class="space"></td>';
                 }
 
                 // 1日から月末日までの表示
@@ -245,7 +119,7 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
                 for ($d = 1; $d <= $lastday; $d++) {
                     echo '<td class = "day"><a class="open" href="?y=' . $y . '&m=' . $m . '&sel_d=' . $d . '">' . $d . '</a>';
                     echo '<br>';
-                    echo '<br>';
+                    /*echo '<br>';*/
                     $job_date = strval($y) . '-' . strval($m) . '-' . strval($d);
                     $result = $db->query("select * from job_schedule where user_id = $user_id and job_date = '$job_date'");
                     foreach ($result as $value) :
@@ -267,7 +141,7 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
                 // 最後の週の土曜日まで移動
                 $wdx = date("w", mktime(0, 0, 0, $m + 1, 0, $y));
                 for ($i = 1; $i < 7 - $wdx; $i++) {
-                    echo "<td></td>";
+                    echo '<td class="space"></td>';
                 }
                 ?>
             </table>
@@ -281,16 +155,18 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
                     バイト項目
                     <select name='job_name' required>
                         <option disabled selected>選択してください</option>
+                        <!-- <option>コンビニ</option>
+                        <option>ニトリ</option> -->
                         <?php
                         foreach ($result2 as $value):
                             echo '<option>' . $value['job_name'] . '</option>';
                         endforeach;
                         ?>
                     </select>
-                    時間帯
-                    <input type='time' name='start_time' style='width:80px' step='60' required>
+                    時間
+                    <input type='time' name='start_time' style='width:80px' step='60'>
                     ~
-                    <input type='time' name='end_time' style='width:80px' step='60' required>
+                    <input type='time' name='end_time' style='width:80px' step='60'>
                     <input type='hidden' name='year' value='<?= $y ?>'>
                     <input type='hidden' name='month' value='<?= $m ?>'>
                     <input type='hidden' name='day' value='<?= $sel_d ?>'>
@@ -307,20 +183,20 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
                     }
                 }
                 if ($count != 0) {
-                    echo '<table class=sel_d_inf border=1>';
-                    echo '<tr>';
+                    echo '<table class=sel_d_inf>';
+                    echo '<tr class="item">';
                     echo '<td>バイト名</td>
                         <td>時間</td>
                         <td colspan=2>削除</td>';
                     echo '</tr>';
                     foreach ($result3 as $value):
-                        echo '<tr>';
+                        echo '<tr class="item-list">';
                         echo '<td>' . $value['job_name'] . '</td><td>' . $value['start_time'] . '~' . $value['end_time'] . '</td>';
                         echo '<td><form action=\'delete_schedule.php\' method=\'post\'>';
                         echo '<input type=\'hidden\' name=\'job_date\' value=',$sel_date,'>';
                         echo '<input type=\'hidden\' name=\'job_name\' value=',$value['job_name'],'>';
                         echo '<input type=\'hidden\' name=\'start_time\' value=',$value['start_time'],'>';                        
-                        echo '<input type="submit" value="削除"></form></td>';
+                        echo '<input type="submit" value="×" class="button-del"></form></td>';
                         echo '</tr>';
                     endforeach;
                     echo '</table>';
@@ -328,9 +204,32 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
                     echo '登録情報はありません。';
                 }
                 ?>
+                <label class='close' id="no" onclick="close_popup()">×</label><br>
+                <form action='add_schedule.php' method='post'>
+                    <span class="select-time">バイト項目
+                        <select name='job_name' required class="drop-down-job">
+                            <option disabled selected>選択してください</option>
+                            <!-- <option>コンビニ</option>
+                            <option>ニトリ</option> -->
+                            <?php
+                            foreach ($result2 as $value):
+                                echo '<option>' . $value['job_name'] . '</option>';
+                            endforeach;
+                            ?>
+                        </select>
+                    </span>
+                    <span class="drop-down-time">時間</span>
+                    <input type='time' name='start_time' style='width:80px' step='60'>
+                    ~
+                    <input type='time' name='end_time' style='width:80px' step='60'>
+                    <input type='hidden' name='year' value='<?= $y ?>'>
+                    <input type='hidden' name='month' value='<?= $m ?>'>
+                    <input type='hidden' name='day' value='<?= $sel_d ?>'><br>
+                    <input type='submit' value='追加' class='button-add'>
+                </form><br><br>
             </div>
         </div>
-    </main>
+    </div>
 </body>
 
 <?php
