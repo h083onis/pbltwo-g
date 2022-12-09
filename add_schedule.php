@@ -23,6 +23,7 @@ $check_en_time = new DateTime($end_time);
 if($job_name == '' || $start_time == '' || $end_time == ''){
   $db = null;
   header("Location:home.php?e=1&y=$y&m=$m&sel_d=$d"); //エラーを返す
+  exit();
 }
 
 #時間帯にかぶりがある場合のエラー
@@ -33,6 +34,7 @@ foreach($result as $value){
   if ($tem_st_time <= $check_st_time && $tem_en_time >= $check_en_time) {
     $db = null;
     header("Location:home.php?e=2&y=$y&m=$m&sel_d=$d"); //エラーを返す
+    exit();
   }
 }
 

@@ -8,7 +8,9 @@ $second_pass= $_POST['second_pass'];
 
 if($first_pass != $second_pass){
   $db = null;
-  header("Location:job_inf.php?e=3&check_pass=correct"); //エラーを返す
+  header("Location:job_inf.php?e=3&check_pass=correct");
+  exit();
+  //エラーを返す
 }
 $db = new PDO("sqlite:part-time-job.db");
 
