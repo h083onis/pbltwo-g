@@ -133,7 +133,7 @@ $db = null;
   }
   ?>
   <form id = 'check_pass' action='check_pass.php' method='post'>
-    <input type='password'name='pass' minlength='8' required>
+    <input type='password' name='pass' minlength='8' required>
   </form>
   <input type='submit' value='パスワードの変更' form='check_pass'></br>
   <?php

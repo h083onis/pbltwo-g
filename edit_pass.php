@@ -3,12 +3,12 @@
 // $user_id =$_SESSION['user_id'];
 $user_id = 1;
 $new_target = $_POST['target_amount'];
-$first_pass =$_POST['first_pass'];
+$first_pass = $_POST['first_pass'];
 $second_pass= $_POST['second_pass'];
 
 if($first_pass != $second_pass){
   $db = null;
-  header("Location:job_inf?e=3&check_pass=correct"); //エラーを返す
+  header("Location:job_inf.php?e=3&check_pass=correct"); //エラーを返す
 }
 $db = new PDO("sqlite:part-time-job.db");
 

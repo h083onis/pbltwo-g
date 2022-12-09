@@ -4,16 +4,17 @@ $user_id = 1;
 $pass = $_POST['pass'];
 
 $db = new PDO('sqlite:part-time-job.db');
-$encryptedPw = password_hash($pass, PASSWORD_DEFAULT);
-$result = $db->query("select count(*) from user_inf where user_id = '$user_id' and pass = '$encryptedPw'");
-$num_rows = $result->fetchColumn();
-echo $num_rows;
-#該当しない場合
-if ($num_rows == 0) {
-  $db = null;
-  header("Location:job_inf.php?e=2"); //エラーを返す
+$result = $db->query("select pass from user_inf where user_id = '$user_id'");
+$encry_pass = $result->fetchColumn();
+echo $encry_pass;
+$db = null;
+
+#一致していた場合
+if (password_verify($pass, $encry_pass)) {
+  header("Location:job_inf.php?check_pass=correct");
+  exit();
 }
 
-header("Location:job_inf.php?check_pass=correct")
-
+#該当しない場合
+header("Location:job_inf.php?e=2"); //エラーを返す
 ?>
