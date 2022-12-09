@@ -31,7 +31,7 @@ foreach ($result as $value) {
   echo $value['start_time'];
   $tem_st_time = new DateTime($value['start_time']);
   $tem_en_time = new DateTime($value['end_time']);
-  if (($tem_st_time <= $check_st_time && $tem_en_time >= $check_st_time) || ($tem_st_time <= $check_en_time && $tem_en_time >= $check_en_time)) {
+  if ($tem_st_time <= $check_en_time && $tem_en_time >= $check_st_time){
     $db = null;
     header("Location:home.php?e=2&y=$y&m=$m&sel_d=$d"); //エラーを返す
     exit();
