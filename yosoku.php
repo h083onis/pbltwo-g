@@ -1,5 +1,7 @@
 <?php
 require_once 'month_calc.php';
+
+
 $fp = fopen('job_schedule.csv', 'r');
 $num_sche = 0;
 $arr_sche = [];
@@ -32,9 +34,8 @@ fclose($fp);
 $fp = fopen('job_income_aggregation2.csv', 'w');
 $salary = 0 ;
 for ($j = 0; $j < $num_job_inc; $j++) {
-  if (isset($arr_job_inc[$j][5])) {
-    $line = array(array($arry_job_inc[$j][0],$arr_job_inc[$j][1],$arr_job_inc[$j][2],$arr_job_inc[$j][3],$arr_job_inc[$j][4],$arr_job_inc[$j][5],$arr_job_inc[$j][6]. "\n"));
-    fwrite($fp, $line . "\n");
+  if (!isset($arr_job_inc[$j][5])) {
+    fwrite($fp, implode(",",$arr_job_inc[$j]) . "\n");
   } else {
     for ($i = 0; $i < $num_sche; $i++) {
       if (($arr_job_inc[$j][0] = 'a' && $arr_sche[$i][0] = 'a') && $arr_job_inc[$j][1] == $arr_sche[$i][1] && new DateTimeImmutable($arr_sche[$i][2]) <= new DateTimeImmutable($arr_job_inc[$j][2])) {
@@ -49,9 +50,9 @@ for ($j = 0; $j < $num_job_inc; $j++) {
       }
     }
     echo $salary;
-  }
-  $arr_job_inc[$j][5] = $salary;
-  fwrite($fp, $arr_job_inc[$j] . "\n");
+    $arr_job_inc[$j][5] = strval($salary);
+    fwrite($fp, implode(",", $arr_job_inc[$j]) . "\n");
+  }  
 }
 fclose($fp);
-
+print_r($arr_job_inc);
