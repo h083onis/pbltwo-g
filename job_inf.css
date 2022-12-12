@@ -1,0 +1,55 @@
+
+.inf {
+  /*background-color: rgb(230, 231, 231);*/
+  background-color: rgb(228, 228, 228);
+  padding: 30px;
+  width: 700px;
+  top: 0;                     
+  bottom: 0;                  
+  left: 0;                  
+  right: 0;                   
+  margin: auto;
+}
+
+/*ユーザ情報*/
+.user-inf {
+  display: flex;
+  background-color: rgb(240, 240, 240);
+  padding: 10px;
+}
+
+.user-id {
+  margin-left: 50px;
+  margin-top: 50px;
+  font-weight: bold;
+}
+
+.job-inf {
+  /*background-color: rgb(152, 219, 231);*/
+  display: block;
+  margin-left: 80px;
+  padding-top: 10px;
+}
+
+.user-pass {
+  margin-left: 80px;
+}
+
+.pass-change {
+  display: flex;
+  margin-top: 20px;
+}
+
+.pass-button {
+  margin-left: 10px;
+  /*
+  color: white;
+  background-color: rgb(24, 230, 230);
+  border: none;
+  */
+}
+
+.target {
+  display: flex;
+  margin-bottom: 20px;
+}

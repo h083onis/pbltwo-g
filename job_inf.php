@@ -27,6 +27,9 @@ $db = null;
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="common.css">
+  <link rel="stylesheet" href="user-icon.css">
+  <link rel="stylesheet" href="job_inf.css">
   <title>Document</title>
   <script>
     function print_popup1() {
@@ -112,7 +115,7 @@ $db = null;
 </head>
 
 <body>
-  <table align='center' border=1>
+  <!--<table align='center' border=1>
     <tr>
       <td class='contents_cel'><span><a href='home.php'>ホーム画面</ho-mu></a></span>
       <td class='contents_cel'><span><a href='edit_job_inf.php'>バイト情報編集</a></span>
@@ -121,33 +124,58 @@ $db = null;
       <td class='contents_cel'><span><a href=''>ヘルプ</a></span></td>
       <td class='contents_cel'><span><a href=''>ログアウト</a></span></td>
     </tr>
-  </table>
-  <h1><?= $user_id?></h1>
-  <span>パスワードを変更したい場合は現時点のパスワードをここに入力する</span>
-  <?php
-  if(isset($_GET['e']) && $_GET['e']==2){
-    echo'パスワードが間違っています';
-  }
-  if(isset($_GET['check_pass']) && $_GET['check_pass'] == 'complete'){
-    echo 'パスワードの変更が完了しました';
-  }
-  ?>
-  <form id = 'check_pass' action='check_pass.php' method='post'>
-    <input type='password'name='pass' minlength='8' required>
-  </form>
-  <input type='submit' value='パスワードの変更' form='check_pass'></br>
+  </table>-->
+
+  <div class="side-menu">
+    <nav>
+      <ul>
+        <li><a href='job_inf.php' class="navi info-icon"><img src="./img/information.svg" alt="個人情報" width="70px" height="40spx" /></a></li>
+        <li><a href='home.php' class="navi calender-icon"><img src="./img/calender.svg" alt="カレンダー" width="70px" height="40px" /></a></li>
+        <li><a href='' class="navi money-icon"><img src="./img/money.svg" alt="給料計算" width="70px" height="40px" /></a></li>
+        <li><a href='' class="navi logout-icon"><img src="./img/logout.svg" alt="ログアウト" width="70px" height="40px" /></a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="inf">
+    <div class="user-inf">
+      <span class="user"></span>
+      <span class="user-id"><?= $user_id?></span>
+    </div>
+    <?php
+    if(isset($_GET['e']) && $_GET['e']==2){
+      echo'パスワードが間違っています';
+    }
+    if(isset($_GET['check_pass']) && $_GET['check_pass'] == 'complete'){
+      echo 'パスワードの変更が完了しました';
+    }
+    ?>
+    <div class="user-pass">
+      <div class="pass-change">
+        <form id = 'check_pass' action='check_pass.php' method='post'>
+          <input type='password'name='pass' minlength='8' required>
+        </form>
+        <input type='submit' value='パスワード変更' form='check_pass' class="pass-button">
+      </div>
+      <span>※パスワード変更の際は現在のパスワードを入力してください</span>
+    </div>
+  
+
+  <div class="job-inf">
   <?php
   if($target != ''){
-    echo '<h1>今月の目標金額</h1><span>'. $target. '円</span>';
+    echo '今月の目標金額<span>'. $target. '円</span>';
   }
   else{
     echo '目標金額が設定されていません';
   }
   ?>
-  <form id='edit_target' action = 'edit_target.php' method = 'post'>
-    <input type ='number' name ='target_amount' min = 1 required>
-  </form>
-  <input type='submit' value='目標金額の変更' form ='edit_target'>
+  <div class="target">
+    <form id='edit_target' action = 'edit_target.php' method = 'post'>
+      <input type ='number' name ='target_amount' min = 1 required>
+    </form>
+    <input type='submit' value='目標金額の変更' form ='edit_target'>
+  </div>
   <!-- 既に登録されているバイトの登録情報を表示する -->
   <?php
   if ($count != 0) {
@@ -246,5 +274,7 @@ if (isset($_GET['check_pass']) && $_GET['check_pass'] == 'correct') {
   echo '<script>', 'print_popup3();', '</script>';
 }
 ?>
+</div>
+</div>
 
 </html>

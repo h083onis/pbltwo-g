@@ -47,6 +47,7 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
     <meta charset="UTF-8">
     <link rel="stylesheet" href="home.css">
     <link rel="stylesheet" href="common.css">
+    <meta name="viewport" content="width=device-width">
     <title>スケジュール編集ページ</title>
     <script>
         function print_popup() {
@@ -75,7 +76,7 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
 
             <nav>
                 <ul>
-                    <li><a href='' class="navi info-icon"><img src="./img/information.svg" alt="個人情報" width="70px" height="40spx" /></a></li>
+                    <li><a href='job_inf.php' class="navi info-icon"><img src="./img/information.svg" alt="個人情報" width="70px" height="40spx" /></a></li>
                     <li><a href='home.php' class="navi calender-icon"><img src="./img/calender.svg" alt="カレンダー" width="70px" height="40px" /></a></li>
                     <li><a href='' class="navi money-icon"><img src="./img/money.svg" alt="給料計算" width="70px" height="40px" /></a></li>
                     <li><a href='' class="navi logout-icon"><img src="./img/logout.svg" alt="ログアウト" width="70px" height="40px" /></a></li>

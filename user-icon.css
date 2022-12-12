@@ -1,0 +1,29 @@
+.user {
+  display: inline-block;
+  position: relative;
+  border-radius: 50%;
+  background-color: rgb(190, 190, 190);
+  width: 1em;
+  height: 1em;
+  font-size: 100px;
+  overflow: hidden;
+}
+.user::before,
+.user::after {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background-color: white;
+  content: "";
+}
+.user::before {
+  top: 0.15em;
+  width: 0.4em;
+  height: 0.4em;
+}
+.user::after {
+  bottom: -0.4em;
+  width: 0.8em;
+  height: 0.8em;
+}
