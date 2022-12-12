@@ -15,7 +15,7 @@ unset($_SESSION['pass']);
 </head>
 
 <body>
-	<h1>ログイン</h1>
+	<h1>バイト管理アプリ</h1>
 	<form action="pass.php" method="post" name="login_form">
 		<table>
 			</tr>
