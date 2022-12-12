@@ -20,6 +20,7 @@ echo $num_rows;
 if ($num_rows == 1) {
   $db = null;
   header("Location:job_inf.php?e=1"); //エラーを返す
+  exit();
 }
 
 

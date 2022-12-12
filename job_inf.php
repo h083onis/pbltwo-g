@@ -115,16 +115,6 @@ $db = null;
 </head>
 
 <body>
-  <!--<table align='center' border=1>
-    <tr>
-      <td class='contents_cel'><span><a href='home.php'>ホーム画面</ho-mu></a></span>
-      <td class='contents_cel'><span><a href='edit_job_inf.php'>バイト情報編集</a></span>
-      <td class='contents_cel'><span><a href=''>給与計算</a></span></td>
-      <td class='contents_cel'><span><a href=''>個人情報</a></span></td>
-      <td class='contents_cel'><span><a href=''>ヘルプ</a></span></td>
-      <td class='contents_cel'><span><a href=''>ログアウト</a></span></td>
-    </tr>
-  </table>-->
 
   <div class="side-menu">
     <nav>

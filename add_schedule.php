@@ -9,30 +9,32 @@ $y = $_POST['year'];
 $m = $_POST['month'];
 $d = $_POST['day'];
 
-$job_date = strval($y) .'-'. strval($m) .'-'. strval($d);
+$job_date = strval($y) . '-' . strval($m) . '-' . strval($d);
 $job_name = $_POST['job_name'];
 $start_time = $_POST['start_time'];
 $end_time = $_POST['end_time'];
 $db = new PDO("sqlite:part-time-job.db");
 
-$result = $db->query("select * from job_schedule where user_id = $user_id and job_date = '$job_date'");
+$result = $db->query("select * from job_schedule where user_id = '$user_id' and job_date = '$job_date'");
 $check_st_time = new DateTime($start_time);
 $check_en_time = new DateTime($end_time);
 
 #入力がおかしい場合のエラー
-if($job_name == '' || $start_time == '' || $end_time == ''){
+if ($job_name == '' || $start_time == '' || $end_time == '') {
   $db = null;
   header("Location:home.php?e=1&y=$y&m=$m&sel_d=$d"); //エラーを返す
+  exit();
 }
 
 #時間帯にかぶりがある場合のエラー
-foreach($result as $value){
+foreach ($result as $value) {
   echo $value['start_time'];
   $tem_st_time = new DateTime($value['start_time']);
   $tem_en_time = new DateTime($value['end_time']);
-  if ($tem_st_time <= $check_st_time && $tem_en_time >= $check_en_time) {
+  if ($tem_st_time <= $check_en_time && $tem_en_time >= $check_st_time){
     $db = null;
     header("Location:home.php?e=2&y=$y&m=$m&sel_d=$d"); //エラーを返す
+    exit();
   }
 }
 
