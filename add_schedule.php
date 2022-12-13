@@ -10,12 +10,14 @@ $m = $_POST['month'];
 $d = $_POST['day'];
 
 $job_date = strval($y) . '-' . strval($m) . '-' . strval($d);
+$date = date_create($job_date);
+$formated_date = date_format($date, 'Y-m-d');
 $job_name = $_POST['job_name'];
 $start_time = $_POST['start_time'];
 $end_time = $_POST['end_time'];
 $db = new PDO("sqlite:part-time-job.db");
 
-$result = $db->query("select * from job_schedule where user_id = '$user_id' and job_date = '$job_date'");
+$result = $db->query("select * from job_schedule where user_id = '$user_id' and job_date = '$formated_date'");
 $check_st_time = new DateTime($start_time);
 $check_en_time = new DateTime($end_time);
 

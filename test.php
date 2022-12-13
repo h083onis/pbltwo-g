@@ -12,7 +12,7 @@ foreach($result1 as $value){
     $start_mid_time = $value['start_mid_time'];
     $end_mid_time = $value['end_mid_time'];
 }
-echo  $start_mid_time;
+// echo  $start_mid_time;
 
 $y = 2022;
 $m = 12;
