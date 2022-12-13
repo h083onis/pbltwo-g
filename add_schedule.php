@@ -50,7 +50,7 @@ $sql = "insert into job_schedule(user_id, job_name, job_date, start_time, end_ti
 if ($stmt = $db->prepare($sql)) {
   $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
   $stmt->bindValue(':job_name', $job_name, PDO::PARAM_STR);
-  $stmt->bindValue(':job_date', $job_date, PDO::PARAM_STR);
+  $stmt->bindValue(':job_date', $formated_date, PDO::PARAM_STR);
   $stmt->bindValue(':start_time', $start_time, PDO::PARAM_STR);
   $stmt->bindValue(':end_time', $end_time, PDO::PARAM_STR);
   $stmt->execute();
