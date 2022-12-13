@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>salary_charts</title>
+    <title>テスト用</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
     <script>
@@ -22,8 +22,6 @@
 </head>
 <body>
     <div align="center">
-<input type="button" onClick="change_y()" value="年" >
-<input type="button" onClick="change_m()" value="月" >
 <select name="month" id="select_m" onchange = "change_m()">
     <option id="today" hidden></option>
     <option value="1">1月</option>
@@ -40,6 +38,7 @@
     <option value="12">12月</option>
 </div>
 </select>
+<input type="button" onClick="change_y()" value="年" >
 <canvas id="sample1"></canvas>
 <canvas id="sample2" width="300" height="100"></canvas>
 
