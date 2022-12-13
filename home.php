@@ -27,9 +27,9 @@ if (isset($_GET['sel_d'])) {
     $sel_date = strval($y) . '-' . strval($m) . '-' . strval($sel_d);
     $date = date_create($sel_date);
     $formated_date = date_format($date, 'Y-m-d');
-    $count = $db->query("select count(*) from job_schedule where user_id = $user_id and job_date = '$formated_date'");
-    $result2 = $db->query("select * from part_time_job_inf where user_id = $user_id");
-    $result3 = $db->query("select * from job_schedule where user_id = $user_id and job_date = '$formated_date'");
+    $count = $db->query("select count(*) from job_schedule where user_id = '$user_id' and job_date = '$formated_date'");
+    $result2 = $db->query("select * from part_time_job_inf where user_id = '$user_id'");
+    $result3 = $db->query("select * from job_schedule where user_id = '$user_id' and job_date = '$formated_date'");
     $db = null;
 }
 #$yと$mが一致する月のシフト状況をデータベースから取得する
@@ -126,7 +126,7 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
                     $job_date = strval($y) . '-' . strval($m) . '-' . strval($d);
                     $date = date_create($job_date);
                     $formated_date = date_format($date, 'Y-m-d');
-                    $result = $db->query("select * from job_schedule where user_id = $user_id and job_date = '$formated_date'");
+                    $result = $db->query("select * from job_schedule where user_id = '$user_id' and job_date = '$formated_date'");
                     foreach ($result as $value) :
                         echo '<span class = text_style>' . $value['job_name'] . $value['start_time'] . '~' . $value['end_time'] . '</span></br>';
                     endforeach;
