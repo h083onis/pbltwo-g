@@ -25,7 +25,10 @@ if($tem_m == 0){
 
 $pre_job_date = strval($tem_y) . '-' . strval($tem_m) . '-' . strval($cutoff_day);
 $now_job_date = strval($y) . '-' . strval($m) . '-' . strval($cutoff_day);
-$result2 = $db->query("select * from job_schedule where user_id ='$user_id' and job_name ='$job_name' and job_date > '$pre_job_date' and job_date <= '$now_job_date'");
+echo $pre_job_date.'<br>';
+echo $now_job_date.'<br>';
+
+$result2 = $db->query("select * from job_schedule where user_id ='$user_id' and job_name ='$job_name' and job_date BETWEEN '$pre_job_date' and '$now_job_date'");
 foreach($result2 as $value){
     echo $value['start_time'].'<br>';
 }
