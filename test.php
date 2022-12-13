@@ -1,7 +1,7 @@
 <?php
 // $user_id = $_SESSINN['user_id'];
 $user_id = 1;
-$
+
 $db = new PDO("sqlite:part-time-job.db");
 $job_name = '居酒屋';
 $result1 = $db->query("select * from part_time_job_inf where user_id = '$user_id' and job_name = '$job_name'");
@@ -29,5 +29,7 @@ $result2 = $db->query("select * from job_schedule where user_id ='$user_id' and 
 foreach($result2 as $value){
     echo $value['start_time'].'<br>';
 }
+
+$db = null;
 // $result2 = $db->query("select * job_schedule where date > ")
 ?>
