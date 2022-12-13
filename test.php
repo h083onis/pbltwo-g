@@ -18,7 +18,7 @@ $y = 2022;
 $m = 12;
 $tem_m = $m - 1;
 $tem_y = $y;
-if($tem == 0){
+if($tem_m == 0){
     $tem_m = 12;
     $ten_y = $y-1;
 }
