@@ -34,20 +34,26 @@ $formated_date = date_format($date, 'Y-m-d');
 $result2 = $db->query("select * from job_schedule where user_id ='$user_id' and job_name ='$job_name' and job_date BETWEEN '$pre_job_date' and '$now_job_date'");
 $salary = 0;
 foreach ($result2 as $value) {
-    $tmp_st_time = new DateTime($y.'-'.$m.'-'.$d.'-'.$value['start_time']);
-    $tmp_en_time = new DateTime();
-    $tmp_midst_time = new DateTime();
-    $tmp_miden_time = new DateTime();
-if( < $value['start_time'] && $value['start_time'] < date(22:00)){
-        $from_time = strtotime($value['start_time']);
+    $tmp_st_time = new DateTime($value['job_date'].' '.$value['start_time']);
+    
+    if(strtotime($value['start_time'])>strtotime($value['end_time'])){
+        $tmp_en_time = date("Y-m-d H:i", strtotime($value['job_date'].' '.$value['end_time'] .'+days'));
+    }else{
+        $tmp_en_time;
+    }
+
+    $tmp_midst_time = new DateTime($value['job_date'].' '.'22:00');
+    $tmp_miden_time = date("Y-m-d H:i", strtotime($value['job_date'].' '.'5:00+days'));
+
+ if( !($tmp_st_time > $tmp_midst_time && $tmp_st_time < $tmp_miden_time) && !($tmp_en_time > $tmp_midst_time && $tmp_en_time < $tmp_miden_time)){
+    $from_time = strtotime($value['start_time']);
     $to_time = strtotime($value['end_time']);
     $diff = $to_time - $from_time;
-    $min_time = $diff / 60;        //勤務時間（分）
+    $min_time = $diff / 60;        //勤務時間（分
     $min_wage = $hourly_wage / 60;  //分給
     $day_salary = $min_wage * $min_time;
     $salary += $day_salary;
-    }
-    
+ }
 }
 echo $salary;
 
