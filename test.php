@@ -27,7 +27,8 @@ $pre_job_date = strval($tem_y) . '-' . strval($tem_m) . '-' . strval($cutoff_day
 $now_job_date = strval($y) . '-' . strval($m) . '-' . strval($cutoff_day);
 $date = date_create($pre_job_date);
 $formated_date = date_format($date, 'Y-m-d');
-echo $pre_job_date.'<br>';
+echo $formated_date;
+// echo $pre_job_date.'<br>';
 // echo $now_job_date.'<br>';
 
 $result2 = $db->query("select * from job_schedule where user_id ='$user_id' and job_name ='$job_name' and job_date BETWEEN '$pre_job_date' and '$now_job_date'");
