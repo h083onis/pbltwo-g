@@ -46,24 +46,31 @@
 document.getElementById("sample2").style.display ="none";
 function change_m(){ //月のグラフに切替
     if (m_chart) { //既に描画済みのグラフがある場合にそのグラフを破棄
-    m_chart.destroy();
+      m_chart.destroy();
+    }
+    if (y_chart) { //既に描画済みのグラフがある場合にそのグラフを破棄
+      y_chart.destroy();
     }
     /* if(document.getElementById('select_m')){
         id = document.getElementById('select_m').value;
     } */
     getValue(); // グラフデータにランダムな値を格納
     chart_m(); // グラフを再描画
-    const change1 = document.getElementById("sample1");
     const change2 = document.getElementById("sample2");
+    const change1 = document.getElementById("sample1");
     if(change1.style.display=="none"){
-		change1.style.display ="block";
-        change2.style.display ="none";
-	}
-}
+    change2.style.display ="none";
+    change1.style.display ="block";
+	} 
+} 
 function change_y(){
-    if (y_chart) { //既に描画済みのグラフがある場合にそのグラフを破棄
+  if (m_chart) { //既に描画済みのグラフがある場合にそのグラフを破棄
+    m_chart.destroy();
+  }
+
+  if (y_chart) { //既に描画済みのグラフがある場合にそのグラフを破棄
     y_chart.destroy();
-    }
+  }
 
     getValue2(); // グラフデータにランダムな値を格納
     chart_y(); // グラフを再描画
@@ -71,8 +78,8 @@ function change_y(){
     var change2 = document.getElementById("sample2");
     if(change2.style.display=="none"){
 		change1.style.display ="none";
-        change2.style.display ="block";
-	}
+    change2.style.display ="block";
+	} 
 }
 
 var chartVal = []; // グラフデータ（描画するデータ）
@@ -82,8 +89,9 @@ var cnt = 0;
 // ページ読み込み時にグラフを描画
 getValue(); // グラフデータに値を格納(仮)
 getValue2(); // グラフデータに値を格納(仮)
-chart_y(); // 年グラフ描画処理を呼び出す
 chart_m(); // 月グラフ描画処理を呼び出す
+chart_y(); // 年グラフ描画処理を呼び出す
+
 
 var data = [30,40,50,20,60,70,80,90,30,10,20,50];
 function getValue() {
