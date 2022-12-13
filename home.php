@@ -25,9 +25,11 @@ if (isset($_GET['sel_d'])) {
     $db = new PDO("sqlite:part-time-job.db");
     $sel_d = $_GET['sel_d'];
     $sel_date = strval($y) . '-' . strval($m) . '-' . strval($sel_d);
-    $count = $db->query("select count(*) from job_schedule where user_id = $user_id and job_date = '$sel_date'");
+    $date = date_create($sel_date);
+    $formated_date = date_format($date, 'Y-m-d');
+    $count = $db->query("select count(*) from job_schedule where user_id = $user_id and job_date = '$formated_date'");
     $result2 = $db->query("select * from part_time_job_inf where user_id = $user_id");
-    $result3 = $db->query("select * from job_schedule where user_id = $user_id and job_date = '$sel_date'");
+    $result3 = $db->query("select * from job_schedule where user_id = $user_id and job_date = '$formated_date'");
     $db = null;
 }
 #$yと$mが一致する月のシフト状況をデータベースから取得する
