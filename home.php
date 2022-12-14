@@ -26,10 +26,10 @@ if (isset($_GET['sel_d'])) {
     $sel_d = $_GET['sel_d'];
     $sel_date = strval($y) . '-' . strval($m) . '-' . strval($sel_d);
     $date = date_create($sel_date);
-    $formated_date = date_format($date, 'Y-m-d');
-    $count = $db->query("select count(*) from job_schedule where user_id = '$user_id' and job_date = '$formated_date'");
+    $sel_formated_date = date_format($date, 'Y-m-d');
+    $count = $db->query("select count(*) from job_schedule where user_id = '$user_id' and job_date = '$sel_formated_date'");
     $result2 = $db->query("select * from part_time_job_inf where user_id = '$user_id'");
-    $result3 = $db->query("select * from job_schedule where user_id = '$user_id' and job_date = '$formated_date'");
+    $result3 = $db->query("select * from job_schedule where user_id = '$user_id' and job_date = '$sel_formated_date'");
     $db = null;
 }
 #$yと$mが一致する月のシフト状況をデータベースから取得する
@@ -176,7 +176,7 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
                         echo '<tr class="item-list">';
                         echo '<td>' . $value['job_name'] . '</td><td>' . $value['start_time'] . '~' . $value['end_time'] . '</td>';
                         echo '<td><form action=\'delete_schedule.php\' method=\'post\'>';
-                        echo '<input type=\'hidden\' name=\'job_date\' value=',$sel_date,'>';
+                        echo '<input type=\'hidden\' name=\'job_date\' value=',$sel_formated_date,'>';
                         echo '<input type=\'hidden\' name=\'job_name\' value=',$value['job_name'],'>';
                         echo '<input type=\'hidden\' name=\'start_time\' value=',$value['start_time'],'>';                        
                         echo '<input type="submit" value="×" class="button-del"></form></td>';
