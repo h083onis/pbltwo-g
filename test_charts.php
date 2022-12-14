@@ -23,28 +23,28 @@
     <div align="center">
 <select name="month" id="select_m" onchange = "change_m()">
     <option id="today" hidden></option>
-    <option value="1">1月</option>
-    <option value="2">2月</option>
-    <option value="3">3月</option>
-    <option value="4">4月</option>
-    <option value="5">5月</option>
-    <option value="6">6月</option>
-    <option value="7">7月</option>
-    <option value="8">8月</option>
-    <option value="9">9月</option>
+    <option value="01">1月</option>
+    <option value="02">2月</option>
+    <option value="03">3月</option>
+    <option value="04">4月</option>
+    <option value="05">5月</option>
+    <option value="06">6月</option>
+    <option value="07">7月</option>
+    <option value="08">8月</option>
+    <option value="09">9月</option>
     <option value="10">10月</option>
     <option value="11">11月</option>
     <option value="12">12月</option>
 </div>
 </select>
-<input type="button" onClick="change_y()" value="年" >
+ <input type="button" onClick="change_y()" value="年" >
 <div class="chart-container" style="position: relative; height:5vh; width:50vw">
   <canvas id="sample1"></canvas>
 </div>
 <div class="chart-container" style="position: relative; height:30vh; width:60vw">
 <canvas id="sample2" ></canvas>
 </div>
-<script>
+<script> 
 document.getElementById("sample2").style.display ="none";
 function change_m(){ //月のグラフに切替
     if (m_chart) { //既に描画済みのグラフがある場合にそのグラフを破棄
@@ -84,7 +84,8 @@ function change_y(){
 	} 
 }
 
-var chartVal = []; // グラフデータ（描画するデータ）
+var chartVal_per = []; // グラフデータ（目標達成度合い）
+var chartVal_salary = []; // グラフデータ（その月の給料見込み）
 var chartVal2 = []; // グラフデータ（描画するデータ）
 var cnt = 0;
 
@@ -94,24 +95,35 @@ getValue2(); // グラフデータに値を格納(仮)
 chart_m(); // 月グラフ描画処理を呼び出す
 chart_y(); // 年グラフ描画処理を呼び出す
 
-
-var data = [30,40,50,20,60,70,80,90,30,10,20,50];
 function getValue() {
-    chartVal = [];
-    var date = new Date();
-    var month = date.getMonth();
-    var data = 20;
-    if(cnt == 0){
-       chartVal = data; //当月の目標金額達成度をを代入
-       cnt++;
-    } 
-    else{
-        chartVal.push(Math.floor(Math.random() * 100));
+  chartVal_per = []; 
+  chartVal_salary = [];
+  if(cnt == 0){
+    <?php
+    #データベースから給料見込みの情報を取得
+    // session_start();
+    // $id = $_SESSION['user_id'];
+    $user_id = 1; 
+    $db = new PDO("sqlite:part-time-job.db");
+    $now = date('Y-m');
+    $result = $db->query("select * from income_aggregation where user_id = '$user_id' and date = $now");
+    $db = null;
+    foreach ($result as $value) {
+      $nowIncome = $value['predict_income'];
     }
+    ?>
+    chartVal_per =  <?php echo $nowIncome ?> ; //当月の目標金額達成度をを代入
+    chartVal_salary =  <?php echo $nowIncome ?>;
+    cnt++;
+  } 
+  else{
+    chartVal_per.push(Math.floor(Math.random() * 100)); //仮
+    chartVal_salary.push(Math.floor(Math.random() * 100)); //仮
+  }
 
-    if(chartVal > 100){
-        chartVal = 100;
-    }
+  if(chartVal_per > 100){
+    chartVal_per = 100;
+  }
 }
 
 // グラフデータを生成
@@ -124,7 +136,7 @@ function getValue2() {
 }
 
 
-function chart_m(){ 
+function chart_m(){ //月のグラフを表示
     "use strict";
 var ctx = document.getElementById('sample1');
 const backgroundColor = 'rgba(0, 114, 188, 1)'; //グラフの色(青)
@@ -139,14 +151,14 @@ const counter = {
     ctx.textAlign = 'center';
 
     // 位置調整
-    ctx.fillText(chartVal + '円', width / 2, top + (height / 2));
+    ctx.fillText(chartVal_salary + '円', width / 2, top + (height / 2));
   }
 };
 window.m_chart = new Chart(ctx, {
     type: 'doughnut',
     data: {
         datasets: [{
-                data: [chartVal,100 - chartVal],
+                data: [chartVal_per,100 - chartVal_per],
                 backgroundColor: [
                     backgroundColor,
                     'rgba(0, 0, 0, 0)',
