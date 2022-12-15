@@ -1,21 +1,38 @@
 <?php
 // $user_id = $_SESSINN['user_id'];
 $user_id = 1;
+$y = 2022;
+$m = 12;
+$job_name = 'コンビニ';
 
 $db = new PDO("sqlite:part-time-job.db");
-$job_name = 'コンビニ';
-$result1 = $db->query("select * from part_time_job_inf where user_id = '$user_id' and job_name = '$job_name'");
-foreach ($result1 as $value) {
-    $hourly_wage = $value['hourly_wage'];
-    $cutoff_day = $value['cutoff_day'];
-    $mid_wage = $value['mid_wage'];
-    $start_mid_time = $value['start_mid_time'];
-    $end_mid_time = $value['end_mid_time'];
+$sel_date = date_create(strval($y) . '-' . strval($m));
+$sel_formated_date = date_format($sel_date, 'Y-m-d');
+$job_count = $db->query("select count(*) from job_icome_aggregation where user_id = '$user_id' and job_name = '$job_name' and date = '$sel_formated_date'");
+$num_rows = $job_count->fetchColumn();
+if ($num_rows == 0) {
+    $result1 = $db->query("select * from part_time_job_inf where user_id = '$user_id' and job_name = '$job_name'");
+    foreach ($result1 as $value) {
+        $hourly_wage = $value['hourly_wage'];
+        $cutoff_day = $value['cutoff_day'];
+        $mid_wage = $value['mid_wage'];
+        $start_mid_time = $value['start_mid_time'];
+        $end_mid_time = $value['end_mid_time'];
+    }
+} else {
+ 
+    $result1 = $db->query("select * from job_income_aggregation where user_id = '$user_id' and job_name = '$job_name' and date = '$sel_formated_date'");
+    foreach ($result1 as $value) {
+        $hourly_wage = $value['current_hourly_wage'];
+        $cutoff_day = $value['current_cuttoff_day'];
+        $mid_wage = $value['current_mid_wage'];
+        $start_mid_time = $value['current_start_mid_time'];
+        $end_mid_time = $value['current_end_mid_time'];
+    }
 }
 // echo  $start_mid_time;
 
-$y = 2022;
-$m = 12;
+
 $tem_m = $m - 1;
 $tem_y = $y;
 if ($tem_m == 0) {
@@ -139,9 +156,23 @@ foreach ($result2 as $value) {
         $day_salary = $min_wage * $min_time;
         $salary += $day_salary;
     }
-    
 }
 echo $salary;
+$date = date_create(strval($y) . '-' . strval($m));
+$formated_date = date_format($date, 'Y-m-d');
+$sql = "replace into job_income_aggregation(user_id, job_name,date,current_hourly_wage,current_mid_wage,current_cutoff_day,current_start_mid_time,current_end_mit_time,predict_income) values(:user_id,:job_name,:date,:current_hourly_wage,:current_mid_wage,:current_cutoff_day,:current_start_mid_time,:current_end_mid_time,:predict_income)";
+if ($stmt = $db->prepare($sql)) {
+    $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+    $stmt->bindValue(':job_name', $job_name, PDO::PARAM_STR);
+    $stmt->bindValue(':date', $formated_date, PDO::PARAM_STR);
+    $stmt->bindValue(':current_hourly_wage', $houryly_wage, PDO::PARAM_STR);
+    $stmt->bindValue(':current_mid_wage', $mid_wage, PDO::PARAM_STR);
+    $stmt->bindValue(':current_cutoff_day', $cutoff_day, PDO::PARAM_INT);
+    $stmt->bindValue(':current_start_mid_time', $start_mid_time, PDO::PARAM_STR);
+    $stmt->bindValue(':current_end_mit_time', $end_mid_time, PDO::PARAM_STR);
+    $stmt->bindValue(':predict_income', $salary, PDO::PARAM_INT);
+    $stmt->execute();
+}
 
 $db = null;
 // $result2 = $db->query("select * job_schedule where date > ")
