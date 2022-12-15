@@ -160,7 +160,7 @@ foreach ($result2 as $value) {
 echo $salary;
 $date = date_create(strval($y) . '-' . strval($m));
 $formated_date = date_format($date, 'Y-m-d');
-$sql = "replace into job_income_aggregation(user_id, job_name,date,current_hourly_wage,current_mid_wage,current_cutoff_day,current_start_mid_time,current_end_mit_time,predict_income) values(:user_id,:job_name,:date,:current_hourly_wage,:current_mid_wage,:current_cutoff_day,:current_start_mid_time,:current_end_mid_time,:predict_income)";
+$sql = "replace into job_income_aggregation(user_id, job_name,date,current_hourly_wage,current_mid_wage,current_cutoff_day,current_start_mid_time,current_end_mid_time,predict_income) values(:user_id,:job_name,:date,:current_hourly_wage,:current_mid_wage,:current_cutoff_day,:current_start_mid_time,:current_end_mid_time,:predict_income)";
 if ($stmt = $db->prepare($sql)) {
     $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
     $stmt->bindValue(':job_name', $job_name, PDO::PARAM_STR);
