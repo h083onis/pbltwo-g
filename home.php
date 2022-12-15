@@ -89,7 +89,7 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
         <div class="area" align="center">
             <h3>
                 <a href="?y=<?php echo $prev_y; ?>" class="move-mo">&lt;</a><span class="years"><?php echo $y; ?>年</span><a href="?y=<?php echo $next_y; ?>" class="move-mo">&gt;</a><br>
-                <a href="?m=<?php echo $prev_m; ?>" class="move-mo">&lt;</a><span class="months"><?php echo $m; ?></span>月 <a href="?m=<?php echo $next_m; ?>" class="move-mo">&gt;</a>
+                <a href="?m=<?php echo $prev_m; ?>" class="move-mo">&lt;</a><span class="months"><?php echo strval($m); ?></span>月 <a href="?m=<?php echo $next_m; ?>" class="move-mo">&gt;</a>
             </h3>
             <table class="calendar">
                 <tr>
