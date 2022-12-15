@@ -198,7 +198,7 @@ $db = null;
   }
   ?>
   <form action='add_inf.php' method='post'>
-    バイト名<input type='text' name='job_name' required><br>
+    バイト名<input type='text' name='job_name' required maxlength="10"><br>
     時給入力<input type='number' name='hourly_wage' min='0' required><br>
     締め日<input type='number' name='cutoff_day' min='1' max='31' required><br>
     給料日<input type='number' name='payment_day' min='1' max='31' required><br>
