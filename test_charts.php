@@ -30,7 +30,6 @@
         now_month.value = month;
     }
     </script>
-    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <div align="center">
@@ -39,10 +38,11 @@
     <option value="2020">2020年</option>
     <option value="2021">2021年</option>
 </select>
-<select name="year" id="select_y" onchange = "change_y()">
+<select name="year2" id="select_y" onchange = "change_y()">
     <option id="now_year2" hidden></option>
     <option value="2020">2020年</option>
     <option value="2021">2021年</option>
+    <option value="2022">2022年</option>
 </select>
 <select name="month" id="select_m" onchange = "change_m()">
     <option id="now_month" hidden></option>
@@ -59,9 +59,9 @@
     <option value="11">11月</option>
     <option value="12">12月</option>
 </select>
-<input type="button" onClick="change_m()" value="月" >
- <input type="button" onClick="change_y()" value="年" >
-<div class="chart-container" style="position: relative; height:5vh; width:50vw">
+<input type="button" onClick="mode_m()" value="月" >
+ <input type="button" onClick="mode_y()" value="年" >
+<div class="chart-container" style="position: relative; height:5vh; width:80vw">
   <canvas id="sample1"></canvas>
 </div>
 <div class="chart-container" style="position: relative; height:30vh; width:60vw">
@@ -69,57 +69,60 @@
 </div>
     </div>
 <script> 
-document.getElementById("sample2").style.display ="none";
+//document.getElementById("sample2").style.display ="none";
 document.getElementById("select_y").style.display ="none";
 
-function change_m(){ //月のグラフに切替
-    if (m_chart) { //既に描画済みのグラフがある場合にそのグラフを破棄
-      m_chart.destroy();
-    }
-    if (y_chart) { //既に描画済みのグラフがある場合にそのグラフを破棄
-      y_chart.destroy();
-    }
-    /* if(document.getElementById('select_m')){
-        id = document.getElementById('select_m').value;
-    } */
-    getValue(); // グラフデータに値を格納
-    chart_m(); // グラフを再描画
-    const change2 = document.getElementById("sample2");
-    const change1 = document.getElementById("sample1");
-    const change3 = document.getElementById("select_m");
-    const change4 = document.getElementById("select_ym");
-    const change5 = document.getElementById("select_y");
-    if(change1.style.display=="none"){
-    change2.style.display ="none";
-    change1.style.display ="block";
-    change3.style.display ="block";
-    change4.style.display ="block";
-    change5.style.display ="none";
-	} 
-} 
-function change_y(){
+function mode_m(){ //月のグラフに切替
   if (m_chart) { //既に描画済みのグラフがある場合にそのグラフを破棄
     m_chart.destroy();
   }
-
   if (y_chart) { //既に描画済みのグラフがある場合にそのグラフを破棄
     y_chart.destroy();
   }
+  chart_m(); // グラフを再描画
+  const change3 = document.getElementById("select_m");
+  change3.style.display ="block";
+  const change4 = document.getElementById("select_ym");
+  change4.style.display ="block";
+  const change5 = document.getElementById("select_y");
+  change5.style.display ="none";
+} 
 
-    getValue2(); // グラフデータに値を格納
-    chart_y(); // グラフを再描画
-    var change1 = document.getElementById("sample1");
-    var change2 = document.getElementById("sample2");
-    var change3 = document.getElementById("select_m");
-    var change4 = document.getElementById("select_ym");
-    var change5 = document.getElementById("select_y");
-    if(change2.style.display=="none"){
-		change1.style.display ="none";
-    change2.style.display ="block";
-    change3.style.display ="none";
-    change4.style.display ="none";
-    change5.style.display ="block";
-	} 
+var mode_cnt = 0;
+function mode_y(){
+  if (mode_cnt != 0){
+  if (y_chart) { //既に描画済みのグラフがある場合にそのグラフを破棄
+    y_chart.destroy();
+  }
+}
+if (m_chart) { //既に描画済みのグラフがある場合にそのグラフを破棄
+    m_chart.destroy();
+}
+  chart_y(); //グラフを再描画
+   
+  mode_cnt++;
+  var change3 = document.getElementById("select_m");
+  change3.style.display ="none";
+  var change4 = document.getElementById("select_ym");
+  change4.style.display ="none";
+  var change5 = document.getElementById("select_y");
+  change5.style.display ="block";
+}
+
+function change_m(){ //月のグラフに切替
+  if (m_chart) { //既に描画済みのグラフがある場合にそのグラフを破棄
+    m_chart.destroy();
+  }
+  getValue(); // グラフデータに値を格納
+  chart_m(); // グラフを再描画
+} 
+
+function change_y(){
+  if (y_chart) { //既に描画済みのグラフがある場合にそのグラフを破棄
+    y_chart.destroy();
+  }
+  getValue2(); // グラフデータに値を格納
+  chart_y(); // グラフを再描画
 }
 
 var chartVal_per = []; // グラフデータ（目標達成度合い）
@@ -132,7 +135,7 @@ var cnt2 = 0;
 getValue(); // グラフデータに値を格納(仮)
 getValue2(); // グラフデータに値を格納(仮)
 chart_m(); // 月グラフ描画処理を呼び出す
-chart_y(); // 年グラフ描画処理を呼び出す
+//chart_y(); // 年グラフ描画処理を呼び出す
 
 //月グラフデータの生成
 function getValue() {
@@ -185,24 +188,6 @@ function getValue() {
 function getValue2() {
   chartVal2 = []; // 配列を初期化
   var length = 12;
-  if(cnt2 == 0){
-    <?php
-    #データベースから給料見込みの情報を取得
-    // session_start();
-    // $id = $_SESSION['user_id'];
-    $user_id = 1; 
-    $Income_sum = 0;
-    $db = new PDO("sqlite:part-time-job.db");
-    $now = date('Y');
-    $result = $db->query("select predict_income from income_aggregation where user_id = '$user_id' and date like '$now'");
-    $db = null;
-    foreach ($result as $value) {
-      $Income[] = $value['predict_income'];
-    }
-    ?>
-    chartVal_income2 =  <?php echo $Income_sum ?>;
-    cnt++;
-  }
   for (i = 0; i < length; i++) {
     chartVal2.push(Math.floor(Math.random() * 50000));
   }
