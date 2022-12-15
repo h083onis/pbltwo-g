@@ -3,7 +3,7 @@
 $user_id = 1;
 $y = 2022;
 $m = 12;
-$job_name = 'コンビニ';
+$job_name = '居酒屋';
 
 $db = new PDO("sqlite:part-time-job.db");
 $sel_date = date_create(strval($y) . '-' . strval($m));
@@ -24,7 +24,7 @@ if ($num_rows == 0) {
     $result1 = $db->query("select * from job_income_aggregation where user_id = '$user_id' and job_name = '$job_name' and date = '$sel_formated_date'");
     foreach ($result1 as $value) {
         $hourly_wage = $value['current_hourly_wage'];
-        $cutoff_day = $value['current_cuttoff_day'];
+        $cutoff_day = $value['current_cutoff_day'];
         $mid_wage = $value['current_mid_wage'];
         $start_mid_time = $value['current_start_mid_time'];
         $end_mid_time = $value['current_end_mid_time'];
@@ -62,13 +62,15 @@ foreach ($result2 as $value) {
     }
     echo date_format($tmp_en_time, "Y-m-d H:i") . '<br>';
 
-    $tmp_midst_time = new DateTime($value['job_date'] . ' ' . '22:00');
+    
+    $tmp_midst_time = new DateTime($value['job_date'] . ' ' . $start_mid_time);
+    echo date_format($tmp_midst_time, "Y-m-d H:i").'<br>';
 
-    $tmp_premiden_time = new Datetime(($value['job_date'] . ' ' . '5:00'));
-    $tmp_miden_time = new Datetime($value['job_date'] . ' ' . '5:00 + 1 day');
+    $tmp_premiden_time = new Datetime(($value['job_date'] . ' ' . $end_mid_time));
+    $tmp_miden_time = new Datetime($value['job_date'] . ' ' . $end_mid_time.'+ 1 day');
     $tmp_miden_time->format('Y-m-d H:i');
     echo date_format($tmp_premiden_time, "Y-m-d H:i") . '<br>';
-    //echo date_format($tmp_miden_time, "Y-m-d H:i").'<br>';
+    echo date_format($tmp_miden_time, "Y-m-d H:i").'<br>';
 
 
     // 始まり深夜
