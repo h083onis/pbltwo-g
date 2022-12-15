@@ -26,17 +26,17 @@ if ($num_rows == 1) {
 if ($mid_wage != '' || $start_mid_time != '' || $end_mid_time != '') {
   if ($start_mid_time == '' || $end_mid_time == '') {
     $db = null;
-    header("Location:job_inf.php?e=2"); //エラーを返す
+    header("Location:job_inf.php?e=3"); //エラーを返す
     exit();
   }
   if ($mid_wage == '' || $end_mid_time == '') {
     $db = null;
-    header("Location:job_inf.php?e=2"); //エラーを返す
+    header("Location:job_inf.php?e=3"); //エラーを返す
     exit();
   }
   if ($mid_wage == '' || $start_mid_time == '') {
     $db = null;
-    header("Location:job_inf.php?e=2"); //エラーを返す
+    header("Location:job_inf.php?e=3"); //エラーを返す
     exit();
   }
 }
