@@ -23,6 +23,24 @@ if ($num_rows == 1) {
   exit();
 }
 
+if ($mid_wage != '' || $start_mid_time != '' || $end_mid_time != '') {
+  if ($start_mid_time == '' || $end_mid_time == '') {
+    $db = null;
+    header("Location:job_inf.php?e=2"); //エラーを返す
+    exit();
+  }
+  if ($mid_wage == '' || $end_mid_time == '') {
+    $db = null;
+    header("Location:job_inf.php?e=2"); //エラーを返す
+    exit();
+  }
+  if ($mid_wage == '' || $start_mid_time == '') {
+    $db = null;
+    header("Location:job_inf.php?e=2"); //エラーを返す
+    exit();
+  }
+}
+
 $sql = "insert into part_time_job_inf(user_id, job_name, hourly_wage, cutoff_day, payment_day, mid_wage, start_mid_time, end_mid_time) values(:user_id, :job_name,:hourly_wage ,:cutoff_day,:payment_day,:mid_wage,:start_mid_time,:end_mid_time)"; //idはint型として代入
 if ($stmt = $db->prepare($sql)) {
   $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);

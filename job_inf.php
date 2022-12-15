@@ -193,6 +193,9 @@ $db = null;
   if (isset($_GET['e']) && $_GET['e']==1) {
     echo '同じバイト名は登録できません';
   }
+  if (isset($_GET['e']) && $_GET['e']==2) {
+    echo '項目を正しく入力してください';
+  }
   ?>
   <form action='add_inf.php' method='post'>
     バイト名<input type='text' name='job_name' required><br>

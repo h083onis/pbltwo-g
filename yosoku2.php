@@ -20,7 +20,6 @@ if ($num_rows == 0) {
         $end_mid_time = $value['end_mid_time'];
     }
 } else {
- 
     $result1 = $db->query("select * from job_income_aggregation where user_id = '$user_id' and job_name = '$job_name' and date = '$sel_formated_date'");
     foreach ($result1 as $value) {
         $hourly_wage = $value['current_hourly_wage'];
