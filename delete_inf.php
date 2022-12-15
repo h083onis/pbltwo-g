@@ -11,5 +11,17 @@ if ($stmt = $db->prepare($sql)) {
   $stmt->bindValue(':job_name', $job_name, PDO::PARAM_STR);
   $stmt->execute();
 }
+$sql = "delete from job_schedule where user_id = :user_id and job_name = :job_name";
+if ($stmt = $db->prepare($sql)) {
+  $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+  $stmt->bindValue(':job_name', $job_name, PDO::PARAM_STR);
+  $stmt->execute();
+}
+$sql = "delete from job_income_aggregation where user_id = :user_id and job_name = :job_name";
+if ($stmt = $db->prepare($sql)) {
+  $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+  $stmt->bindValue(':job_name', $job_name, PDO::PARAM_STR);
+  $stmt->execute();
+}
 header('Location:job_inf.php');
 ?>
