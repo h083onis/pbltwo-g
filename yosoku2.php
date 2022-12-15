@@ -8,7 +8,7 @@ $job_name = 'コンビニ';
 $db = new PDO("sqlite:part-time-job.db");
 $sel_date = date_create(strval($y) . '-' . strval($m));
 $sel_formated_date = date_format($sel_date, 'Y-m-d');
-$job_count = $db->query("select count(*) from job_icome_aggregation where user_id = '$user_id' and job_name = '$job_name' and date = '$sel_formated_date'");
+$job_count = $db->query("select count(*) from job_income_aggregation where user_id = '$user_id' and job_name = '$job_name' and date = '$sel_formated_date'");
 $num_rows = $job_count->fetchColumn();
 if ($num_rows == 0) {
     $result1 = $db->query("select * from part_time_job_inf where user_id = '$user_id' and job_name = '$job_name'");
