@@ -165,7 +165,7 @@ $sql = "replace into job_income_aggregation(user_id,job_name,date,current_hourly
 if ($stmt = $db->prepare($sql)) {
     $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
     $stmt->bindValue(':job_name', $job_name, PDO::PARAM_STR);
-    $stmt->bindValue(':date', $formated_date, PDO::PARAM_STR);
+    $stmt->bindValue(':date', $sel_formated_date, PDO::PARAM_STR);
     $stmt->bindValue(':current_hourly_wage', $hourly_wage, PDO::PARAM_STR);
     $stmt->bindValue(':current_mid_wage', $mid_wage, PDO::PARAM_STR);
     $stmt->bindValue(':current_cutoff_day', $cutoff_day, PDO::PARAM_INT);
