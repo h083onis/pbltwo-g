@@ -150,10 +150,10 @@ function getValue() {
     $nowIncome_sum = 0;
     $db = new PDO("sqlite:part-time-job.db");
     $now = date('Y-m');
-    $result = $db->query("select sum(predict_income) from income_aggregation where user_id = '$user_id' and date like '$now'");
+    $result = $db->query("select predict_income from job_income_aggregation where user_id = '$user_id' and date like '$now'");
     $db = null;
     foreach ($result as $value) {
-      $nowIncome_sum = $value['sum(predict_income)'];
+      $nowIncome_sum = $value['predict_income'];
     }
     ?>
     chartVal_per =  <?php echo $nowIncome_sum ?> ; //当月の目標金額達成度をを代入
@@ -169,10 +169,10 @@ function getValue() {
     $nowIncome_sum = 0;
     $db = new PDO("sqlite:part-time-job.db");
     $now = date('Y-m');
-    $result = $db->query("select sum(predict_income) from income_aggregation where user_id = '$user_id' and date = '$now'");
+    $result = $db->query("select predict_income from job_income_aggregation where user_id = '$user_id' and date like '$now'");
     $db = null;
     foreach ($result as $value) {
-      $nowIncome_sum = $value['sum(predict_income)'];
+      $nowIncome_sum = $value['predict_income'];
     }
     ?>
     chartVal_per =  <?php echo $nowIncome_sum ?> ; //当月の目標金額達成度をを代入
