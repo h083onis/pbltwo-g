@@ -7,7 +7,7 @@ $job_name = '居酒屋';
 
 $db = new PDO("sqlite:part-time-job.db");
 $sel_date = date_create(strval($y) . '-' . strval($m));
-$sel_formated_date = date_format($sel_date, 'Y-m-d');
+$sel_formated_date = date_format($sel_date, 'Y-m');
 $job_count = $db->query("select count(*) from job_income_aggregation where user_id = '$user_id' and job_name = '$job_name' and date = '$sel_formated_date'");
 $num_rows = $job_count->fetchColumn();
 if ($num_rows == 0) {
@@ -159,8 +159,8 @@ foreach ($result2 as $value) {
     }
 }
 echo $salary;
-$date = date_create(strval($y) . '-' . strval($m));
-$formated_date = date_format($date, 'Y-m-d');
+// $date = date_create(strval($y) . '-' . strval($m));
+// $formated_date = date_format($date, 'Y-m');
 $sql = "replace into job_income_aggregation(user_id,job_name,date,current_hourly_wage,current_mid_wage,current_cutoff_day,current_start_mid_time,current_end_mid_time,predict_income) values(:user_id,:job_name,:date,:current_hourly_wage,:current_mid_wage,:current_cutoff_day,:current_start_mid_time,:current_end_mid_time,:predict_income)";
 if ($stmt = $db->prepare($sql)) {
     $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
