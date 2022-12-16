@@ -150,7 +150,7 @@ function getValue() {
     $nowIncome_sum = 0;
     $db = new PDO("sqlite:part-time-job.db");
     $now = date('Y-m');
-    $result = $db->query("select sum(predict_income) from income_aggregation where user_id = '$user_id' and date = '$now'");
+    $result = $db->query("select sum(predict_income) from income_aggregation where user_id = '$user_id' and date like '$now'");
     $db = null;
     foreach ($result as $value) {
       $nowIncome_sum = $value['sum(predict_income)'];
