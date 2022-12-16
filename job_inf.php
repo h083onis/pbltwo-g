@@ -193,9 +193,12 @@ $db = null;
   if (isset($_GET['e']) && $_GET['e']==1) {
     echo '同じバイト名は登録できません';
   }
+  if (isset($_GET['e']) && $_GET['e']==3) {
+    echo '項目を正しく入力してください';
+  }
   ?>
   <form action='add_inf.php' method='post'>
-    バイト名<input type='text' name='job_name' required><br>
+    バイト名<input type='text' name='job_name' required maxlength="10"><br>
     時給入力<input type='number' name='hourly_wage' min='0' required><br>
     締め日<input type='number' name='cutoff_day' min='1' max='31' required><br>
     給料日<input type='number' name='payment_day' min='1' max='31' required><br>
@@ -231,9 +234,14 @@ $db = null;
   <!-- 削除前の確認画面 -->
   <div id="popup2" class='overlay'>
     <div class='window'>
-      <span>バイト名：<?= $value['job_name'] ?>に関係する全ての情報が削除されますがよろしいでしょうか？</span>
+      <?php
+      foreach($result3 as $value){
+        $del_job_name = $value['job_name'];
+      }
+      ?>
+      <span>バイト名：<?= $del_job_name ?>に関係する全ての情報が削除されますがよろしいでしょうか？</span>
       <form id='delete' action='delete_inf.php' method='post'>
-        <input type='hidden' name='job_name' value=<?= $value['job_name'] ?>>
+        <input type='hidden' name='job_name' value=<?= $del_job_name ?>>
       </form>
       <input type='button' value='いいえ' onclick="close_popup2()"><br>
       <input type='submit' value='はい' form='delete'>
