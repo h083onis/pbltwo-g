@@ -15,12 +15,11 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>給与計算グラフ</title>
+    <title>test</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>     
     <script>
-        window.onload = function () {
+  /*       window.onload = function () {
         var date = new Date();
         var year = date.getFullYear();
         var month = date.getMonth() + 1;
@@ -42,11 +41,11 @@
         now_month.text = month + "月";
         // optionタグのvalueを現在の月に設定する
         now_month.value = month;
-    }
+    } */
     </script>
 </head>
 <body>
-  <div align="center">
+<div align="center">
 <select name="year2" id="select_y" onchange = "change_y()">
     <option id="now_year2" hidden></option>
     <option value="2020">2020年</option>
@@ -59,13 +58,13 @@
 <input type="button" onClick="mode_m()" value="月" >
 <input type="button" onClick="mode_y()" value="年" >
 
-<div class="chart-container" style="position: relative; height:5vh; width:80vw">
+<div style="position: relative; height:5vh; width:80vw">
   <canvas id="sample1"></canvas>
 </div>
-<div class="chart-container" style="position: relative; height:30vh; width:60vw">
+<div style="position: relative; height:30vh; width:60vw">
 <canvas id="sample2" ></canvas>
 </div>
-    </div>
+</div>
 <script> 
 document.getElementById("select_y").style.display ="none";
 
@@ -128,6 +127,8 @@ var chartVal_per = []; // グラフデータ（目標達成度合い）
 var chartVal_income = []; // グラフデータ（その月の給料見込み）
 var chartVal_amount = []; // グラフデータ（ユーザーの目標金額）
 var chartVal_income2 = []; // グラフデータ（その年の給料見込み)
+var cnt = 0;
+var cnt2 = 0;
 
 // ページ読み込み時にグラフを描画
 getValue(); // グラフデータに値を格納(仮)
@@ -137,27 +138,26 @@ chart_m(); // 月グラフ描画処理を呼び出す
 
 //月グラフデータの生成
 function getValue() {
+  chartVal_per = []; 
+  chartVal_income = [];
     <?php
     #データベースから給料見込みの情報を取得
     // session_start();
     // $id = $_SESSION['user_id'];
     $user_id = 1; 
-    $income_sum = 0;
-    $income_per = 0;
-    //$m_data = '09'; //仮
-    //$m_data = $_POST["month"];
-    $y_data = $_POST["YYYY-mm"];
+    $nowIncome_sum = 0;
+    $nowIncome_per = 0;
     $db = new PDO("sqlite:part-time-job.db");
-    $result = $db->query("select sum(predict_income) from job_income_aggregation where user_id = '$user_id' and date like '$y_data%'");
+    $now = date('Y-m');
+    $result = $db->query("select sum(predict_income) from job_income_aggregation where user_id = '$user_id' and date = '$now'");
     $db = null;
     foreach ($result as $value) {
-      $income_sum = $value['sum(predict_income)'];
+      $nowIncome_sum = $value['sum(predict_income)'];
     }
-    $income_per = $income_sum / $target_amount * 100;
+    $nowIncome_per = $nowIncome_sum / $target_amount * 100;
     ?>
-    chartVal_per =  <?php echo $income_per ?> ; //当月の目標金額達成度をを代入
-    chartVal_income =  <?php echo $income_sum ?>;
-
+    chartVal_per =  <?php echo $nowIncome_per ?> ; //当月の目標金額達成度をを代入
+    chartVal_income =  <?php echo $nowIncome_sum ?>;
   if(chartVal_per > 100){
     chartVal_per = 100;
   } 
@@ -181,7 +181,7 @@ function getValue2() {
 
 
 function chart_m(){ //月のグラフを表示
-    "use strict";
+  "use strict";
 var ctx = document.getElementById('sample1');
 const backgroundColor = 'rgba(0, 114, 188, 1)'; //グラフの色(青)
 const counter = {
