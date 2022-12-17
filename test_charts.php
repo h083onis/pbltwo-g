@@ -54,7 +54,7 @@
     <option value="2022">2022年</option>
 </select>
 <form method="post" action="test_charts.php">
-<input type="month" name="YYYY-mm" min="2022-01" max="2022-12" onchange = "this.form.submit()">
+<input type="month" name="YYYY-mm" onchange = "this.form.submit()">
 </form>
 <input type="button" onClick="mode_m()" value="月" >
 <input type="button" onClick="mode_y()" value="年" >
@@ -133,7 +133,6 @@ var chartVal_income2 = []; // グラフデータ（その年の給料見込み)
 getValue(); // グラフデータに値を格納(仮)
 getValue2(); // グラフデータに値を格納(仮)
 chart_m(); // 月グラフ描画処理を呼び出す
-//chart_y(); // 年グラフ描画処理を呼び出す
 
 //月グラフデータの生成
 function getValue() {
@@ -144,14 +143,17 @@ function getValue() {
     $user_id = 1; 
     $income_sum = 0;
     $income_per = 0;
-    //$m_data = '09'; //仮
-    //$m_data = $_POST["month"];
     $y_data = $_POST["YYYY-mm"];
     $db = new PDO("sqlite:part-time-job.db");
-    $result = $db->query("select sum(predict_income) from job_income_aggregation where user_id = '$user_id' and date like '$y_data%'");
+    $result = $db->query("select sum(predict_income) from job_income_aggregation where user_id = '$user_id' and date = '$y_data'");
     $db = null;
     foreach ($result as $value) {
-      $income_sum = $value['sum(predict_income)'];
+      if ($value['sum(predict_income)'] != 0) {
+        $income_sum = $value['sum(predict_income)'];
+      }
+      else{
+        $income_sum = 0;
+      }
     }
     $income_per = $income_sum / $target_amount * 100;
     ?>

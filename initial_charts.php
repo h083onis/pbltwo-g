@@ -19,14 +19,14 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
     <script>
-  /*       window.onload = function () {
+/*          window.onload = function () {
         var date = new Date();
         var year = date.getFullYear();
         var month = date.getMonth() + 1;
         
-        var now_year = document.getElementById("now_year");
+        var now_Ym = document.getElementById("now_Ym");
         // optionタグのテキストを現在の年に設定する
-        now_year.text = year + "年";
+        now_Ym.text = year + "年" + month + "月";
         // optionタグのvalueを現在の年に設定する
         now_year.value = year;
 
@@ -35,13 +35,7 @@
         now_year2.text = year + "年";
         // optionタグのvalueを現在の年に設定する
         now_year2.value = year;
-
-        var now_month = document.getElementById("now_month");
-        // optionタグのテキストを現在の月に設定する
-        now_month.text = month + "月";
-        // optionタグのvalueを現在の月に設定する
-        now_month.value = month;
-    } */
+    }  */
     </script>
 </head>
 <body>
@@ -53,7 +47,7 @@
     <option value="2022">2022年</option>
 </select>
 <form method="post" action="test_charts.php">
-<input type="month" name="YYYY-mm" min="2022-01" max="2022-12" onchange = "this.form.submit()">
+<input type="month" id = "now_Ym"name="YYYY-mm" onchange = "this.form.submit()">
 </form>
 <input type="button" onClick="mode_m()" value="月" >
 <input type="button" onClick="mode_y()" value="年" >
