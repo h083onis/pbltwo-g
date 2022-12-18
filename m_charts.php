@@ -47,13 +47,15 @@
 </head>
 <body>
   <div align="center">
-<select name="year2" id="select_y" onchange = "change_y()">
+<form method="post" action="y_charts.php">
+<select name="year2" id="select_y" onchange = "this.form.submit()">
     <option id="now_year2" hidden></option>
     <option value="2020">2020年</option>
     <option value="2021">2021年</option>
     <option value="2022">2022年</option>
 </select>
-<form method="post" action="m_charts.php">
+</form>
+<form method="post" action="">
 <input type="month" id="select_Ym" name="YYYY-mm" onchange = "this.form.submit()">
 </form>
 <input type="button" onClick="mode_m()" value="月" >

@@ -55,7 +55,7 @@
     <option value="2022">2022年</option>
 </select>
 </form>
-<form method="post" action="test_charts.php">
+<form method="post" action="m_charts.php">
 <input type="month" id = "select_Ym" name="YYYY-mm" onchange = "this.form.submit()">
 </form>
 <input type="button" onClick="mode_m()" value="月" >
