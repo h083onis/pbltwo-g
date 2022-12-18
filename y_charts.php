@@ -18,38 +18,25 @@
     <title>給与計算グラフ</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>     
     <script>
-/*         window.onload = function () {
-        var date = new Date();
-        var year = date.getFullYear();
-        var month = date.getMonth() + 1;
+    window.onload = function () {
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var YearMonth = year + '-' + month;
         
-        var now_year = document.getElementById("now_year");
-        // optionタグのテキストを現在の年に設定する
-        now_year.text = year + "年";
-        // optionタグのvalueを現在の年に設定する
-        now_year.value = year;
+    var now_Ym = document.getElementById("select_Ym");
+    // optionタグのvalueを現在の年に設定する
+    now_Ym.value = YearMonth;
 
-        var now_year2 = document.getElementById("now_year2");
-        // optionタグのテキストを現在の年に設定する
-        now_year2.text = year + "年";
-        // optionタグのvalueを現在の年に設定する
-        now_year2.value = year;
-
-        var now_month = document.getElementById("now_month");
-        // optionタグのテキストを現在の月に設定する
-        now_month.text = month + "月";
-        // optionタグのvalueを現在の月に設定する
-        now_month.value = month;
-    } */
+    } 
     </script>
 </head>
 <body>
   <div align="center">
   <form method="post" action="">
-<select name="year2" id="select_y" onchange = "this.form.submit()">
-    <option id="now_year2" hidden></option>
+<select name="year" id="select_y" onchange = "this.form.submit()">
+    <option id="now_year2" hidden ></option>
     <option value="2020">2020年</option>
     <option value="2021">2021年</option>
     <option value="2022">2022年</option>
@@ -62,10 +49,10 @@
 <input type="button" onClick="mode_y()" value="年" >
 
 <div class="chart-container" style="position: relative; height:5vh; width:80vw">
-  <canvas id="sample1"></canvas>
+  <canvas id="m"></canvas>
 </div>
 <div class="chart-container" style="position: relative; height:30vh; width:60vw">
-<canvas id="sample2" ></canvas>
+<canvas id="y" ></canvas>
 </div>
     </div>
 <script> 
@@ -172,7 +159,7 @@ function getValue2() {
     $user_id = 1; 
     $nowIncome_sum = [];
     $db = new PDO("sqlite:part-time-job.db");
-    $m_data = $_POST["year2"];
+    $m_data = $_POST["year"];
     $result = $db->query("select sum(predict_income) from job_income_aggregation where user_id = '$user_id' and date like '$m_data%' group by date ");
     $db = null;
     foreach ($result as $value) {
@@ -197,8 +184,8 @@ function getValue2() {
 
 
 function chart_m(){ //月のグラフを表示
-    "use strict";
-var ctx = document.getElementById('sample1');
+  "use strict";
+var ctx = document.getElementById('m');
 const backgroundColor = 'rgba(0, 114, 188, 1)'; //グラフの色(青)
 const counter = {
   id: 'counter',
@@ -234,7 +221,7 @@ window.m_chart = new Chart(ctx, {
 }; 
 
 function chart_y(){ //年のグラフ表示
-    var ctx2 = document.getElementById("sample2");
+    var ctx2 = document.getElementById("m");
     window.y_chart = new Chart(ctx2, { // インスタンスをグローバル変数で生成
     type: 'line',
     data: { // ラベルとデータセット
