@@ -20,7 +20,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>     
     <script>
-        window.onload = function () {
+/*         window.onload = function () {
         var date = new Date();
         var year = date.getFullYear();
         var month = date.getMonth() + 1;
@@ -42,19 +42,21 @@
         now_month.text = month + "月";
         // optionタグのvalueを現在の月に設定する
         now_month.value = month;
-    }
+    } */
     </script>
 </head>
 <body>
   <div align="center">
-<select name="year2" id="select_y" onchange = "change_y()">
+  <form method="post" action="">
+<select name="year2" id="select_y" onchange = "this.form.submit()">
     <option id="now_year2" hidden></option>
     <option value="2020">2020年</option>
     <option value="2021">2021年</option>
     <option value="2022">2022年</option>
 </select>
+</form>
 <form method="post" action="test_charts.php">
-<input type="month" name="YYYY-mm" onchange = "this.form.submit()">
+<input type="month" id = "select_Ym" name="YYYY-mm" onchange = "this.form.submit()">
 </form>
 <input type="button" onClick="mode_m()" value="月" >
 <input type="button" onClick="mode_y()" value="年" >
@@ -67,44 +69,40 @@
 </div>
     </div>
 <script> 
-document.getElementById("select_y").style.display ="none";
-
-function mode_m(){ //月のグラフに切替
-  if (m_chart) { //既に描画済みのグラフがある場合にそのグラフを破棄
-    m_chart.destroy();
-  }
-  if(mode_cnt != 0){
-    if (y_chart) { //既に描画済みのグラフがある場合にそのグラフを破棄
-      y_chart.destroy();
-    }
-  }
-  chart_m(); // グラフを再描画
-  const change3 = document.getElementById("select_m");
-  change3.style.display ="block";
-  const change4 = document.getElementById("select_ym");
-  change4.style.display ="block";
-  const change5 = document.getElementById("select_y");
-  change5.style.display ="none";
-} 
+document.getElementById("select_Ym").style.display ="none";
 
 var mode_cnt = 0;
-function mode_y(){
+function mode_m(){ //月のグラフに切替
   if (mode_cnt != 0){
-    if (y_chart) { //既に描画済みのグラフがある場合にそのグラフを破棄
-      y_chart.destroy();
+    if (m_chart) { //既に描画済みのグラフがある場合にそのグラフを破棄
+      m_chart.destroy();
     }
   }
-  if (m_chart) { //既に描画済みのグラフがある場合にそのグラフを破棄
-    m_chart.destroy();
+  if (y_chart) { //既に描画済みのグラフがある場合にそのグラフを破棄
+    y_chart.destroy();
+  }
+  chart_m(); // グラフを再描画
+  mode_cnt++;
+  const change1 = document.getElementById("select_Ym");
+  change1.style.display ="block";
+  const change2 = document.getElementById("select_y");
+  change2.style.display ="none";
+} 
+
+function mode_y(){
+  if (y_chart) { //既に描画済みのグラフがある場合にそのグラフを破棄
+    y_chart.destroy();
+  }
+  if(mode_cnt != 0){
+    if (m_chart) { //既に描画済みのグラフがある場合にそのグラフを破棄
+      m_chart.destroy();
+    }
   }
   chart_y(); //グラフを再描画   
-  mode_cnt++;
-  var change3 = document.getElementById("select_m");
-  change3.style.display ="none";
-  var change4 = document.getElementById("select_ym");
-  change4.style.display ="none";
-  var change5 = document.getElementById("select_y");
-  change5.style.display ="block";
+  const change1 = document.getElementById("select_Ym");
+  change1.style.display ="none";
+  const change2 = document.getElementById("select_y");
+  change2.style.display ="block";
 }
 
 function change_m(){ //月のグラフに切替
@@ -132,34 +130,30 @@ var chartVal_income2 = []; // グラフデータ（その年の給料見込み)
 // ページ読み込み時にグラフを描画
 getValue(); // グラフデータに値を格納(仮)
 getValue2(); // グラフデータに値を格納(仮)
-chart_m(); // 月グラフ描画処理を呼び出す
+chart_y(); // 月グラフ描画処理を呼び出す
 
-//月グラフデータの生成
+//月データの生成
 function getValue() {
+  chartVal_per = []; 
+  chartVal_income = [];
     <?php
     #データベースから給料見込みの情報を取得
     // session_start();
     // $id = $_SESSION['user_id'];
     $user_id = 1; 
-    $income_sum = 0;
-    $income_per = 0;
-    $y_data = $_POST["YYYY-mm"];
+    $nowIncome_sum = 0;
+    $nowIncome_per = 0;
     $db = new PDO("sqlite:part-time-job.db");
-    $result = $db->query("select sum(predict_income) from job_income_aggregation where user_id = '$user_id' and date = '$y_data'");
+    $now = date('Y-m');
+    $result = $db->query("select sum(predict_income) from job_income_aggregation where user_id = '$user_id' and date like '$now'");
     $db = null;
     foreach ($result as $value) {
-      if ($value['sum(predict_income)'] != 0) {
-        $income_sum = $value['sum(predict_income)'];
-      }
-      else{
-        $income_sum = 0;
-      }
+      $nowIncome_sum = $value['sum(predict_income)'];
     }
-    $income_per = $income_sum / $target_amount * 100;
+    $nowIncome_per = $nowIncome_sum / $target_amount * 100;
     ?>
-    chartVal_per =  <?php echo $income_per ?> ; //当月の目標金額達成度をを代入
-    chartVal_income =  <?php echo $income_sum ?>;
-
+    chartVal_per =  <?php echo $nowIncome_per ?> ; //当月の目標金額達成度をを代入
+    chartVal_income =  <?php echo $nowIncome_sum ?>;
   if(chartVal_per > 100){
     chartVal_per = 100;
   } 
@@ -171,13 +165,33 @@ function getValue2() {
   chartVal_income2 = []; // 配列を初期化
   chartVal_amount = []; // 配列を初期化
 
+  <?php
+    #データベースから給料見込みの情報を取得
+    // session_start();
+    // $id = $_SESSION['user_id'];
+    $user_id = 1; 
+    $nowIncome_sum = [];
+    $db = new PDO("sqlite:part-time-job.db");
+    $m_data = $_POST["year2"];
+    $result = $db->query("select sum(predict_income) from job_income_aggregation where user_id = '$user_id' and date like '$m_data%' group by date ");
+    $db = null;
+    foreach ($result as $value) {
+      $nowIncome_sum[] = $value['sum(predict_income)'];
+    }
+    $json_array = json_encode($nowIncome_sum); //配列をjson形式に変換
+  ?>
   var length = 12;
+  var array = <?php echo $json_array; ?>; //変換した配列をjavascriptに受け渡し
   for (i = 0; i < length; i++) {
-    chartVal_income2.push(Math.floor(Math.random() * 50000));
+    if(array[i] == null){
+      chartVal_income2[i] = 0;
+    }
+    else{
+    chartVal_income2[i] = array[i];
+    }
     chartVal_amount[i] = <?php echo $target_amount ?>;
   }
 }
-
 
 
 
