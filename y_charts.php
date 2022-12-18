@@ -113,6 +113,7 @@ var chartVal_per = []; // グラフデータ（目標達成度合い）
 var chartVal_income = []; // グラフデータ（その月の給料見込み）
 var chartVal_amount = []; // グラフデータ（ユーザーの目標金額）
 var chartVal_income2 = []; // グラフデータ（その年の給料見込み)
+var chartVal_target = 0; //グラフデータ(円グラフ用の目標金額)
 
 // ページ読み込み時にグラフを描画
 getValue(); // グラフデータに値を格納(仮)
@@ -121,6 +122,7 @@ chart_y(); // 月グラフ描画処理を呼び出す
 
 //月データの生成
 function getValue() {
+  chartVal_target = 0; //目標金額
   chartVal_per = []; 
   chartVal_income = [];
     <?php
@@ -139,6 +141,7 @@ function getValue() {
     }
     $nowIncome_per = $nowIncome_sum / $target_amount * 100;
     ?>
+    chartVal_target = <?php echo $target_amount ?>; //目標金額を代入
     chartVal_per =  <?php echo $nowIncome_per ?> ; //当月の目標金額達成度をを代入
     chartVal_income =  <?php echo $nowIncome_sum ?>;
   if(chartVal_per > 100){
@@ -194,11 +197,11 @@ const counter = {
     ctx.save();
     ctx.fillStyle = 'black';
     ctx.fillRect(width / 2, top + (height / 2), 0, 0);
-    ctx.font = '60px sans-serif';
+    ctx.font = '47px sans-serif';
     ctx.textAlign = 'center';
 
     // 位置調整
-    ctx.fillText(chartVal_income + '円', width / 2, top + (height / 2));
+    ctx.fillText(chartVal_income + '円' + '/' + chartVal_target + '円', width / 2, top + (height / 2));
   }
 };
 window.m_chart = new Chart(ctx, {
