@@ -34,18 +34,17 @@
 </head>
 <body>
   <div align="center">
-  <form method="post" action="">
+<input type="button" onClick="mode_m()" value="月" >
+<input type="button" onClick="mode_y()" value="年" >
+<form method="post" action="">
 <select name="year" id="select_y" onchange = "this.form.submit()">
 </select>
 </form>
 <form method="post" action="m_charts.php">
 <input type="month" id = "select_Ym" name="YYYY-mm" onchange = "this.form.submit()">
 </form>
-<input type="button" onClick="mode_m()" value="月" >
-<input type="button" onClick="mode_y()" value="年" >
-
 <div style="position: relative; height:70vh; width:75vw">
-  <canvas id="MyChart"></canvas>
+<canvas id="MyChart"></canvas>
 </div>
 </div>
 <script> 
@@ -64,8 +63,8 @@ document.getElementById("select_Ym").style.display ="none";
 
     opt = null;
     for (i = start; i <= end ; i++) {
-      if (i === this_day) {
-        opt += "<option value='" + i + "' selected>" + i + "年" + "</option>";
+      if (i === <?php echo $_POST["year"];?>) {
+        opt += "<option value='" + <?php echo $_POST["year"];?> + "' selected>" + <?php echo $_POST["year"];?> + "年" + "</option>";
       } else {
         opt += "<option value='" + i + "'>" + i + "年" + "</option>";
       }

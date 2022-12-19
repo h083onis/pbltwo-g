@@ -21,6 +21,8 @@
 </head>
 <body>
   <div align="center">
+<input type="button" onClick="mode_m()" value="月" >
+<input type="button" onClick="mode_y()" value="年" >
 <form method="post" action="y_charts.php">
 <select name="year" id="select_y" onchange = "this.form.submit()">
 </select>
@@ -28,11 +30,8 @@
 <form method="post" action="">
 <input type="month" id="select_Ym" name="YYYY-mm" value="<?php echo $_POST['YYYY-mm'];?>" onchange = "this.form.submit()">
 </form>
-<input type="button" onClick="mode_m()" value="月" >
-<input type="button" onClick="mode_y()" value="年" >
-
 <div style="position: relative; height:70vh; width:75vw">
-  <canvas id="MyChart"></canvas>
+<canvas id="MyChart"></canvas>
 </div>
 </div>
 <script> 
