@@ -44,13 +44,10 @@
 <input type="button" onClick="mode_m()" value="月" >
 <input type="button" onClick="mode_y()" value="年" >
 
-<div class="chart-container" style="position: relative; height:5vh; width:80vw">
-  <canvas id="m"></canvas>
+<div style="position: relative; height:70vh; width:75vw">
+  <canvas id="MyChart"></canvas>
 </div>
-<div class="chart-container" style="position: relative; height:30vh; width:60vw">
-<canvas id="y" ></canvas>
 </div>
-    </div>
 <script> 
 document.getElementById("select_Ym").style.display ="none";
 
@@ -68,9 +65,9 @@ document.getElementById("select_Ym").style.display ="none";
     opt = null;
     for (i = start; i <= end ; i++) {
       if (i === this_day) {
-        opt += "<option value='" + i + "' selected>" + i + "</option>";
+        opt += "<option value='" + i + "' selected>" + i + "年" + "</option>";
       } else {
-        opt += "<option value='" + i + "'>" + i + "</option>";
+        opt += "<option value='" + i + "'>" + i + "年" + "</option>";
       }
     }
     return document.getElementById(id).innerHTML = opt;
@@ -213,7 +210,7 @@ function getValue2() {
 
 function chart_m(){ //月のグラフを表示
   "use strict";
-var ctx = document.getElementById('m');
+var ctx = document.getElementById('MyChart');
 const backgroundColor = 'rgba(0, 114, 188, 1)'; //グラフの色(青)
 const counter = {
   id: 'counter',
@@ -244,12 +241,15 @@ window.m_chart = new Chart(ctx, {
                 borderColor: 'rgba(0, 0, 0, 1)' // 棒の枠線の色(黒)
             }]
     },
+    options: {
+    maintainAspectRatio: false 
+    },
     plugins: [counter]
 });
 }; 
 
 function chart_y(){ //年のグラフ表示
-    var ctx2 = document.getElementById("m");
+    var ctx2 = document.getElementById("MyChart");
     window.y_chart = new Chart(ctx2, { // インスタンスをグローバル変数で生成
     type: 'line',
     data: { // ラベルとデータセット
