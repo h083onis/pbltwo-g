@@ -1,3 +1,4 @@
+@charset "utf-8";
 
 .inf {
   /*background-color: rgb(230, 231, 231);*/
@@ -14,7 +15,7 @@
 /*ユーザ情報*/
 .user-inf {
   display: flex;
-  background-color: rgb(240, 240, 240);
+  /*background-color: rgb(240, 240, 240);*/
   padding: 10px;
 }
 
@@ -49,7 +50,33 @@
   */
 }
 
+/*目標金額*/
 .target {
   display: flex;
   margin-bottom: 20px;
+}
+
+.target-display {
+  font-size: 25px;
+}
+
+.target-button {
+  margin-left: 10px;
+}
+
+/*テーブル*/
+.job-detail {
+  margin-bottom: 10px;
+  background-color: white;
+  border: none;
+}
+
+.job-detail td {
+  padding: 5px;
+  /*background-color: white;*/
+}
+
+.job-item {
+  padding: 20px;
+  background-color: rgb(190, 190, 190);
 }
