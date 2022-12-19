@@ -14,7 +14,7 @@ $db = new PDO("sqlite:part-time-job.db");
 
 #2
 #同じバイト名がある場合のエラーを考える
-$job_count = $db->query("select count(*) from part_time_job_inf where user_id = $user_id and job_name = '$job_name'");
+$job_count = $db->query("select count(*) from part_time_job_inf where user_id = '$user_id' and job_name = '$job_name'");
 $num_rows = $job_count->fetchColumn();
 echo $num_rows;
 if ($num_rows == 1) {
