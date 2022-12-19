@@ -28,23 +28,13 @@
     var now_Ym = document.getElementById("select_Ym");
     // optionタグのvalueを現在の年に設定する
     now_Ym.value = YearMonth;
-
-    var now_year = document.getElementById("select_y");
-    // optionタグのテキストを現在の年に設定する
-    now_year.text = year + "年";
-    // optionタグのvalueを現在の年に設定する
-    now_year.value = year; 
-    }  
+  }  
   </script>
 </head>
 <body>
 <div align="center">
 <form method="post" action="y_charts.php">
 <select name="year" id="select_y" onchange = "this.form.submit()">
-  <option id="now_year2" hidden></option>
-  <option value="2020">2020年</option>
-  <option value="2021">2021年</option>
-  <option value="2022">2022年</option>
 </select>
 </form>
 <form method="post" action="m_charts.php">
@@ -62,6 +52,35 @@
 </div>
 <script> 
 document.getElementById("select_y").style.display ="none";
+
+(function date() { //年グラフのプルダウン作成
+  var optionLoop, this_year, today;
+  today = new Date();
+  this_year = today.getFullYear();
+
+  /*
+    ループ処理（スタート数字、終了数字、表示id名、デフォルト数字）
+   */
+  optionLoop = function date(start, end, id, this_day) {
+    var i, opt;
+
+    opt = null;
+    for (i = start; i <= end ; i++) {
+      if (i === this_day) {
+        opt += "<option value='" + i + "' selected>" + i + "</option>";
+      } else {
+        opt += "<option value='" + i + "'>" + i + "</option>";
+      }
+    }
+    return document.getElementById(id).innerHTML = opt;
+  };
+
+
+  /*
+    関数設定（スタート数字[必須]、終了数字[必須]、表示id名[省略可能]、デフォルト数字[省略可能]）
+   */
+  optionLoop(this_year - 5, this_year + 1, 'select_y', this_year);
+})();
 
 var mode_cnt = 0;
 function mode_m(){ //月のグラフに切替

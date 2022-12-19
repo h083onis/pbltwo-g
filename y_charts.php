@@ -1,25 +1,25 @@
 <?php
-    #データベースからユーザーの目標金額を取得
-    // session_start();
-    // $id = $_SESSION['user_id'];
-    $user_id = 1; 
-    $target_amount = 0;
-    $db = new PDO("sqlite:part-time-job.db");
-    $amount_result = $db->query("select target_amount from user_inf where user_id = '$user_id'");
-    $db = null;
-    foreach ($amount_result as $amount_value) {
-      $target_amount = $amount_value['target_amount'];
-    }
+  #データベースからユーザーの目標金額を取得
+  // session_start();
+  // $id = $_SESSION['user_id'];
+  $user_id = 1; 
+  $target_amount = 0;
+  $db = new PDO("sqlite:part-time-job.db");
+  $amount_result = $db->query("select target_amount from user_inf where user_id = '$user_id'");
+  $db = null;
+  foreach ($amount_result as $amount_value) {
+    $target_amount = $amount_value['target_amount'];
+  }
 ?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <title>給与計算グラフ</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
-    <script>
-    window.onload = function () {
+  <meta charset="UTF-8">
+  <title>給与計算グラフ</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
+  <script>
+  window.onload = function () {
     var date = new Date();
     var year = date.getFullYear();
     var month = date.getMonth() + 1;
@@ -29,17 +29,13 @@
     // optionタグのvalueを現在の年に設定する
     now_Ym.value = YearMonth;
 
-    } 
-    </script>
+  } 
+  </script>
 </head>
 <body>
   <div align="center">
   <form method="post" action="">
 <select name="year" id="select_y" onchange = "this.form.submit()">
-    <option id="now_year2" hidden ></option>
-    <option value="2020">2020年</option>
-    <option value="2021">2021年</option>
-    <option value="2022">2022年</option>
 </select>
 </form>
 <form method="post" action="m_charts.php">
@@ -57,6 +53,35 @@
     </div>
 <script> 
 document.getElementById("select_Ym").style.display ="none";
+
+(function date() { //年グラフのプルダウン作成
+  var optionLoop, this_year, today;
+  today = new Date();
+  this_year = today.getFullYear();
+
+  /*
+    ループ処理（スタート数字、終了数字、表示id名、デフォルト数字）
+   */
+  optionLoop = function date(start, end, id, this_day) {
+    var i, opt;
+
+    opt = null;
+    for (i = start; i <= end ; i++) {
+      if (i === this_day) {
+        opt += "<option value='" + i + "' selected>" + i + "</option>";
+      } else {
+        opt += "<option value='" + i + "'>" + i + "</option>";
+      }
+    }
+    return document.getElementById(id).innerHTML = opt;
+  };
+
+
+  /*
+    関数設定（スタート数字[必須]、終了数字[必須]、表示id名[省略可能]、デフォルト数字[省略可能]）
+  */
+  optionLoop(this_year - 5, this_year + 1, 'select_y', <?php echo $_POST["year"]?>);
+})();
 
 var mode_cnt = 0;
 function mode_m(){ //月のグラフに切替

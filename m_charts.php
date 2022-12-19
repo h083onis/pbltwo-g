@@ -14,23 +14,10 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <title>給与計算グラフ</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
-    <script>
-    window.onload = function () {
-      var date = new Date();
-      var year = date.getFullYear();
-      var month = date.getMonth() + 1;
-
-      var now_year = document.getElementById("select_y");
-      //optionタグのテキストを現在の年に設定する
-      now_year.text = year + "年";
-      // optionタグのvalueを現在の年に設定する
-      now_year.value = year;
-    } 
-    </script>
+  <meta charset="UTF-8">
+  <title>給与計算グラフ</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
 </head>
 <body>
   <div align="center">
@@ -58,6 +45,34 @@
 <script> 
 document.getElementById("select_y").style.display ="none";
 
+(function date() { //年グラフのプルダウン作成
+  var optionLoop, this_year, today;
+  today = new Date();
+  this_year = today.getFullYear();
+
+  /*
+    ループ処理（スタート数字、終了数字、表示id名、デフォルト数字）
+   */
+  optionLoop = function date(start, end, id, this_day) {
+    var i, opt;
+
+    opt = null;
+    for (i = start; i <= end ; i++) {
+      if (i === this_day) {
+        opt += "<option value='" + i + "' selected>" + i + "</option>";
+      } else {
+        opt += "<option value='" + i + "'>" + i + "</option>";
+      }
+    }
+    return document.getElementById(id).innerHTML = opt;
+  };
+
+
+  /*
+    関数設定（スタート数字[必須]、終了数字[必須]、表示id名[省略可能]、デフォルト数字[省略可能]）
+   */
+  optionLoop(this_year - 5, this_year + 1, 'select_y', this_year);
+})();
 function mode_m(){ //月のグラフに切替
   if (m_chart) { //既に描画済みのグラフがある場合にそのグラフを破棄
     m_chart.destroy();
