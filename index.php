@@ -15,6 +15,7 @@ unset($_SESSION['pass']);
 </head>
 
 <body>
+	<img src="logo.png" alt="png" class="logo">
 	<h1>バイト管理アプリ</h1>
 	<form action="pass.php" method="post" name="login_form">
 		<table>
