@@ -1,9 +1,6 @@
 <?php
 // session_start();
-// if (isset($_SESSION['idname']) == 0) {
-//     header("Location:index.php"); //ログイン画面に飛ばす
-// }
-// if(ini_set('max_execution_time', 10)){
+// if (isset($_SESSION['user_id']) == 0) {
 //     header("Location:index.php"); //ログイン画面に飛ばす
 // }
 
