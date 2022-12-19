@@ -234,9 +234,14 @@ $db = null;
     <!-- 削除前の確認画面 -->
     <div id="popup2" class='overlay'>
       <div class='window'>
-        <span>バイト名：<?= $value['job_name'] ?>に関係する全ての情報が削除されますがよろしいでしょうか？</span>
+        <?php
+        foreach($result3 as $value):
+          $del_job = $value['job_name'];
+        endforeach;
+        ?>
+        <span>バイト名：<?= $del_job ?>に関係する全ての情報が削除されますがよろしいでしょうか？</span>
         <form id='delete' action='delete_inf.php' method='post'>
-          <input type='hidden' name='job_name' value=<?= $value['job_name'] ?>>
+          <input type='hidden' name='job_name' value=<?= $del_job ?>>
         </form>
         <input type='button' value='いいえ' onclick="close_popup2()"><br>
         <input type='submit' value='はい' form='delete'>
