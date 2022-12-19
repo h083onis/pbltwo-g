@@ -56,4 +56,4 @@ if ($stmt = $db->prepare($sql)) {
 }
 $db = null;
 
-header("Location:home.php?y=$y&m=$m");
+header("Location:yosoku2.php?y=$y&m=$m&job_name=$job_name");

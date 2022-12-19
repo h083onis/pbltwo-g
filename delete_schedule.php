@@ -18,5 +18,7 @@ if ($stmt = $db->prepare($sql)) {
   $stmt->bindValue(':start_time', $start_time, PDO::PARAM_STR);
   $stmt->execute();
 }
-header("Location:home.php?y=$sel_y&m=$sel_m&sel_d=$sel_d");
+$db = null;
+
+header("Location:yosoku2.php?y=$sel_y&m=$sel_m&job_name=$job_name&sel_d=$sel_d");
 ?>

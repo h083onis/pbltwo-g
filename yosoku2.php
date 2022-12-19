@@ -1,9 +1,14 @@
 <?php
-// $user_id = $_SESSINN['user_id'];
+// $user_id = $_SESSION['user_id'];
 $user_id = 1;
-$y = 2022;
-$m = 12;
-$job_name = 'コンビニ';
+$y = $_GET['y'];
+$m = $_GET['m'];
+// echo $_GET['job_name'];
+$job_name = $_GET['job_name'];
+
+// $y = 2022;
+// $m = 12;
+// $job_name = 'コンビニ';
 
 $db = new PDO("sqlite:part-time-job.db");
 $sel_date = date_create(strval($y) . '-' . strval($m));
@@ -176,4 +181,10 @@ if ($stmt = $db->prepare($sql)) {
 }
 
 $db = null;
+if(isset($_GET['sel_d'])){
+    $sel_d = $_GET['sel_d'];
+    header("Location:home.php?y=$y&m=$m&sel_d=$sel_d");
+    exit();
+}
+header("Location:home.php?y=$y&m=$m");
 // $result2 = $db->query("select * job_schedule where date > ")
