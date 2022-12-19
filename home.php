@@ -67,89 +67,80 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
 <body>
     <div class="main">
         <div class="side-menu">
-            <!--<nav>
-                <ul>
-                    <li><a href='home.php' class="navi info-icon">個人情報</a></li>
-                    <li><a href='edit_job_inf.php' class="navi calender-icon">カレンダー</a></li>
-                    <li><a href='' class="navi money-icon">給料計算</a></li>
-                    <li><a href='' class="navi logout-icon">ログアウト</a></li>
-                </ul>
-            </nav>-->
-
             <nav>
                 <ul>
                     <li><a href='job_inf.php' class="navi info-icon"><img src="./img/information.svg" alt="個人情報" width="70px" height="40spx" /></a></li>
                     <li><a href='home.php' class="navi calender-icon"><img src="./img/calender.svg" alt="カレンダー" width="70px" height="40px" /></a></li>
                     <li><a href='' class="navi money-icon"><img src="./img/money.svg" alt="給料計算" width="70px" height="40px" /></a></li>
+                    <li><a href='' class="navi question-icon"><img src="./img/question.svg" alt="ヘルプ" width="70px" height="40px" /></a></li>
                     <li><a href='' class="navi logout-icon"><img src="./img/logout.svg" alt="ログアウト" width="70px" height="40px" /></a></li>
                 </ul>
             </nav>
         </div>    
     
         <div class="area" align="center">
-            <h3>
-                <a href="?y=<?php echo $prev_y; ?>" class="move-mo">&lt;</a><span class="years"><?php echo $y; ?>年</span><a href="?y=<?php echo $next_y; ?>" class="move-mo">&gt;</a><br>
-                <a href="?m=<?php echo $prev_m; ?>" class="move-mo">&lt;</a><span class="months"><?php echo (int)$m; ?></span>月 <a href="?m=<?php echo $next_m; ?>" class="move-mo">&gt;</a>
-            </h3>
-            <table class="calendar">
-                <tr>
-                    <?php
-                    //$week配列の中の$weeksという要素を繰り返し処理する(日曜日から土曜日まで)
-                    foreach ($week as $weeks) {
-                        if ($weeks == '日') {
-                            echo '<td class = "week sunday">' . $weeks . '</td>';
-                        } else if ($weeks == '土') {
-                            echo '<td class = "week saturday">' . $weeks . '</td>';
-                        } else {
-                            echo '<td class = "week weekday">' . $weeks . '</td>';
+            <div class="calendar-outside">
+                <a href="?y=<?php echo $prev_y; ?>" class="move-mo">&lt;</a><span class="years"><?php echo $y; ?></span><a href="?y=<?php echo $next_y; ?>" class="move-mo">&gt;</a><br>
+                <a href="?m=<?php echo $prev_m; ?>" class="move-mo">&lt;</a><span class="months"><?php echo $m; ?></span><a href="?m=<?php echo $next_m; ?>" class="move-mo">&gt;</a>
+                
+                <table class="calendar">
+                    <tr>
+                        <?php
+                        //$week配列の中の$weeksという要素を繰り返し処理する(日曜日から土曜日まで)
+                        foreach ($week as $weeks) {
+                            if ($weeks == '日') {
+                                echo '<td class = "week sunday">' . $weeks . '</td>';
+                            } else if ($weeks == '土') {
+                                echo '<td class = "week saturday">' . $weeks . '</td>';
+                            } else {
+                                echo '<td class = "week weekday">' . $weeks . '</td>';
+                            }
                         }
+                        ?>
+                    </tr>
+                    <?php
+                    // 1日の曜日を取得
+                    $wd1 = date("w", mktime(0, 0, 0, $m, 1, $y));
+                    // その数だけ空白を表示
+                    for ($i = 1; $i <= $wd1; $i++) {
+                        echo '<td class="space"></td>';
+                    }
+
+                    // 1日から月末日までの表示
+                    $d = 1;
+                    $n = 0;
+
+                    $db = new PDO("sqlite:part-time-job.db");
+                    for ($d = 1; $d <= $lastday; $d++) {
+                        echo '<td class = "day"><a class="open" href="?y=' . $y . '&m=' . $m . '&sel_d=' . $d . '">' . $d . '</a>';
+                        /*echo '<br>';*/
+                        /*echo '<br>';*/
+                        $job_date = strval($y) . '-' . strval($m) . '-' . strval($d);
+                        $result = $db->query("select * from job_schedule where user_id = $user_id and job_date = '$job_date'");
+                        foreach ($result as $value) :
+                            echo '<br><span class = text_style>' . $value['job_name'] . $value['start_time'] . '~' . $value['end_time'] . '</span><br>';
+                        endforeach;
+                        echo "</td>";
+                        if (date("w", mktime(0, 0, 0, $m, $d, $y)) == 6) {
+                            // 週を終了
+                            echo "</tr>";
+                            // 次の週がある場合は新たな行を準備
+                            if (checkdate($m, $d + 1, $y)) {
+                                echo "<tr>";
+                            }
+                        }
+                        $n++;
+                    }
+                    $db = null;
+
+                    // 最後の週の土曜日まで移動
+                    $wdx = date("w", mktime(0, 0, 0, $m + 1, 0, $y));
+                    for ($i = 1; $i < 7 - $wdx; $i++) {
+                        echo '<td class="space"></td>';
                     }
                     ?>
-                </tr>
-                <?php
-                // 1日の曜日を取得
-                $wd1 = date("w", mktime(0, 0, 0, $m, 1, $y));
-                // その数だけ空白を表示
-                for ($i = 1; $i <= $wd1; $i++) {
-                    echo '<td class="space"></td>';
-                }
-
-                // 1日から月末日までの表示
-                $d = 1;
-                $n = 0;
-
-                $db = new PDO("sqlite:part-time-job.db");
-                for ($d = 1; $d <= $lastday; $d++) {
-                    echo '<td class = "day"><a class="open" href="?y=' . $y . '&m=' . $m . '&sel_d=' . $d . '">' . $d . '</a>';
-                    echo '<br>';
-                    /*echo '<br>';*/
-                    $job_date = strval($y) . '-' . strval($m) . '-' . strval($d);
-                    $date = date_create($job_date);
-                    $formated_date = date_format($date, 'Y-m-d');
-                    $result = $db->query("select * from job_schedule where user_id = '$user_id' and job_date = '$formated_date'");
-                    foreach ($result as $value) :
-                        echo '<span class = text_style>' . $value['job_name'].'<br>'. $value['start_time'] . '~' . $value['end_time'] . '</span></br>';
-                    endforeach;
-                    echo "</td>";
-                    if (date("w", mktime(0, 0, 0, $m, $d, $y)) == 6) {
-                        // 週を終了
-                        echo "</tr>";
-                        // 次の週がある場合は新たな行を準備
-                        if (checkdate($m, $d + 1, $y)) {
-                            echo "<tr>";
-                        }
-                    }
-                    $n++;
-                }
-                $db = null;
-
-                // 最後の週の土曜日まで移動
-                $wdx = date("w", mktime(0, 0, 0, $m + 1, 0, $y));
-                for ($i = 1; $i < 7 - $wdx; $i++) {
-                    echo '<td class="space"></td>';
-                }
-                ?>
-            </table>
+                </table>
+            </div>
         </div>
 
         <div id="popup" class='overlay'>

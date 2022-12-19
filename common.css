@@ -38,7 +38,7 @@ li {
   display: block;
   top: 50%;
   margin: 10px;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 .navi:hover {
@@ -66,15 +66,23 @@ li {
   transform: translate(-50%, -50%);
 }
 
-.logout-icon {
-  position:absolute;
+.question-icon {
+  position: absolute;
   top: 500px;
   left: 40%;
   transform: translate(-50%, -50%);
 }
 
+.logout-icon {
+  position:absolute;
+  top: 600px;
+  left: 40%;
+  transform: translate(-50%, -50%);
+}
+
 @media (max-width: 800){
-  .navi {
+  .side-menu {
     display: flex;
   }
+
 }
