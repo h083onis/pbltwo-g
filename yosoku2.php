@@ -3,7 +3,7 @@
 $user_id = 1;
 $y = 2022;
 $m = 12;
-$job_name = '居酒屋';
+$job_name = 'コンビニ';
 
 $db = new PDO("sqlite:part-time-job.db");
 $sel_date = date_create(strval($y) . '-' . strval($m));
