@@ -1,5 +1,6 @@
 <?php
 session_start();
+header("refresh:1200;url=index.php");
 $user_id = $_SESSION['user_id'];
 $pass = $_SESSION['pass'];
 $encryptedPw = password_hash($pass, PASSWORD_DEFAULT);

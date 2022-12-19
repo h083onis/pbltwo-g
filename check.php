@@ -1,6 +1,7 @@
 <?php
 $user_id = $_POST['user_id'];
 $pass = $_POST['pass'];
+header("refresh:1200;url=index.php");
 session_start(); //セッションスタート
 $_SESSION['user_id'] = $user_id;
 $_SESSION['pass'] =  $pass;

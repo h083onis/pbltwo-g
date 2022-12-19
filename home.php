@@ -3,6 +3,12 @@
 // if (isset($_SESSION['idname']) == 0) {
 //     header("Location:index.php"); //ログイン画面に飛ばす
 // }
+// if(ini_set('max_execution_time', 10)){
+//     header("Location:index.php"); //ログイン画面に飛ばす
+// }
+
+//20分操作がされない場合にindex.phpに飛ばす
+header("refresh:1200;url=index.php");
 // $user_id = $_SESSION['user_id'];
 $user_id = 1;
 date_default_timezone_set('Asia/Tokyo'); //東京時間にする

@@ -2,6 +2,7 @@
 session_start();
 unset($_SESSION['user_id']);
 unset($_SESSION['pass']);
+header("refresh:1200;url=index.php");
 ?>
 <!DOCTYPE html>
 <html lang="ja">
