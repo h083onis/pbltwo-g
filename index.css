@@ -1,3 +1,33 @@
+*,
+::before,
+::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.picture {
+    /* background-image: url(./login.jpg); */
+    background-color: rgb(24, 230, 230);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    height: 100vh;
+}
+
+.form-login {
+    background-color: rgb(255, 253, 253, 0.8);
+    width: 550px;
+    height: 600px;
+    padding: 40px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+}
+
 .logo {
     width: 20%;
     height: auto;
@@ -8,7 +38,12 @@
 }
 
 h1 {
-    text-align: center;
+    font-size: 70px;
+}
+
+h2 {
+    /* color: rgb(24, 230, 230); */
+    font-size: 15px;
 }
 
 table {
@@ -18,27 +53,31 @@ table {
 
 input[type="text"] {
     background-color: #dcdcdc;
-    width: 300px;
-    height: 30px;
-    border-radius: 10px;
+    width: 400px;
+    height: 40px;
+    border-radius: 20px;
     border: #dcdcdc;
+    margin-top: 70px;
+    margin-bottom: 15px;
 }
 
 input[type="password"] {
     background-color: #dcdcdc;
-    width: 300px;
-    height: 30px;
-    border-radius: 10px;
+    width: 400px;
+    height: 40px;
+    border-radius: 20px;
     border: #dcdcdc;
+    margin-bottom: 20px;
 }
 
 input[type="submit"] {
     background-color: rgb(24, 230, 230);
-    width: 300px;
-    height: 30px;
-    border-radius: 10px;
+    width: 400px;
+    height: 40px;
+    border-radius: 20px;
     border: rgb(24, 230, 230);
     color: white;
+    margin-bottom: 15px;
 }
 
 div {
