@@ -22,10 +22,10 @@ unset($_SESSION['pass']);
 			<table>
 				</tr>
 				<tr class="">
-					<td><input type="text" placeholder="ユーザー名" name="user_id" required></td>
+					<td><input type="text" placeholder="　ユーザー名" name="user_id" required></td>
 				</tr>
 				<tr class="">
-					<td><input type="password" placeholder="パスワード" name="pass" required></td>
+					<td><input type="password" placeholder="　パスワード" name="pass" required></td>
 				</tr>
 			</table>
 			<div>
