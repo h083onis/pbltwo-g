@@ -146,7 +146,7 @@ $db = null;
         <form id = 'check_pass' action='check_pass.php' method='post'>
           <input type='password'name='pass' minlength='8' required>
         </form>
-        <input type='submit' value='パスワード変更' form='check_pass' class="pass-button">
+        <input type='submit' value='変更' form='check_pass' class="button">
       </div>
       <span>※パスワード変更の際は現在のパスワードを入力してください</span>
     </div>
@@ -164,7 +164,7 @@ $db = null;
       <form id='edit_target' action = 'edit_target.php' method = 'post'>
         <input type ='number' name ='target_amount' min = 1 required>
       </form>
-      <input type='submit' value='目標金額の変更' form ='edit_target' class="target-button">
+      <input type='submit' value='金額変更' form ='edit_target' class="button">
     </div>
     <!-- 既に登録されているバイトの登録情報を表示する -->
     <?php
@@ -181,8 +181,8 @@ $db = null;
         } else {
           echo '<td>なし</td><td>なし</td>';
         }
-        echo '<td><input type="button" value="編集" onClick="location.href=\'job_inf.php?sel_job=' . $value['job_name'] . '\'"></td>';
-        echo '<td><input type="button" value="削除" onClick="location.href=\'job_inf.php?delete_job=' . $value['job_name'] . '\'"></td>';
+        echo '<td><input type="button" value="編集" onClick="location.href=\'job_inf.php?sel_job=' . $value['job_name'] . '\'" class="button-edit"></td>';
+        echo '<td><input type="button" value="×" onClick="location.href=\'job_inf.php?delete_job=' . $value['job_name'] . '\'" class="button-del"></td>';
         echo '</tr>';
       }
       echo '</table>';
@@ -195,16 +195,17 @@ $db = null;
     }
     ?>
     <form action='add_inf.php' method='post'>
-      バイト名<input type='text' name='job_name' required><br>
-      時給入力<input type='number' name='hourly_wage' min='0' required><br>
-      締め日<input type='number' name='cutoff_day' min='1' max='31' required><br>
-      給料日<input type='number' name='payment_day' min='1' max='31' required><br>
-      深夜手当時給入力<input type='number' name='mid_wage' min='0'><br>
-      深夜手当時間
-      <input type='time' name='start_mid_time' style='width:80px' step='60'>
-      ~
-      <input type='time' name='end_mid_time' style='width:80px' step='60'>
-      <input type='submit' value='登録'>
+      バイト名：<input type='text' name='job_name' required class="form"><br>
+      時給入力：<input type='number' name='hourly_wage' min='0' required class="form"><br>
+      締め日：<input type='number' name='cutoff_day' min='1' max='31' required class="form"><br>
+      給料日：<input type='number' name='payment_day' min='1' max='31' required class="form"><br>
+      深夜手当時給入力：<input type='number' name='mid_wage' min='0' class="form"><br>
+      <div class="form">深夜手当時間：
+        <input type='time' name='start_mid_time' style='width:80px' step='60'>
+        ~
+        <input type='time' name='end_mid_time' style='width:80px' step='60'>
+        <input type='submit' value='登録' class="button">
+      </div>
     </form>
     <!-- 編集画面 -->
     <div id="popup1" class='overlay'>

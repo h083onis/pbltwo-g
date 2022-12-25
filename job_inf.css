@@ -4,11 +4,13 @@
   /*background-color: rgb(230, 231, 231);*/
   background-color: rgb(228, 228, 228);
   padding: 30px;
-  width: 700px;
-  top: 0;                     
-  bottom: 0;                  
-  left: 0;                  
-  right: 0;                   
+  width: 750px;
+  height: 800px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   margin: auto;
 }
 
@@ -41,13 +43,18 @@
   margin-top: 20px;
 }
 
-.pass-button {
+.button {
   margin-left: 10px;
-  /*
-  color: white;
-  background-color: rgb(24, 230, 230);
+  border-radius: 20px;
   border: none;
-  */
+  background: rgb(24, 230, 230);
+  color: white;
+  font-size: 17px;
+  width: 100px;
+}
+
+.button:hover {
+  background-color: rgb(22, 187, 187);
 }
 
 /*目標金額*/
@@ -79,4 +86,23 @@
 .job-item {
   padding: 20px;
   background-color: rgb(190, 190, 190);
+}
+
+.button-edit {
+  border-radius: 20px;
+  width: 50px;
+}
+
+.button-del {
+  font-size: 20px;
+  height: 25px;
+  width: 25px;
+  border: none;
+  background: rgb(243, 117, 117);
+  color: #ffffff;
+}
+
+.form {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
