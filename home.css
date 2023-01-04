@@ -222,6 +222,10 @@ table.sel_d_inf td {
   display: flex;
 }
 
+.button-add:hover {
+  background: rgb(22, 187, 187);
+}
+
 .button-del {
   font-size: 20px;
   height: 25px;

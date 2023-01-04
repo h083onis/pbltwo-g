@@ -61,57 +61,6 @@ $db = null;
       // location.href = 'bulletin.php?sel=' + sel;
     }
   </script>
-  <style>
-    .open {
-      cursor: pointer;
-    }
-
-    #pop-up1 {
-      display: none;
-    }
-
-    #pop-up2 {
-      display: none;
-    }
-
-    .overlay {
-      display: none;
-    }
-
-    .overlay {
-      display: none;
-      z-index: 9999;
-      background-color: #00000070;
-      position: fixed;
-      width: 100%;
-      height: 100vh;
-      top: 0;
-      left: 0;
-    }
-
-    .window {
-      width: 600px;
-      max-width: 600px;
-      height: 500px;
-      background-color: #ffffff;
-      border-radius: 6px;
-      /* display: flex; */
-      justify-content: center;
-      align-items: center;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    .close {
-      cursor: pointer;
-      position: absolute;
-      top: 4px;
-      right: 4px;
-      font-size: 20px;
-    }
-  </style>
 </head>
 
 <body>
@@ -194,7 +143,7 @@ $db = null;
       echo '同じバイト名は登録できません';
     }
     ?>
-    <form action='add_inf.php' method='post'>
+    <form action='add_inf.php' method='post' class="add-form">
       バイト名：<input type='text' name='job_name' required class="form"><br>
       時給入力：<input type='number' name='hourly_wage' min='0' required class="form"><br>
       締め日：<input type='number' name='cutoff_day' min='1' max='31' required class="form"><br>
@@ -225,7 +174,7 @@ $db = null;
             echo '<input type=\'hidden\' name=\'pre_name\' value=', $value['job_name'], '>';
           }
           ?>
-          <input type='submit' value='変更'>
+          <input type='submit' value='変更' class="button">
         </form>
       </div>
     </div>
