@@ -82,15 +82,15 @@ $db = null;
       <span class="user"></span>
       <span class="user-id"><?= $user_id?></span>
     </div>
-    <?php
-    if(isset($_GET['e']) && $_GET['e']==2){
-      echo'パスワードが間違っています';
-    }
-    if(isset($_GET['check_pass']) && $_GET['check_pass'] == 'complete'){
-      echo 'パスワードの変更が完了しました';
-    }
-    ?>
     <div class="user-pass">
+      <?php
+        if(isset($_GET['e']) && $_GET['e']==2){
+          echo'パスワードが間違っています';
+        }
+        if(isset($_GET['check_pass']) && $_GET['check_pass'] == 'complete'){
+          echo 'パスワードの変更が完了しました';
+        }
+      ?>
       <div class="pass-change">
         <form id = 'check_pass' action='check_pass.php' method='post'>
           <input type='password'name='pass' minlength='8' required>
