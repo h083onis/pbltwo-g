@@ -29,7 +29,7 @@ unset($_SESSION['pass']);
 				</tr>
 			</table>
 			<div>
-				<input type="submit" value="ログイン">
+				<input type="submit" value="ログイン" class="login">
 			</div>
 		</form>
 	

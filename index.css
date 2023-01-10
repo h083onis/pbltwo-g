@@ -87,3 +87,8 @@ div {
 p {
     text-align: center;
 }
+
+.login {
+    font-weight: bold;
+    font-size: 15px;
+}
