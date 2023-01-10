@@ -106,6 +106,10 @@
   color: #ffffff;
 }
 
+.button-del:hover {
+  background: rgb(247, 75, 75);
+}
+
 /*バイト追加フォーム*/
 .form {
   margin-top: 5px;
@@ -113,7 +117,7 @@
 }
 
 .add-form {
-  background-color: rgb(247, 247, 247);
+  /* background-color: rgb(247, 247, 247); */
   width: 580px;
   padding: 10px;
 }

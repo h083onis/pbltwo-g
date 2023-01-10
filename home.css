@@ -235,6 +235,10 @@ table.sel_d_inf td {
   color: #ffffff;
 }
 
+.button-del:hover {
+  background: rgb(247, 75, 75);
+}
+
 .select-time {
   font-size: 17px;
 }
