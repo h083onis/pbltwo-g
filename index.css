@@ -16,7 +16,7 @@
 }
 
 .form-login {
-    background-color: rgba(131, 130, 130, 0.8);
+    background-color: rgba(151, 151, 151, 0.8);
     width: 550px;
     height: 600px;
     padding: 40px;
@@ -92,3 +92,7 @@ p {
     font-weight: bold;
     font-size: 15px;
 }
+
+.login:hover {
+    background-color: rgb(22, 187, 187);
+  }
