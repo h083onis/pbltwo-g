@@ -14,7 +14,8 @@ if($first_pass != $second_pass){
 }
 $db = new PDO("sqlite:part-time-job.db");
 
-$encryptedPw = password_hash($pass, PASSWORD_DEFAULT);
+// $encryptedPw = password_hash($pass, PASSWORD_DEFAULT);
+$encryptedPw = md5($first_pass);
 $sql = "update user_inf set pass= :pass where user_id = :user_id";
 if ($stmt = $db->prepare($sql)) {
   $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
