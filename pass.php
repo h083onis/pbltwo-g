@@ -19,7 +19,7 @@ $result = $db->query("select pass from user_inf where user_id = '$user_id'")
 <body>
   <?php
   foreach ($result as $value) {
-    if (md5($pass)==$value['passwd']) {
+    if (md5($pass)==$value['pass']) {
       header("Location:home.php");
       exit();
     }
