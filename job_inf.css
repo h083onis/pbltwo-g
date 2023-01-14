@@ -47,14 +47,14 @@
   margin-left: 10px;
   border-radius: 20px;
   border: none;
-  background: rgb(24, 230, 230);
+  background: rgb(114, 224, 224);
   color: white;
   font-size: 17px;
   width: 100px;
 }
 
 .button:hover {
-  background-color: rgb(22, 187, 187);
+  background-color: rgb(19, 221, 221);
 }
 
 /*目標金額*/
@@ -124,6 +124,9 @@
 
 
 /*編集ポップアップ*/
+.button-change {
+  margin-top: 40px;
+}
 
 
 /*最初に設定*/
@@ -157,9 +160,9 @@
 .window {
   width: 600px;
   max-width: 600px;
-  height: 500px;
+  height: 400px;
   background-color: #ffffff;
-  border-radius: 6px;
+  border-radius: 30px;
   /* display: flex; */
   justify-content: center;
   align-items: center;

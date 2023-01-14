@@ -211,7 +211,7 @@ table.sel_d_inf td {
 .button-add {
   width: 100px;
   font-size: 17px;
-  background: rgb(24, 230, 230);
+  background: rgb(114, 224, 224);
   color: #ffffff;
   border-radius: 20px;
   border: none;
@@ -223,7 +223,7 @@ table.sel_d_inf td {
 }
 
 .button-add:hover {
-  background: rgb(22, 187, 187);
+  background: rgb(19, 221, 221);
 }
 
 .button-del {

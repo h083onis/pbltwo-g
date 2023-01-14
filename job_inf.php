@@ -174,7 +174,7 @@ $db = null;
             echo '<input type=\'hidden\' name=\'pre_name\' value=', $value['job_name'], '>';
           }
           ?>
-          <input type='submit' value='変更' class="button">
+          <br><input type='submit' value='変更' class="button button-change">
         </form>
       </div>
     </div>
