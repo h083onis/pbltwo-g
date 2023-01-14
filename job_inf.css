@@ -117,7 +117,8 @@
 }
 
 .add-form {
-  /* background-color: rgb(247, 247, 247); */
+  background-color: rgb(255, 255, 255);
+  border-radius: 20px;
   width: 580px;
   padding: 10px;
 }
@@ -170,6 +171,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  padding: 20px;
 }
 
 .close {
