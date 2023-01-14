@@ -71,11 +71,12 @@ input[type="password"] {
 }
 
 input[type="submit"] {
-    background-color: rgb(24, 230, 230);
+    /* background-color: rgb(24, 230, 230); */
+    background-color: rgb(114, 224, 224);
     width: 400px;
     height: 40px;
     border-radius: 20px;
-    border: rgb(24, 230, 230);
+    border: rgb(114, 224, 224);
     color: white;
     margin-bottom: 15px;
 }
@@ -89,10 +90,25 @@ p {
 }
 
 .login {
-    font-weight: bold;
+    /* font-weight: bold; */
     font-size: 15px;
 }
 
 .login:hover {
-    background-color: rgb(22, 187, 187);
-  }
+    background-color: rgb(19, 221, 221);
+}
+
+.sign-up {
+    font-size: 15px;
+    background-color: rgb(103, 113, 204);
+    width: 400px;
+    height: 40px;
+    border-radius: 20px;
+    border: rgb(103, 113, 204);
+    color: white;
+    margin-bottom: 15px;
+}
+
+.sign-up:hover {
+    background-color: rgb(34, 34, 167);
+}
