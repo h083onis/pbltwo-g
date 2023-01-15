@@ -7,6 +7,7 @@ $user_id = 1;
 $db = new PDO("sqlite:part-time-job.db");
 $result = $db->query("select * from part_time_job_inf where user_id = '$user_id'");
 $count = $db->query("select count(*) from part_time_job_inf where user_id = '$user_id'");
+$row = $count->fetchColumn();
 $target_amount = $db->query("select target_amount from user_inf where user_id = '$user_id'");
 $target = $target_amount->fetchColumn();
 
@@ -169,7 +170,7 @@ $db = null;
     </div>
     <!-- 既に登録されているバイトの登録情報を表示する -->
     <?php
-    if ($count != 0) {
+    if ($row != 0) {
       echo '<table border=1 class="job-detail">';
       echo '<tr class="job-item">';
       echo '<td>バイト名</td><td>時給</td><td>締め日</td><td>給料日</td><td>深夜手当時給</td><td>深夜手当時間</td><td colspan=2>編集・削除</td>';
@@ -252,6 +253,11 @@ $db = null;
     <div id="popup3" class='overlay'>
       <div class='window'>
         <span>変更したいパスワードを2回入力してください</span>
+        <?php
+          if(isset($_GET['e']) && $_GET['e']==4){
+            echo '同じパスワードを入力してください';
+          }
+        ?>
         <form id='edit_pass' action='edit_pass.php' method='post'>
           <input type='password' name='first_pass' minlength='8' required></br>
           <input type='password' name='second_pass' minlength='8' required> 

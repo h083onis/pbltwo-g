@@ -31,6 +31,7 @@ if (isset($_GET['sel_d'])) {
     $date = date_create($sel_date);
     $sel_formated_date = date_format($date, 'Y-m-d');
     $count = $db->query("select count(*) from job_schedule where user_id = '$user_id' and job_date = '$sel_formated_date'");
+    $row = $count->fetchColumn();
     $result2 = $db->query("select * from part_time_job_inf where user_id = '$user_id'");
     $result3 = $db->query("select * from job_schedule where user_id = '$user_id' and job_date = '$sel_formated_date'");
     $db = null;
@@ -160,7 +161,7 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
                         echo '他のバイトと時間帯がかぶっています';
                     }
                 }
-                if ($count != 0) {
+                if ($row != 0) {
                     echo '<table class=sel_d_inf>';
                     echo '<tr class="item">';
                     echo '<td>バイト名</td>

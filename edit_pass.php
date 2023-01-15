@@ -8,7 +8,7 @@ $second_pass= $_POST['second_pass'];
 
 if($first_pass != $second_pass){
   $db = null;
-  header("Location:job_inf.php?e=3&check_pass=correct");
+  header("Location:job_inf.php?e=3&check_pass=correct&e=4");
   exit();
   //エラーを返す
 }
