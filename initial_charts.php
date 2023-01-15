@@ -22,7 +22,6 @@
   window.onload = function () {
     var date = new Date();
     var year = date.getFullYear();
-    //var month = date.getMonth() + 1;
     var month = ('00' + (date.getMonth()+1)).slice(-2);
     var YearMonth = year + '-' + month;
         

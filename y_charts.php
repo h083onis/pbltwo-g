@@ -22,7 +22,7 @@
   window.onload = function () {
     var date = new Date();
     var year = date.getFullYear();
-    var month = date.getMonth() + 1;
+    var month = ('00' + (date.getMonth()+1)).slice(-2);
     var YearMonth = year + '-' + month;
         
     var now_Ym = document.getElementById("select_Ym");
@@ -158,7 +158,12 @@ function getValue() {
     $result = $db->query("select sum(predict_income) from job_income_aggregation where user_id = '$user_id' and date like '$now'");
     $db = null;
     foreach ($result as $value) {
-      $nowIncome_sum = $value['sum(predict_income)'];
+      if ($value['sum(predict_income)'] != 0) {
+        $nowIncome_sum = $value['sum(predict_income)'];
+      }
+      else{
+        $nowIncome_sum = 0;
+      }
     }
     $nowIncome_per = $nowIncome_sum / $target_amount * 100;
     ?>
