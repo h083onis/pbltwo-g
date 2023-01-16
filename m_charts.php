@@ -30,7 +30,7 @@
 <form method="post" action="">
 <input type="month" id="select_Ym" name="YYYY-mm" value="<?php echo $_POST['YYYY-mm'];?>" onchange = "this.form.submit()">
 </form>
-<div style="position: relative; height:70vh; width:75vw">
+<div style="position: relative;">
 <canvas id="MyChart"></canvas>
 </div>
 </div>
@@ -202,6 +202,8 @@ function getValue2() {
 function chart_m(){ //月のグラフを表示
     "use strict";
 var ctx = document.getElementById('MyChart');
+ctx.width=window.innerWidth*0.1;
+ctx.height=window.innerHeight*0.8;
 const backgroundColor = 'rgba(0, 114, 188, 1)'; //グラフの色(青)
 const counter = {
   id: 'counter',
@@ -226,7 +228,7 @@ window.m_chart = new Chart(ctx, {
                     backgroundColor,
                     'rgba(0, 0, 0, 0)',
                 ],
-                radius: 300,  
+                radius: 250,  
                 cutout: '82%',  //チャートの幅(%)
                 borderWidth: 1,   //枠線
                 borderColor: 'rgba(0, 0, 0, 1)' // 棒の枠線の色(黒)
