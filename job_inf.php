@@ -1,9 +1,9 @@
 <?php
 #データベースからバイトの情報を取得
-// session_start();
-// $id = $_SESSION['user_id'];
+session_start();
+$user_id = $_SESSION['user_id'];
 header("refresh:1200;url=index.php");
-$user_id = 1;
+// $user_id = 1;
 $db = new PDO("sqlite:part-time-job.db");
 $result = $db->query("select * from part_time_job_inf where user_id = '$user_id'");
 $count = $db->query("select count(*) from part_time_job_inf where user_id = '$user_id'");

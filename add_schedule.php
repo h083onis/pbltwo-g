@@ -1,10 +1,10 @@
 <?php
-// session_start();
+session_start();
 // if (isset($_SESSION['idname']) == 0) {
 //     header("Location:index.php"); //ログイン画面に飛ばす
 // }
-// $user_id = $_SESSION['user_id'];
-$user_id = 1;
+$user_id = $_SESSION['user_id'];
+// $user_id = 1;
 $y = $_POST['year'];
 $m = $_POST['month'];
 $d = $_POST['day'];

@@ -1,5 +1,7 @@
 <?php
-$user_id = 1;
+session_start();
+$user_id = $_SESSION['user_id']
+// $user_id = 1;
 $job_name = $_POST['job_name'];
 $job_date = $_POST['job_date'];
 $start_time = $_POST['start_time'];

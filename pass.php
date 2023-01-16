@@ -1,6 +1,8 @@
 <?php
+session_start();
 $user_id = $_POST['user_id'];
 $pass = $_POST['pass'];
+$_SESSION['user_id'] = $user_id;
 
 $db = new PDO('sqlite:part-time-job.db');
 $result = $db->query("select pass from user_inf where user_id = '$user_id'")
