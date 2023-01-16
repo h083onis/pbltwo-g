@@ -1,17 +1,33 @@
 <?php
-$key = '長い鍵長い鍵長い鍵長い鍵長い鍵長い鍵長い鍵長い鍵長い鍵長い鍵';
-$id = $_POST['id'];
-$pass = openssl_encrypt($_POST['pass'], 'AES-128-ECB', $key);
-$id_pass = $id.",".$pass;
-$data = file("test.txt");
+$user_id = $_POST['user_id'];
+$pass = $_POST['pass'];
 
-
-foreach ($data as $line) {
-  if (rtrim($line) == $id_pass) {
-    header("Location:http://localhost/PBL2/home1.php");
-    exit();
-  }
-}
-echo 'IDまたはパスワードが違います。';
-echo '<p><a href="http://localhost/PBL2/index.php">home</a></p>';
+$db = new PDO('sqlite:part-time-job.db');
+$result = $db->query("select pass from user_inf where user_id = '$user_id'")
 ?>
+
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Document</title>
+</head>
+
+<body>
+  <?php
+  foreach ($result as $value) {
+    if (password_verify($pass, $value['pass'])) {
+      header("Location:home1.php");
+      exit();
+    }
+  }
+  echo '<p>IDまたはパスワードが違います。</p>';
+  echo '<p><a href="index.php">home</a></p>';
+  ?>
+</body>
+
+</html>
