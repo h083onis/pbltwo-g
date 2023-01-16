@@ -204,8 +204,6 @@ function chart_m(){ //月のグラフを表示
 var ctx = document.getElementById('MyChart');
 ctx.width=window.innerWidth*0.01;
 ctx.height=window.innerHeight*0.8;
-ctx.width=window.innerWidth*0.1;
-ctx.height=window.innerHeight*0.8;
 const backgroundColor = 'rgba(0, 114, 188, 1)'; //グラフの色(青)
 const counter = {
   id: 'counter',
