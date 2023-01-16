@@ -3,12 +3,7 @@
 $user_id = 1;
 $y = $_GET['y'];
 $m = $_GET['m'];
-// echo $_GET['job_name'];
 $job_name = $_GET['job_name'];
-
-// $y = 2022;
-// $m = 12;
-// $job_name = 'コンビニ';
 
 $db = new PDO("sqlite:part-time-job.db");
 $sel_date = date_create(strval($y) . '-' . strval($m));
@@ -41,22 +36,20 @@ $tem_m = $m - 1;
 $tem_y = $y;
 if ($tem_m == 0) {
     $tem_m = 12;
-    $ten_y = $y - 1;
+    $tem_y = $y - 1;
 }
 
 $pre_job_date = strval($tem_y) . '-' . strval($tem_m) . '-' . strval($cutoff_day);
 $now_job_date = strval($y) . '-' . strval($m) . '-' . strval($cutoff_day);
+echo $pre_job_date.'<br>';
+echo $now_job_date.'<br>';
 $date = date_create($pre_job_date);
 $formated_date = date_format($date, 'Y-m-d');
-//echo $formated_date;
-// echo $pre_job_date.'<br>';
-// echo $now_job_date.'<br>';
 
 $result2 = $db->query("select * from job_schedule where user_id ='$user_id' and job_name ='$job_name' and job_date BETWEEN '$pre_job_date' and '$now_job_date'");
 $salary = 0;
 foreach ($result2 as $value) {
     $tmp_st_time = new DateTime($value['job_date'] . ' ' . $value['start_time']);
-    echo date_format($tmp_st_time, "Y-m-d H:i") . '<br>';
 
     if (strtotime($value['start_time']) > strtotime($value['end_time'])) {
         $tmp_en_time = new Datetime($value['job_date'] . ' ' . $value['end_time'] . '+1 day');
@@ -64,18 +57,12 @@ foreach ($result2 as $value) {
     } else {
         $tmp_en_time = new DateTime($value['job_date'] . ' ' . $value['end_time']);
     }
-    echo date_format($tmp_en_time, "Y-m-d H:i") . '<br>';
 
-    
     $tmp_midst_time = new DateTime($value['job_date'] . ' ' . $start_mid_time);
-    echo date_format($tmp_midst_time, "Y-m-d H:i").'<br>';
 
     $tmp_premiden_time = new Datetime(($value['job_date'] . ' ' . $end_mid_time));
     $tmp_miden_time = new Datetime($value['job_date'] . ' ' . $end_mid_time.'+ 1 day');
     $tmp_miden_time->format('Y-m-d H:i');
-    echo date_format($tmp_premiden_time, "Y-m-d H:i") . '<br>';
-    echo date_format($tmp_miden_time, "Y-m-d H:i").'<br>';
-
 
     // 始まり深夜
     if ($tmp_st_time <= $tmp_premiden_time) {
@@ -163,9 +150,6 @@ foreach ($result2 as $value) {
         $salary += $day_salary;
     }
 }
-echo $salary;
-// $date = date_create(strval($y) . '-' . strval($m));
-// $formated_date = date_format($date, 'Y-m');
 $sql = "replace into job_income_aggregation(user_id,job_name,date,current_hourly_wage,current_mid_wage,current_cutoff_day,current_start_mid_time,current_end_mid_time,predict_income) values(:user_id,:job_name,:date,:current_hourly_wage,:current_mid_wage,:current_cutoff_day,:current_start_mid_time,:current_end_mid_time,:predict_income)";
 if ($stmt = $db->prepare($sql)) {
     $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
@@ -187,4 +171,3 @@ if(isset($_GET['sel_d'])){
     exit();
 }
 header("Location:home.php?y=$y&m=$m");
-// $result2 = $db->query("select * job_schedule where date > ")
