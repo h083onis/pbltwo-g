@@ -1,7 +1,7 @@
 <?php
     #データベースからユーザーの目標金額を取得
     session_start();
-    $id = $_SESSION['user_id'];
+    $user_id = $_SESSION['user_id'];
     // $user_id = 1; 
     $target_amount = 0;
     $db = new PDO("sqlite:part-time-job.db");
