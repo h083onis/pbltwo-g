@@ -202,6 +202,8 @@ function getValue2() {
 function chart_m(){ //月のグラフを表示
     "use strict";
 var ctx = document.getElementById('MyChart');
+ctx.width=window.innerWidth*0.01;
+ctx.height=window.innerHeight*0.8;
 ctx.width=window.innerWidth*0.1;
 ctx.height=window.innerHeight*0.8;
 const backgroundColor = 'rgba(0, 114, 188, 1)'; //グラフの色(青)
@@ -243,6 +245,8 @@ window.m_chart = new Chart(ctx, {
 
 function chart_y(){ //年のグラフ表示
     var ctx2 = document.getElementById("MyChart");
+    ctx2.width=window.innerWidth*0.1;
+    ctx2.height=window.innerHeight*0.07;
     window.y_chart = new Chart(ctx2, { // インスタンスをグローバル変数で生成
     type: 'line',
     data: { // ラベルとデータセット
