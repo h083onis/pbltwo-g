@@ -18,6 +18,7 @@
   <title>給与計算グラフ</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
+  <link rel="stylesheet" href="common.css">
   <script>
   window.onload = function () {
     var date = new Date();
@@ -32,6 +33,19 @@
   </script>
 </head>
 <body>
+
+  <div class="side-menu">
+    <nav>
+      <ul>
+        <li><a href='job_inf.php' class="navi info-icon"><img src="./img/information.svg" alt="個人情報" width="70px" height="40spx" /></a></li>
+        <li><a href='home.php' class="navi calender-icon"><img src="./img/calender.svg" alt="カレンダー" width="70px" height="40px" /></a></li>
+        <li><a href='initial_charts.php' class="navi money-icon"><img src="./img/money.svg" alt="給料計算" width="70px" height="40px" /></a></li>
+        <li><a href='' class="navi question-icon"><img src="./img/question.svg" alt="ヘルプ" width="70px" height="40px" /></a></li>
+        <li><a href='' class="navi logout-icon"><img src="./img/logout.svg" alt="ログアウト" width="70px" height="40px" /></a></li>
+      </ul>
+    </nav>
+  </div> 
+
 <div align="center">
 <input type="button" onClick="mode_m()" value="月" >
 <input type="button" onClick="mode_y()" value="年" >
