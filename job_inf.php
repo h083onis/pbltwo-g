@@ -63,57 +63,6 @@ $db = null;
       // location.href = 'bulletin.php?sel=' + sel;
     }
   </script>
-  <style>
-    .open {
-      cursor: pointer;
-    }
-
-    #pop-up1 {
-      display: none;
-    }
-
-    #pop-up2 {
-      display: none;
-    }
-
-    .overlay {
-      display: none;
-    }
-
-    .overlay {
-      display: none;
-      z-index: 9999;
-      background-color: #00000070;
-      position: fixed;
-      width: 100%;
-      height: 100vh;
-      top: 0;
-      left: 0;
-    }
-
-    .window {
-      width: 600px;
-      max-width: 600px;
-      height: 500px;
-      background-color: #ffffff;
-      border-radius: 6px;
-      /* display: flex; */
-      justify-content: center;
-      align-items: center;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    .close {
-      cursor: pointer;
-      position: absolute;
-      top: 4px;
-      right: 4px;
-      font-size: 20px;
-    }
-  </style>
 </head>
 
 <body>
@@ -135,20 +84,20 @@ $db = null;
       <span class="user"></span>
       <span class="user-id"><?= $user_id?></span>
     </div>
-    <?php
-    if(isset($_GET['e']) && $_GET['e']==2){
-      echo'パスワードが間違っています';
-    }
-    if(isset($_GET['check_pass']) && $_GET['check_pass'] == 'complete'){
-      echo 'パスワードの変更が完了しました';
-    }
-    ?>
     <div class="user-pass">
+      <?php
+        if(isset($_GET['e']) && $_GET['e']==2){
+          echo'パスワードが間違っています';
+        }
+        if(isset($_GET['check_pass']) && $_GET['check_pass'] == 'complete'){
+          echo 'パスワードの変更が完了しました';
+        }
+      ?>
       <div class="pass-change">
         <form id = 'check_pass' action='check_pass.php' method='post'>
           <input type='password'name='pass' minlength='8' required>
         </form>
-        <input type='submit' value='パスワード変更' form='check_pass' class="pass-button">
+        <input type='submit' value='変更' form='check_pass' class="button">
       </div>
       <span>※パスワード変更の際は現在のパスワードを入力してください</span>
     </div>
@@ -166,7 +115,7 @@ $db = null;
       <form id='edit_target' action = 'edit_target.php' method = 'post'>
         <input type ='number' name ='target_amount' min = 1 required>
       </form>
-      <input type='submit' value='目標金額の変更' form ='edit_target' class="target-button">
+      <input type='submit' value='金額変更' form ='edit_target' class="button">
     </div>
     <!-- 既に登録されているバイトの登録情報を表示する -->
     <?php
@@ -183,8 +132,8 @@ $db = null;
         } else {
           echo '<td>なし</td><td>なし</td>';
         }
-        echo '<td><input type="button" value="編集" onClick="location.href=\'job_inf.php?sel_job=' . $value['job_name'] . '\'"></td>';
-        echo '<td><input type="button" value="削除" onClick="location.href=\'job_inf.php?delete_job=' . $value['job_name'] . '\'"></td>';
+        echo '<td><input type="button" value="編集" onClick="location.href=\'job_inf.php?sel_job=' . $value['job_name'] . '\'" class="button-edit"></td>';
+        echo '<td><input type="button" value="×" onClick="location.href=\'job_inf.php?delete_job=' . $value['job_name'] . '\'" class="button-del"></td>';
         echo '</tr>';
       }
       echo '</table>';
@@ -199,17 +148,18 @@ $db = null;
       echo '項目への入力が不十分です';
     }
     ?>
-    <form action='add_inf.php' method='post'>
-      バイト名<input type='text' name='job_name' maxlength='10' required><br>
-      時給入力<input type='number' name='hourly_wage' min='0' required><br>
-      締め日<input type='number' name='cutoff_day' min='1' max='31' required><br>
-      給料日<input type='number' name='payment_day' min='1' max='31' required><br>
-      深夜手当時給入力<input type='number' name='mid_wage' min='0'><br>
-      深夜手当時間
-      <input type='time' name='start_mid_time' style='width:80px' step='60'>
-      ~
-      <input type='time' name='end_mid_time' style='width:80px' step='60'>
-      <input type='submit' value='登録'>
+    <form action='add_inf.php' method='post' class="add-form">
+      バイト名：<input type='text' name='job_name' required class="form"><br>
+      時給入力：<input type='number' name='hourly_wage' min='0' required class="form"><br>
+      締め日：<input type='number' name='cutoff_day' min='1' max='31' required class="form"><br>
+      給料日：<input type='number' name='payment_day' min='1' max='31' required class="form"><br>
+      深夜手当時給入力：<input type='number' name='mid_wage' min='0' class="form"><br>
+      <div class="form">深夜手当時間：
+        <input type='time' name='start_mid_time' style='width:80px' step='60'>
+        ~
+        <input type='time' name='end_mid_time' style='width:80px' step='60'>
+        <input type='submit' value='登録' class="button">
+      </div>
     </form>
     <!-- 編集画面 -->
     <div id="popup1" class='overlay'>
@@ -218,18 +168,18 @@ $db = null;
         <form action='edit_inf.php' method='post'>
           <?php
           foreach ($result2 as $value) {
-            echo 'バイト名<input type=\'text\' name=\'job_name\'value=', $value['job_name'], '>';
-            echo '時給入力<input type=\'number\' name=\'hourly_wage\' min=\'0\' value=', $value['hourly_wage'], ' required><br>';
-            echo '締め日<input type=\'number\' name=\'cutoff_day\' min=\'1\' max=\'31\' value=', $value['cutoff_day'], ' required><br>';
-            echo '給料日<input type=\'number\' name=\'payment_day\' min=\'1\' max=\'31\' value=', $value['payment_day'], ' required><br>';
-            echo '深夜手当時給入力<input type=\'number\' name=\'mid_wage\' min=\'0\' value=', $value['mid_wage'], '><br>';
-            echo '深夜手当時間';
+            echo 'バイト名：<input type=\'text\' name=\'job_name\'value=', $value['job_name'], '><br>';
+            echo '時給：<input type=\'number\' name=\'hourly_wage\' min=\'0\' value=', $value['hourly_wage'], ' required><br>';
+            echo '締め日：<input type=\'number\' name=\'cutoff_day\' min=\'1\' max=\'31\' value=', $value['cutoff_day'], ' required><br>';
+            echo '給料日：<input type=\'number\' name=\'payment_day\' min=\'1\' max=\'31\' value=', $value['payment_day'], ' required><br>';
+            echo '深夜手当時給：<input type=\'number\' name=\'mid_wage\' min=\'0\' value=', $value['mid_wage'], '><br>';
+            echo '深夜手当時間：';
             echo '<input type=\'time\' name=\'start_mid_time\' style=\'width:80px\' step=\'60\' value=', $value['start_mid_time'], '>~';
             echo '<input type=\'time\' name=\'end_mid_time\' style=\'width:80px\' step=\'60\' value=', $value['end_mid_time'], '>';
             echo '<input type=\'hidden\' name=\'pre_name\' value=', $value['job_name'], '>';
           }
           ?>
-          <input type='submit' value='変更'>
+          <br><input type='submit' value='変更' class="button button-change">
         </form>
       </div>
     </div>

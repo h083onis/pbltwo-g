@@ -14,25 +14,28 @@ unset($_SESSION['pass']);
 	<title>Document</title>
 </head>
 
-<body>
-	<img src="logo.png" alt="png" class="logo">
-	<h1>バイト管理アプリ</h1>
-	<form action="pass.php" method="post" name="login_form">
-		<table>
-			</tr>
-			<tr class="">
-				<td><input type="text" placeholder="ユーザー名" name="user_id" required></td>
-			</tr>
-			<tr class="">
-				<td><input type="password" placeholder="パスワード" name="pass" required></td>
-			</tr>
-		</table>
-		<div>
-			<input type="submit" value="ログイン">
-		</div>
-	</form>
-
-	<p><a href="add.php">新規登録はこちら</a></p>
+<body class="picture">
+	<div class="form-login">
+		<h1>smart</h1>
+		<h2>バイト管理アプリ<h2>
+		<form action="pass.php" method="post" name="login_form">
+			<table>
+				</tr>
+				<tr class="">
+					<td><input type="text" placeholder="　ユーザー名" name="user_id" required></td>
+				</tr>
+				<tr class="">
+					<td><input type="password" placeholder="　パスワード" name="pass" required></td>
+				</tr>
+			</table>
+			<div>
+				<input type="submit" value="ログイン" class="login">
+			</div>
+		</form>
+	
+		<input type="button" value="新規登録" onclick="location.href='add.php'" class="sign-up">
+		<!-- <p><a href="add.php">新規登録はこちら</a></p> -->
+	</div>
 </body>
 
 </html>

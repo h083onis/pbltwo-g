@@ -4,11 +4,13 @@
   /*background-color: rgb(230, 231, 231);*/
   background-color: rgb(228, 228, 228);
   padding: 30px;
-  width: 700px;
-  top: 0;                     
-  bottom: 0;                  
-  left: 0;                  
-  right: 0;                   
+  width: 750px;
+  height: 800px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   margin: auto;
 }
 
@@ -41,13 +43,18 @@
   margin-top: 20px;
 }
 
-.pass-button {
+.button {
   margin-left: 10px;
-  /*
-  color: white;
-  background-color: rgb(24, 230, 230);
+  border-radius: 20px;
   border: none;
-  */
+  background: rgb(114, 224, 224);
+  color: white;
+  font-size: 17px;
+  width: 100px;
+}
+
+.button:hover {
+  background-color: rgb(19, 221, 221);
 }
 
 /*目標金額*/
@@ -79,4 +86,98 @@
 .job-item {
   padding: 20px;
   background-color: rgb(190, 190, 190);
+}
+
+.button-edit {
+  border-radius: 20px;
+  width: 50px;
+}
+
+.button-edit:hover {
+  background: rgb(148, 148, 148);
+}
+
+.button-del {
+  font-size: 20px;
+  height: 25px;
+  width: 25px;
+  border: none;
+  background: rgb(243, 117, 117);
+  color: #ffffff;
+}
+
+.button-del:hover {
+  background: rgb(247, 75, 75);
+}
+
+/*バイト追加フォーム*/
+.form {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.add-form {
+  background-color: rgb(255, 255, 255);
+  border-radius: 20px;
+  width: 580px;
+  padding: 10px;
+}
+
+
+/*編集ポップアップ*/
+.button-change {
+  margin-top: 40px;
+}
+
+
+/*最初に設定*/
+.open {
+  cursor: pointer;
+}
+
+#pop-up1 {
+  display: none;
+}
+
+#pop-up2 {
+  display: none;
+}
+
+.overlay {
+  display: none;
+}
+
+.overlay {
+  display: none;
+  z-index: 9999;
+  background-color: #00000070;
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+}
+
+.window {
+  width: 600px;
+  max-width: 600px;
+  height: 400px;
+  background-color: #ffffff;
+  border-radius: 30px;
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+}
+
+.close {
+  cursor: pointer;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-size: 20px;
 }
