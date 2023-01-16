@@ -40,15 +40,19 @@ if ($tem_m == 0) {
     $tem_y = $y - 1;
 }
 
-$pre_job_date = strval($tem_y) . '-' . strval($tem_m) . '-' . strval($cutoff_day);
-$now_job_date = strval($y) . '-' . strval($m) . '-' . strval($cutoff_day);
-echo $pre_job_date.'<br>';
-echo $now_job_date.'<br>';
-$date = date_create($pre_job_date);
-$formated_date = date_format($date, 'Y-m-d');
+$pre_job_date = date_create(strval($tem_y) . '-' . strval($tem_m) . '-' . strval($cutoff_day));
+$formated_pre_date = date_format($pre_job_date, 'Y-m-d');
+$now_job_date = date_create(strval($y) . '-' . strval($m) . '-' . strval($cutoff_day));
+$formated_now_date = date_format($now_job_date, 'Y-m-d');
+// echo $pre_job_date.'<br>';
+// echo $now_job_date.'<br>';
+$formated_date = $formated_pre_date;
 
-$result2 = $db->query("select * from job_schedule where user_id ='$user_id' and job_name ='$job_name' and job_date BETWEEN '$pre_job_date' and '$now_job_date'");
+$result2 = $db->query("select * from job_schedule where user_id ='$user_id' and job_name ='$job_name' and job_date BETWEEN '$formated_pre_date' and '$formated_now_date'");
 $salary = 0;
+// foreach($result2 as $value){
+//     echo $value['job_date'].'<br>';
+// }
 foreach ($result2 as $value) {
     $tmp_st_time = new DateTime($value['job_date'] . ' ' . $value['start_time']);
 
