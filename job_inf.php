@@ -212,8 +212,8 @@ $db = null;
           <input type='password' name='first_pass' minlength='8' required></br>
           <input type='password' name='second_pass' minlength='8' required> 
         </form>
-        <input type='button' value='やめる' onclick="close_popup3()"><br>
-        <input type='submit' value='変更' form='edit_pass'>
+        <input type='button' value='やめる' onclick="close_popup3()" class="button">
+        <input type='submit' value='変更' form='edit_pass' class="button">
       </div>
     </div>
     </div>
