@@ -1,7 +1,7 @@
 <?php
-// session_start();
-// $user_id = $_SESSION['id'];
-$user_id = 1;
+session_start();
+$user_id = $_SESSION['id'];
+// $user_id = 1;
 $pre_name = $_POST['pre_name'];
 $job_name = $_POST['job_name'];
 $hourly_wage = $_POST['hourly_wage'];

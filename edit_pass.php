@@ -1,7 +1,7 @@
 <?php
-// session_start();
-// $user_id =$_SESSION['user_id'];
-$user_id = 1;
+session_start();
+$user_id =$_SESSION['user_id'];
+// $user_id = 1;
 $new_target = $_POST['target_amount'];
 $first_pass = $_POST['first_pass'];
 $second_pass= $_POST['second_pass'];
