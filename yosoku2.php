@@ -32,6 +32,16 @@ if ($num_rows == 0) {
 }
 // echo  $start_mid_time;
 
+if($mid_wage == 0){
+    $mid_wage = $hourly_wage;
+}
+
+if((!isset($start_mid_time))&& !isset($end_mid_time)){
+    $start_mid_time = new DateTime('22:00');
+    $start_mid_time->format('H:i');
+    $start_mid_time = new DateTime('5:00');
+    $start_mid_time->format('H:i');
+}
 
 $tem_m = $m - 1;
 $tem_y = $y;
@@ -156,7 +166,7 @@ foreach ($result2 as $value) {
     }
 }
 
-echo $salary;
+//echo $salary;
 
 $sql = "replace into job_income_aggregation(user_id,job_name,date,current_hourly_wage,current_mid_wage,current_cutoff_day,current_start_mid_time,current_end_mid_time,predict_income) values(:user_id,:job_name,:date,:current_hourly_wage,:current_mid_wage,:current_cutoff_day,:current_start_mid_time,:current_end_mid_time,:predict_income)";
 if ($stmt = $db->prepare($sql)) {
