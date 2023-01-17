@@ -204,10 +204,11 @@ function getValue2() {
     $nowIncome_sum = [];
     $db = new PDO("sqlite:part-time-job.db");
     $now = date('Y');
-    $result = $db->query("select sum(predict_income) from job_income_aggregation where user_id = '$user_id' and date like '$now%' group by date ");
+    $result = $db->query("select sum(predict_income) ,substr(date, -2) from job_income_aggregation where user_id = '$user_id' and date like '$now%' group by date ");
     $db = null;
     foreach ($result as $value) {
-      $nowIncome_sum[] = $value['sum(predict_income)'];
+      $month = (int)$value['substr(date, -2)'];
+      $nowIncome_sum[$month-1] = $value['sum(predict_income)'];
     }
     $json_array = json_encode($nowIncome_sum); //配列をjson形式に変換
   ?>
