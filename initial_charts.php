@@ -31,6 +31,12 @@
     now_Ym.value = YearMonth;
   }  
   </script>
+  <style>
+    .chart_container {
+    width: 75%;
+    margin: auto;
+  }
+</style>
 </head>
 <body>
 
@@ -56,7 +62,7 @@
 <form method="post" action="m_charts.php">
 <input type="month" id = "select_Ym" name="YYYY-mm" onchange = "this.form.submit()">
 </form>
-<div style="position: relative">
+<div class="chart_container">
   <canvas id="MyChart"></canvas>
 </div>
 </div>
@@ -204,10 +210,11 @@ function getValue2() {
     $nowIncome_sum = [];
     $db = new PDO("sqlite:part-time-job.db");
     $now = date('Y');
-    $result = $db->query("select sum(predict_income) from job_income_aggregation where user_id = '$user_id' and date like '$now%' group by date ");
+    $result = $db->query("select sum(predict_income) ,substr(date, -2) from job_income_aggregation where user_id = '$user_id' and date like '$now%' group by date ");
     $db = null;
     foreach ($result as $value) {
-      $nowIncome_sum[] = $value['sum(predict_income)'];
+      $month = (int)$value['substr(date, -2)'];
+      $nowIncome_sum[$month-1] = $value['sum(predict_income)'];
     }
     $json_array = json_encode($nowIncome_sum); //配列をjson形式に変換
   ?>
@@ -268,9 +275,9 @@ window.m_chart = new Chart(ctx, {
 
 function chart_y(){ //年のグラフ表示
     var ctx2 = document.getElementById("MyChart");
-    ctx2.width=window.innerWidth*0.1;
+/*     ctx2.width=window.innerWidth*0.1;
     ctx2.height=window.innerHeight*0.07;
-    window.y_chart = new Chart(ctx2, { // インスタンスをグローバル変数で生成
+ */    window.y_chart = new Chart(ctx2, { // インスタンスをグローバル変数で生成
     type: 'line',
     data: { // ラベルとデータセット
       labels: ["1月","2月","3月","4月", "5月", "6月", "7月", "8月","9月","10月","11月","12月"],
@@ -288,6 +295,8 @@ function chart_y(){ //年のグラフ表示
         }],
     },
     options: {
+      responsive: true,
+      maintainAspectRatio: false 
     }
   });
 }    
