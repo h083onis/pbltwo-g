@@ -224,7 +224,7 @@ function chart_m(){ //月のグラフを表示
     "use strict";
 var ctx = document.getElementById('MyChart');
 ctx.width=window.innerWidth*0.01;
-ctx.height=window.innerHeight*0.8;
+ctx.height=window.innerHeight*0.9;
 const backgroundColor = 'rgba(0, 114, 188, 1)'; //グラフの色(青)
 const counter = {
   id: 'counter',
@@ -249,7 +249,7 @@ window.m_chart = new Chart(ctx, {
                     backgroundColor,
                     'rgba(0, 0, 0, 0)',
                 ],
-                radius: 300,  
+                radius: 250,  
                 cutout: '82%',  //チャートの幅(%)
                 borderWidth: 1,   //枠線
                 borderColor: 'rgba(0, 0, 0, 1)' // 棒の枠線の色(黒)
