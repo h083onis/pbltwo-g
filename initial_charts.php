@@ -235,7 +235,7 @@ function chart_m(){ //月のグラフを表示
   "use strict";
 var ctx = document.getElementById('MyChart');
 ctx.width=window.innerWidth*0.01;
-ctx.height=window.innerHeight*0.8;
+ctx.height=window.innerHeight*0.9;
 const backgroundColor = 'rgba(0, 114, 188, 1)'; //グラフの色(青)
 const counter = {
   id: 'counter',
@@ -246,7 +246,6 @@ const counter = {
     ctx.fillRect(width / 2, top + (height / 2), 0, 0);
     ctx.font = '47px sans-serif';
     ctx.textAlign = 'center';
-
     // 位置調整
     ctx.fillText(chartVal_income + '円' + '/' + chartVal_target + '円', width / 2, top + (height / 2));
   }
@@ -260,7 +259,7 @@ window.m_chart = new Chart(ctx, {
                     backgroundColor,
                     'rgba(0, 0, 0, 0)',
                 ],
-                radius: 300,  
+                radius: 250,  
                 cutout: '82%',  //チャートの幅(%)
                 borderWidth: 1,   //枠線
                 borderColor: 'rgba(0, 0, 0, 1)' // 棒の枠線の色(黒)
@@ -275,9 +274,7 @@ window.m_chart = new Chart(ctx, {
 
 function chart_y(){ //年のグラフ表示
     var ctx2 = document.getElementById("MyChart");
-/*     ctx2.width=window.innerWidth*0.1;
-    ctx2.height=window.innerHeight*0.07;
- */    window.y_chart = new Chart(ctx2, { // インスタンスをグローバル変数で生成
+    window.y_chart = new Chart(ctx2, { // インスタンスをグローバル変数で生成
     type: 'line',
     data: { // ラベルとデータセット
       labels: ["1月","2月","3月","4月", "5月", "6月", "7月", "8月","9月","10月","11月","12月"],
