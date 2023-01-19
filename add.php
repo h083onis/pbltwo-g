@@ -12,31 +12,33 @@ header("refresh:1200;url=index.php");
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="index.css">
 
   <title>Document</title>
 </head>
 
-<body>
-  <h1>新規登録</h1>
+<body class="picture">
+  <div class="form-login">
+  <h3>新規登録</h3>
   <form action="check.php" method="post" name="info">
     <table>
       <tr class="">
         <p class="form_caution">全項目が必須入力です。</p>
       </tr>
       <tr class="">
-        <td><p><input type="text" placeholder="ユーザー名" name="user_id" required></p></td>
+        <td><p><input type="text" placeholder="  ユーザー名" name="user_id" required></p></td>
       </tr>
       <tr class="">
-        <td><input type="password" placeholder="パスワード" name="pass" required></p></td>
+        <td><input type="password" placeholder="  パスワード" name="pass" required></p></td>
       </tr>
     </table>
     <form action="check.php" method="post">
       <div>
-        <input type="submit" value="登録">
+        <input type="submit" value="登録" class="login">
       </div>
     </form>
   </form>
-  <p><a href="index.php">TOP</a></p>
+  <input type="button" value="ログイン画面に戻る" onclick="location.href='index.php'" class="sign-up">
 </body>
 
 </html>

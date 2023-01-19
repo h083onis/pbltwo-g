@@ -67,22 +67,6 @@ else if($d > $cutoff_day){
 }
 
 $pre_job_date = date_create(strval($tem_y) . '-' . strval($tem_m) . '-' . strval($cutoff_day));
-=======
-$tem_cutoff_day = $cutoff_day+1;
-if($tem_cutoff_day==32){
-    if($tem_m == 12){
-        $tem_y = $tem_y + 1;
-        $tem_m = 1;
-        $tem_cutoff_day = 1;
-    }
-    else{
-        $tem_cutoff_day = 1;
-        $tem_m += 1;
-    }
-}
-
-$pre_job_date = date_create(strval($tem_y) . '-' . strval($tem_m) . '-' . strval($tem_cutoff_day));
->>>>>>> d4923c9f3a7ddaf4793975a0fe9da87d6b9e1e03
 $formated_pre_date = date_format($pre_job_date, 'Y-m-d');
 $now_job_date = date_create(strval($y) . '-' . strval($m) . '-' . strval($cutoff_day));
 $formated_now_date = date_format($now_job_date, 'Y-m-d');

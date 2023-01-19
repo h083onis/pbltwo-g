@@ -23,12 +23,15 @@ $db = null;
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="index.css">
   <title>Document</title>
 </head>
 
-<body>
-  <h1>登録完了しました。</h1>
-  <p><a href="index.php">home</a></p>
+<body class="picture">
+  <div class="form-login">
+    <h3>登録完了しました。</h3>
+    <p><a href="index.php">ログイン画面に戻る</a></p>
+  </div>
 </body>
 
 </html>

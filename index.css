@@ -112,3 +112,7 @@ p {
 .sign-up:hover {
     background-color: rgb(34, 34, 167);
 }
+
+h3 {
+    font-size: 35px;
+}
