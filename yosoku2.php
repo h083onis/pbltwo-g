@@ -42,6 +42,7 @@ if((!isset($start_mid_time))&& !isset($end_mid_time)){
     $end_mid_time = new DateTime('05:00');
     $end_mid_time->format('H:i');
 }
+// echo gettype($end_mid_time);
 
 $tem_m = $m - 1;
 $tem_y = $y;
@@ -50,7 +51,20 @@ if ($tem_m == 0) {
     $tem_y = $y - 1;
 }
 
-$pre_job_date = date_create(strval($tem_y) . '-' . strval($tem_m) . '-' . strval($cutoff_day));
+$tem_cutoff_day = $cutoff_day+1;
+if($tem_cutoff_day==32){
+    if($tem_m == 12){
+        $tem_y = $tem_y + 1;
+        $tem_m = 1;
+        $tem_cutoff_day = 1;
+    }
+    else{
+        $tem_cutoff_day = 1;
+        $tem_m += 1;
+    }
+}
+
+$pre_job_date = date_create(strval($tem_y) . '-' . strval($tem_m) . '-' . strval($tem_cutoff_day));
 $formated_pre_date = date_format($pre_job_date, 'Y-m-d');
 $now_job_date = date_create(strval($y) . '-' . strval($m) . '-' . strval($cutoff_day));
 $formated_now_date = date_format($now_job_date, 'Y-m-d');
@@ -178,6 +192,9 @@ foreach ($result2 as $value) {
 
 echo $salary;
 
+// echo gettype($start_mid_time);
+// echo $start_mid_time;
+
 $sql = "replace into job_income_aggregation(user_id,job_name,date,current_hourly_wage,current_mid_wage,current_cutoff_day,current_start_mid_time,current_end_mid_time,predict_income) values(:user_id,:job_name,:date,:current_hourly_wage,:current_mid_wage,:current_cutoff_day,:current_start_mid_time,:current_end_mid_time,:predict_income)";
 if ($stmt = $db->prepare($sql)) {
     $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
@@ -198,4 +215,4 @@ if(isset($_GET['sel_d'])){
     header("Location:home.php?y=$y&m=$m&sel_d=$sel_d");
     exit();
 }
-//header("Location:home.php?y=$y&m=$m");
+header("Location:home.php?y=$y&m=$m");
