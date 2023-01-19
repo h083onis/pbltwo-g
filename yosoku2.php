@@ -4,6 +4,7 @@ $user_id = $_SESSION['user_id'];
 // $user_id = 1;
 $y = $_GET['y'];
 $m = $_GET['m'];
+$d = $_GET['d'];
 $job_name = $_GET['job_name'];
 
 $db = new PDO("sqlite:part-time-job.db");
@@ -32,22 +33,21 @@ if ($num_rows == 0) {
 }
 // echo  $start_mid_time;
 
-if($mid_wage == 0){
-    $mid_wage = $hourly_wage;
-}
-
-if((!isset($start_mid_time))&& !isset($end_mid_time)){
-    $start_mid_time = new DateTime('22:00');
-    $start_mid_time->format('H:i');
-    $end_mid_time = new DateTime('05:00');
-    $end_mid_time->format('H:i');
-}
-
 $tem_m = $m - 1;
 $tem_y = $y;
 if ($tem_m == 0) {
     $tem_m = 12;
     $tem_y = $y - 1;
+}
+
+if($d > $cutoff_day && $m == 12){
+    $tem_m += 1;
+    $y += 1;
+    $m = 1;
+}
+else if($d > $cutoff_day){
+    $tem_m += 1;
+    $m += 1;
 }
 
 $pre_job_date = date_create(strval($tem_y) . '-' . strval($tem_m) . '-' . strval($cutoff_day));
@@ -84,8 +84,19 @@ foreach ($result2 as $value) {
     $tmp_miden_time = new Datetime($value['job_date'] . ' ' . $end_mid_time.'+ 1 day');
     $tmp_miden_time->format('Y-m-d H:i');
 
+    // 深夜制度なし
+    if($mid_wage == 0){
+        $difference = date_diff($tmp_st_time, $tmp_en_time);
+        $min_time = $difference->days * 24 * 60;
+        $min_time += $difference->h * 60;
+        $min_time += $difference->i;    //勤務時間(分
+        $min_wage = $hourly_wage / 60;  //分給
+        $day_salary = $min_wage * $min_time;
+        $salary += $day_salary;
+        echo '0<br>';
+    }
     // 始まり深夜
-    if ($tmp_st_time <= $tmp_premiden_time) {
+    else if ($tmp_st_time <= $tmp_premiden_time) {
         //始まり～5:00
         $difference = date_diff($tmp_st_time, $tmp_premiden_time);
         $min_time = $difference->days * 24 * 60;
