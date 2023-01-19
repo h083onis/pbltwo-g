@@ -33,21 +33,6 @@ if ($num_rows == 0) {
 }
 // echo  $start_mid_time;
 
-<<<<<<< HEAD
-=======
-if($mid_wage == 0){
-    $mid_wage = $hourly_wage;
-}
-
-if((!isset($start_mid_time))&& !isset($end_mid_time)){
-    $start_mid_time = new DateTime('22:00');
-    $start_mid_time->format('H:i');
-    $end_mid_time = new DateTime('05:00');
-    $end_mid_time->format('H:i');
-}
-// echo gettype($end_mid_time);
-
->>>>>>> d4923c9f3a7ddaf4793975a0fe9da87d6b9e1e03
 $tem_m = $m - 1;
 $tem_y = $y;
 if ($tem_m == 0) {
@@ -55,7 +40,6 @@ if ($tem_m == 0) {
     $tem_y = $y - 1;
 }
 
-<<<<<<< HEAD
 if($d > $cutoff_day && $m == 12){
     $tem_m += 1;
     $y += 1;
