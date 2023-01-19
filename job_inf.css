@@ -50,7 +50,7 @@
   background: rgb(114, 224, 224);
   color: white;
   font-size: 17px;
-  width: 100px;
+  width: 130px;
 }
 
 .button:hover {
@@ -187,4 +187,19 @@
   top: 4px;
   right: 4px;
   font-size: 20px;
+}
+
+/* パスワード変更 */
+.button-pass {
+  display: flex;
+  margin-left: 140px;
+  margin-top: 50px;
+}
+
+.change {
+  margin-left: 20px;
+}
+
+.cancel {
+  margin-right: 20px;
 }
