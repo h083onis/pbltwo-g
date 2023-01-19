@@ -4,6 +4,7 @@ $user_id = $_SESSION['user_id'];
 // $user_id = 1;
 $y = $_GET['y'];
 $m = $_GET['m'];
+$d = $_GET['d'];
 $job_name = $_GET['job_name'];
 
 $db = new PDO("sqlite:part-time-job.db");
@@ -32,18 +33,6 @@ if ($num_rows == 0) {
 }
 // echo  $start_mid_time;
 
-if($mid_wage == 0){
-    $mid_wage = $hourly_wage;
-}
-
-if((!isset($start_mid_time))&& !isset($end_mid_time)){
-    $start_mid_time = new DateTime('22:00');
-    $start_mid_time->format('H:i');
-    $end_mid_time = new DateTime('05:00');
-    $end_mid_time->format('H:i');
-}
-// echo gettype($end_mid_time);
-
 $tem_m = $m - 1;
 $tem_y = $y;
 if ($tem_m == 0) {
@@ -51,32 +40,26 @@ if ($tem_m == 0) {
     $tem_y = $y - 1;
 }
 
-$tem_cutoff_day = $cutoff_day+1;
-if($tem_cutoff_day==32){
-    if($tem_m == 12){
-        $tem_y = $tem_y + 1;
-        $tem_m = 1;
-        $tem_cutoff_day = 1;
-    }
-    else{
-        $tem_cutoff_day = 1;
-        $tem_m += 1;
-    }
+if($d > $cutoff_day && $m == 12){
+    $tem_m += 1;
+    $y += 1;
+    $m = 1;
+}
+else if($d > $cutoff_day){
+    $tem_m += 1;
+    $m += 1;
 }
 
-$pre_job_date = date_create(strval($tem_y) . '-' . strval($tem_m) . '-' . strval($tem_cutoff_day));
+$pre_job_date = date_create(strval($tem_y) . '-' . strval($tem_m) . '-' . strval($cutoff_day));
 $formated_pre_date = date_format($pre_job_date, 'Y-m-d');
 $now_job_date = date_create(strval($y) . '-' . strval($m) . '-' . strval($cutoff_day));
 $formated_now_date = date_format($now_job_date, 'Y-m-d');
-echo $formated_pre_date.'から<br>';
-echo $formated_now_date.'まで<br>';
-//$formated_date = $formated_pre_date;
+//echo $formated_pre_date.'から<br>';
+//echo $formated_now_date.'まで<br>';
 
 $result2 = $db->query("select * from job_schedule where user_id ='$user_id' and job_name ='$job_name' and job_date BETWEEN '$formated_pre_date' and '$formated_now_date'");
 $salary = 0;
-// foreach($result2 as $value){
-//     echo $value['job_date'].'<br>';
-// }
+
 foreach ($result2 as $value) {
     $tmp_st_time = new DateTime($value['job_date'] . ' ' . $value['start_time']);
     $tmp_st_time->format('Y-m-d H:i');
@@ -98,8 +81,19 @@ foreach ($result2 as $value) {
     $tmp_miden_time = new Datetime($value['job_date'] . ' ' . $end_mid_time.'+ 1 day');
     $tmp_miden_time->format('Y-m-d H:i');
 
+    // 深夜制度なし
+    if($mid_wage == 0){
+        $difference = date_diff($tmp_st_time, $tmp_en_time);
+        $min_time = $difference->days * 24 * 60;
+        $min_time += $difference->h * 60;
+        $min_time += $difference->i;    //勤務時間(分
+        $min_wage = $hourly_wage / 60;  //分給
+        $day_salary = $min_wage * $min_time;
+        $salary += $day_salary;
+        //echo '0<br>';
+    }
     // 始まり深夜
-    if ($tmp_st_time <= $tmp_premiden_time) {
+    else if ($tmp_st_time <= $tmp_premiden_time) {
         //始まり～5:00
         $difference = date_diff($tmp_st_time, $tmp_premiden_time);
         $min_time = $difference->days * 24 * 60;
@@ -116,7 +110,7 @@ foreach ($result2 as $value) {
         $min_wage = $hourly_wage / 60;
         $day_salary = $min_wage * $min_time;
         $salary += $day_salary;
-        echo '1<br>';
+        //echo '1<br>';
     }
     // 深夜なし
     else if ($tmp_st_time <= $tmp_midst_time && $tmp_en_time <= $tmp_midst_time) {
@@ -127,7 +121,7 @@ foreach ($result2 as $value) {
         $min_wage = $hourly_wage / 60;  //分給
         $day_salary = $min_wage * $min_time;
         $salary += $day_salary;
-        echo '2<br>';
+        //echo '2<br>';
     }
     //終わりが深夜
     else if ($tmp_st_time <= $tmp_midst_time && ($tmp_en_time > $tmp_midst_time && $tmp_en_time <= $tmp_miden_time)) {
@@ -147,7 +141,7 @@ foreach ($result2 as $value) {
         $min_wage = $mid_wage / 60;
         $day_salary = $min_wage * $min_time;
         $salary += $day_salary;
-        echo '3<br>';
+        //echo '3<br>';
     }
     //深夜のみ
     else if ($tmp_st_time > $tmp_midst_time && $tmp_en_time <= $tmp_miden_time) {
@@ -158,7 +152,7 @@ foreach ($result2 as $value) {
         $min_wage = $mid_wage / 60;
         $day_salary = $min_wage * $min_time;
         $salary += $day_salary;
-        echo '4<br>';
+        //echo '4<br>';
     }
     //深夜またぎ
     else if ($tmp_st_time <= $tmp_midst_time && $tmp_en_time > $tmp_miden_time) {
@@ -186,11 +180,11 @@ foreach ($result2 as $value) {
         $min_wage = $hourly_wage / 60;
         $day_salary = $min_wage * $min_time;
         $salary += $day_salary;
-        echo '5<br>';
+        //echo '5<br>';
     }
 }
 
-echo $salary;
+//echo $salary;
 
 // echo gettype($start_mid_time);
 // echo $start_mid_time;

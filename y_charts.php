@@ -278,7 +278,7 @@ window.m_chart = new Chart(ctx, {
 
 function chart_y(){ //年のグラフ表示
     var ctx2 = document.getElementById("MyChart");
-    ctx2.height=window.innerHeight*0.8;
+    ctx2.height=window.innerHeight*0.9;
     window.y_chart = new Chart(ctx2, { // インスタンスをグローバル変数で生成
     type: 'line',
     data: { // ラベルとデータセット
