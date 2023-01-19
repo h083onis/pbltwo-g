@@ -4,10 +4,10 @@ $user_id = $_SESSION['user_id'];
 // $user_id = 1;
 $y = $_GET['y'];
 $m = $_GET['m'];
-if(isset($_GET['d'])){
+if (isset($_GET['d'])) {
     $d = $_GET['d'];
 }
-if(isset($_GET['sel_d'])){
+if (isset($_GET['sel_d'])) {
     $d = $_GET['sel_d'];
 }
 
@@ -49,33 +49,35 @@ $tem_pre_y = $y;
 $tem_aft_m = $m;
 $tem_aft_y = $y;
 
-if ($tem_pre_m == 0) {
+if ($tem_pre_m == 0 && $d > $cutoff_day) {
+    $tem_pre_m = $m - 1;
+    $tem_pre_y = $y;
+} elseif ($tem_pre_m == 0) {
     $tem_pre_m = 12;
     $tem_pre_y = $y - 1;
 }
 
-$tem_cutoff_day = $cutoff_day+1;
-if($tem_cutoff_day==32){
-    if($tem_m == 12){
-        $tem_y = $tem_y + 1;
-        $tem_m = 1;
+$tem_cutoff_day = $cutoff_day + 1;
+if ($tem_cutoff_day == 32) {
+    if ($tem_pre_m == 12) {
+        $tem_pre_y = $tem_pre_y + 1;
+        $tem_pre_m = 1;
         $tem_cutoff_day = 1;
-    }
-    else{
+    } else {
         $tem_cutoff_day = 1;
         $tem_m += 1;
     }
 }
 
-if($d > $cutoff_day && $m == 12){
+if ($d > $cutoff_day && $m == 12) {
     $tem_pre_m += 1;
     $tem_aft_y += 1;
     $tem_aft_m = 1;
-}
-else if($d > $cutoff_day){
+} else if ($d > $cutoff_day) {
     $tem_pre_m += 1;
     $tem_aft_m += 1;
 }
+
 
 $pre_job_date = date_create(strval($tem_pre_y) . '-' . strval($tem_pre_m) . '-' . strval($tem_cutoff_day));
 $formated_pre_date = date_format($pre_job_date, 'Y-m-d');
@@ -83,8 +85,8 @@ $now_job_date = date_create(strval($tem_aft_y) . '-' . strval($tem_aft_m) . '-' 
 $formated_now_date = date_format($now_job_date, 'Y-m-d');
 $cutoff_month = date_create(strval($tem_aft_y) . '-' . strval($tem_aft_m));
 $format_cutoff_month = date_format($cutoff_month, 'Y-m');
-//echo $formated_pre_date.'から<br>';
-//echo $formated_now_date.'まで<br>';
+echo $formated_pre_date . 'から<br>';
+echo $formated_now_date . 'まで<br>';
 
 $result2 = $db->query("select * from job_schedule where user_id ='$user_id' and job_name ='$job_name' and job_date BETWEEN '$formated_pre_date' and '$formated_now_date'");
 $salary = 0;
@@ -106,12 +108,12 @@ foreach ($result2 as $value) {
 
     $tmp_premiden_time = new Datetime(($value['job_date'] . ' ' . $end_mid_time));
     $tmp_premiden_time->format('Y-m-d H:i');
-    
-    $tmp_miden_time = new Datetime($value['job_date'] . ' ' . $end_mid_time.'+ 1 day');
+
+    $tmp_miden_time = new Datetime($value['job_date'] . ' ' . $end_mid_time . '+ 1 day');
     $tmp_miden_time->format('Y-m-d H:i');
 
     // 深夜制度なし
-    if($mid_wage == 0){
+    if ($mid_wage == 0) {
         $difference = date_diff($tmp_st_time, $tmp_en_time);
         $min_time = $difference->days * 24 * 60;
         $min_time += $difference->h * 60;
@@ -120,6 +122,17 @@ foreach ($result2 as $value) {
         $day_salary = $min_wage * $min_time;
         $salary += $day_salary;
         //echo '0<br>';
+    }
+    //朝始まり朝終わり
+    else if ($tmp_st_time <= $tmp_premiden_time && $tmp_en_time <= $tmp_premiden_time) {
+        $difference = date_diff($tmp_st_time, $tmp_en_time);
+        $min_time = $difference->days * 24 * 60;
+        $min_time += $difference->h * 60;
+        $min_time += $difference->i;    //勤務時間(分
+        $min_wage = $mid_wage / 60;  //分給
+        $day_salary = $min_wage * $min_time;
+        $salary += $day_salary;
+        //echo '0.5<br>';
     }
     // 始まり深夜
     else if ($tmp_st_time <= $tmp_premiden_time) {
@@ -233,7 +246,7 @@ if ($stmt = $db->prepare($sql)) {
 }
 
 $db = null;
-if(isset($_GET['sel_d'])){
+if (isset($_GET['sel_d'])) {
     $sel_d = $_GET['sel_d'];
     header("Location:home.php?y=$y&m=$m&sel_d=$sel_d");
     exit();
