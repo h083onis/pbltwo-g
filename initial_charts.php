@@ -19,6 +19,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
   <link rel="stylesheet" href="common.css">
+  <link rel="stylesheet" href="charts.css">
   <script>
   window.onload = function () {
     var date = new Date();
@@ -53,8 +54,8 @@
   </div> 
 
 <div align="center">
-<input type="button" onClick="mode_m()" value="月" >
-<input type="button" onClick="mode_y()" value="年" >
+<input type="button" onClick="mode_m()" value="月" class="button month">
+<input type="button" onClick="mode_y()" value="年" class="button year">
 <form method="post" action="y_charts.php">
 <select name="year" id="select_y" onchange = "this.form.submit()">
 </select>
