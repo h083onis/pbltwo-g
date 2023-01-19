@@ -4,12 +4,23 @@ $user_id = $_SESSION['user_id'];
 // $user_id = 1;
 $y = $_GET['y'];
 $m = $_GET['m'];
-$d = $_GET['d'];
+if(isset($_GET['d'])){
+    $d = $_GET['d'];
+}
+if(isset($_GET['sel_d'])){
+    $d = $_GET['sel_d'];
+}
+
 $job_name = $_GET['job_name'];
 
 $db = new PDO("sqlite:part-time-job.db");
 $sel_date = date_create(strval($y) . '-' . strval($m));
 $sel_formated_date = date_format($sel_date, 'Y-m');
+
+
+//$sel_date = date_create(strval($tem_aft_y) . '-' . strval($tem_aft_m));
+//$sel_formated_date = date_format($sel_date, 'Y-m');
+
 $job_count = $db->query("select count(*) from job_income_aggregation where user_id = '$user_id' and job_name = '$job_name' and date = '$sel_formated_date'");
 $num_rows = $job_count->fetchColumn();
 if ($num_rows == 0) {
@@ -33,27 +44,32 @@ if ($num_rows == 0) {
 }
 // echo  $start_mid_time;
 
-$tem_m = $m - 1;
-$tem_y = $y;
-if ($tem_m == 0) {
-    $tem_m = 12;
-    $tem_y = $y - 1;
+$tem_pre_m = $m - 1;
+$tem_pre_y = $y;
+$tem_aft_m = $m;
+$tem_aft_y = $y;
+
+if ($tem_pre_m == 0) {
+    $tem_pre_m = 12;
+    $tem_pre_y = $y - 1;
 }
 
 if($d > $cutoff_day && $m == 12){
-    $tem_m += 1;
-    $y += 1;
-    $m = 1;
+    $tem_pre_m += 1;
+    $tem_aft_y += 1;
+    $tem_aft_m = 1;
 }
 else if($d > $cutoff_day){
-    $tem_m += 1;
-    $m += 1;
+    $tem_pre_m += 1;
+    $tem_aft_m += 1;
 }
 
-$pre_job_date = date_create(strval($tem_y) . '-' . strval($tem_m) . '-' . strval($cutoff_day));
+$pre_job_date = date_create(strval($tem_pre_y) . '-' . strval($tem_pre_m) . '-' . strval($cutoff_day));
 $formated_pre_date = date_format($pre_job_date, 'Y-m-d');
-$now_job_date = date_create(strval($y) . '-' . strval($m) . '-' . strval($cutoff_day));
+$now_job_date = date_create(strval($tem_aft_y) . '-' . strval($tem_aft_m) . '-' . strval($cutoff_day));
 $formated_now_date = date_format($now_job_date, 'Y-m-d');
+$cutoff_month = date_create(strval($tem_aft_y) . '-' . strval($tem_aft_m));
+$format_cutoff_month = date_format($cutoff_month, 'Y-m');
 //echo $formated_pre_date.'から<br>';
 //echo $formated_now_date.'まで<br>';
 
@@ -193,7 +209,7 @@ $sql = "replace into job_income_aggregation(user_id,job_name,date,current_hourly
 if ($stmt = $db->prepare($sql)) {
     $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
     $stmt->bindValue(':job_name', $job_name, PDO::PARAM_STR);
-    $stmt->bindValue(':date', $sel_formated_date, PDO::PARAM_STR);
+    $stmt->bindValue(':date', $format_cutoff_month, PDO::PARAM_STR);
     $stmt->bindValue(':current_hourly_wage', $hourly_wage, PDO::PARAM_STR);
     $stmt->bindValue(':current_mid_wage', $mid_wage, PDO::PARAM_STR);
     $stmt->bindValue(':current_cutoff_day', $cutoff_day, PDO::PARAM_INT);
@@ -209,4 +225,4 @@ if(isset($_GET['sel_d'])){
     header("Location:home.php?y=$y&m=$m&sel_d=$sel_d");
     exit();
 }
-header("Location:home.php?y=$y&m=$m");
+header("Location:home.php?y=$y&m=$m&sel_d=$d");
