@@ -20,6 +20,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
   <link rel="stylesheet" href="common.css">
   <link rel="stylesheet" href="charts.css">
+  <style>
+    .chart_container {
+    width: 75%;
+    margin: auto;
+  }
+</style>
 </head>
 <body>
 
@@ -45,7 +51,7 @@
 <form method="post" action="">
 <input type="month" id="select_Ym" name="YYYY-mm" value="<?php echo $_POST['YYYY-mm'];?>" onchange = "this.form.submit()">
 </form>
-<div style="position: relative; height:70vh; width:75vw">
+<div class="chart_container">
 <canvas id="MyChart"></canvas>
 </div>
 </div>
@@ -191,10 +197,11 @@ function getValue2() {
     $nowIncome_sum = [];
     $db = new PDO("sqlite:part-time-job.db");
     $now = date('Y');
-    $result = $db->query("select sum(predict_income) from job_income_aggregation where user_id = '$user_id' and date like '$now%' group by date ");
+    $result = $db->query("select sum(predict_income) ,substr(date, -2) from job_income_aggregation where user_id = '$user_id' and date like '$now%' group by date ");
     $db = null;
     foreach ($result as $value) {
-      $nowIncome_sum[] = $value['sum(predict_income)'];
+      $month = (int)$value['substr(date, -2)'];
+      $nowIncome_sum[$month-1] = $value['sum(predict_income)'];
     }
     $json_array = json_encode($nowIncome_sum); //配列をjson形式に変換
   ?>
@@ -217,6 +224,8 @@ function getValue2() {
 function chart_m(){ //月のグラフを表示
     "use strict";
 var ctx = document.getElementById('MyChart');
+ctx.width=window.innerWidth*0.01;
+ctx.height=window.innerHeight*0.9;
 const backgroundColor = 'rgba(0, 114, 188, 1)'; //グラフの色(青)
 const counter = {
   id: 'counter',
@@ -241,7 +250,7 @@ window.m_chart = new Chart(ctx, {
                     backgroundColor,
                     'rgba(0, 0, 0, 0)',
                 ],
-                radius: 300,  
+                radius: 250,  
                 cutout: '82%',  //チャートの幅(%)
                 borderWidth: 1,   //枠線
                 borderColor: 'rgba(0, 0, 0, 1)' // 棒の枠線の色(黒)
@@ -274,6 +283,8 @@ function chart_y(){ //年のグラフ表示
         }],
     },
     options: {
+      responsive: true,
+      maintainAspectRatio: false 
     }
   });
 }    
