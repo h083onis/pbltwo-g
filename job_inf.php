@@ -151,7 +151,7 @@ $db = null;
     <form action='add_inf.php' method='post' class="add-form">
       バイト名：<input type='text' name='job_name' required class="form"><br>
       時給入力：<input type='number' name='hourly_wage' min='0' required class="form"><br>
-      締め日：<input type='number' name='cutoff_day' min='1' max='31' required class="form"><br>
+      締め日：<input type='number' name='cutoff_day' min='1' max='29' required class="form"><br>
       給料日：<input type='number' name='payment_day' min='1' max='31' required class="form"><br>
       深夜手当時給入力：<input type='number' name='mid_wage' min='0' class="form"><br>
       <div class="form">深夜手当時間：
@@ -170,7 +170,7 @@ $db = null;
           foreach ($result2 as $value) {
             echo 'バイト名：'.$value['job_name'].'<br>';
             echo '時給：<input type=\'number\' name=\'hourly_wage\' min=\'0\' value=', $value['hourly_wage'], ' required><br>';
-            echo '締め日：<input type=\'number\' name=\'cutoff_day\' min=\'1\' max=\'31\' value=', $value['cutoff_day'], ' required><br>';
+            echo '締め日：<input type=\'number\' name=\'cutoff_day\' min=\'1\' max=\'29\' value=', $value['cutoff_day'], ' required><br>';
             echo '給料日：<input type=\'number\' name=\'payment_day\' min=\'1\' max=\'31\' value=', $value['payment_day'], ' required><br>';
             echo '深夜手当時給：<input type=\'number\' name=\'mid_wage\' min=\'0\' value=', $value['mid_wage'], '><br>';
             echo '深夜手当時間：';
