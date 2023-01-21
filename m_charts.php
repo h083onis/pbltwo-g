@@ -20,7 +20,7 @@ foreach ($amount_result as $amount_value) {
 
 <head>
   <meta charset="UTF-8">
-  <title>給与計算グラフ</title>
+  <title>給与計算・グラフページ</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
   <link rel="stylesheet" href="common.css">
@@ -48,18 +48,18 @@ foreach ($amount_result as $amount_value) {
   <div id="side-menu">
     <nav>
       <ul>
-        <li><a href='job_inf.php' class="navi info-icon"><img src="./img/information.svg" alt="個人情報" width="70px" height="40spx" /></a></li>
-        <li><a href='home.php' class="navi calender-icon"><img src="./img/calender.svg" alt="カレンダー" width="70px" height="40px" /></a></li>
-        <li><a href='initial_charts.php' class="navi money-icon"><img src="./img/money.svg" alt="給料計算" width="70px" height="40px" /></a></li>
-        <li><a href='' class="navi question-icon"><img src="./img/question.svg" alt="ヘルプ" width="70px" height="40px" /></a></li>
-        <li><a href='' class="navi logout-icon"><img src="./img/logout.svg" alt="ログアウト" width="70px" height="40px" /></a></li>
+        <li><a href='job_inf.php' class="navi info-icon"><img src="./img/information.svg" alt="個人情報" width="60px" height="35px" /></a></li>
+        <li><a href='home.php' class="navi calender-icon"><img src="./img/calender.svg" alt="カレンダー" width="60px" height="35px" /></a></li>
+        <li><a href='initial_charts.php' class="navi money-icon"><img src="./img/money.svg" alt="給料計算" width="60px" height="35px" /></a></li>
+        <li><a href='' class="navi question-icon"><img src="./img/question.svg" alt="ヘルプ" width="60px" height="35px" /></a></li>
+        <li><a href='' class="navi logout-icon"><img src="./img/logout.svg" alt="ログアウト" width="60px" height="35px" /></a></li>
       </ul>
     </nav>
   </div>
 
   <div align="center">
-    <input type="button" onClick="mode_m()" value="月" class="month">
-    <input type="button" onClick="mode_y()" value="年" class="year">
+    <input type="button" onClick="mode_m()" value="月" class="button month">
+    <input type="button" onClick="mode_y()" value="年" class="button year">
     <form method="post" action="y_charts.php">
       <select name="year" id="select_y" onchange="this.form.submit()">
       </select>
