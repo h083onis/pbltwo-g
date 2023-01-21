@@ -1,8 +1,8 @@
 <?php
 session_start();
-// if (isset($_SESSION['user_id']) == 0) {
-//     header("Location:index.php"); //ログイン画面に飛ばす
-// }
+if (isset($_SESSION['user_id']) == 0) {
+    header("Location:index.php"); //ログイン画面に飛ばす
+}
 
 //20分操作がされない場合にindex.phpに飛ばす
 header("refresh:1200;url=index.php");
@@ -53,7 +53,6 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
     <meta charset="UTF-8">
     <link rel="stylesheet" href="home.css">
     <link rel="stylesheet" href="common.css">
-    <meta name="viewport" content="width=device-width">
     <title>スケジュール編集ページ</title>
     <script>
         function print_popup() {
@@ -65,12 +64,24 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
             document.getElementById('popup').style.display = 'none';
             // location.href = 'bulletin.php?sel=' + sel;
         }
+
+        function move_side_menu() {
+            let side_inf =  document.getElementById("side-menu").getBoundingClientRect().left;
+            if (side_inf >= 0) {
+                document.getElementById("side-menu").style.transform = 'translateX(-90px)';
+            } else {
+                document.getElementById("side-menu").style.transform = 'translateX(0px)';
+            }
+        }
     </script>
+    <style>
+       
+    </style>
 </head>
 
 <body>
     <div class="main">
-        <div class="side-menu">
+        <div id="side-menu">
             <nav>
                 <ul>
                     <li><a href='job_inf.php' class="navi info-icon"><img src="./img/information.svg" alt="個人情報" width="70px" height="40spx" /></a></li>
@@ -80,13 +91,15 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
                     <li><a href='' class="navi logout-icon"><img src="./img/logout.svg" alt="ログアウト" width="70px" height="40px" /></a></li>
                 </ul>
             </nav>
-        </div>    
-    
+        </div>
+           
+        <br>
+        <br>
         <div class="area" align="center">
             <div class="calendar-outside">
-                <a href="?y=<?php echo $prev_y; ?>&m=<?php echo $m;?>" class="move-mo">&lt;</a><span class="years"><?php echo $y; ?></span><a href="?y=<?php echo $next_y; ?>&m=<?php echo $m;?>" class="move-mo">&gt;</a><br>
-                <a href="?m=<?php echo $prev_m; ?>&y=<?php echo $y;?>" class="move-mo">&lt;</a><span class="months"><?php echo (int)$m; ?></span><a href="?m=<?php echo $next_m; ?>&y=<?php echo $y;?>" class="move-mo">&gt;</a>
-                
+                <a href="?y=<?php echo $prev_y; ?>&m=<?php echo $m; ?>" class="move-mo">&lt;</a><span class="years"><?php echo $y; ?></span><a href="?y=<?php echo $next_y; ?>&m=<?php echo $m; ?>" class="move-mo">&gt;</a><br>
+                <a href="?m=<?php echo $prev_m; ?>&y=<?php echo $y; ?>" class="move-mo">&lt;</a><span class="months"><?php echo (int)$m; ?></span><a href="?m=<?php echo $next_m; ?>&y=<?php echo $y; ?>" class="move-mo">&gt;</a>
+
                 <table class="calendar">
                     <tr>
                         <?php
@@ -148,16 +161,17 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
             </div>
         </div>
 
+        <input class ='move-side' name='button' type='button' value='move' onclick="move_side_menu()"> 
+
         <div id="popup" class='overlay'>
             <div class='window'>
                 <div class='date-popup'><?= $y ?>年<?= $m ?>月<?= $sel_d ?>日</div>
                 <!-- すでに追加されている情報を表示する欄 -->
                 <?php
                 if (isset($_GET['e'])) {
-                    if($_GET['e']== 1){
+                    if ($_GET['e'] == 1) {
                         echo '全ての項目を入力してください';
-                    }
-                    else{
+                    } else {
                         echo '他のバイトと時間帯がかぶっています';
                     }
                 }
@@ -168,13 +182,13 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
                         <td>時間</td>
                         <td colspan=2>削除</td>';
                     echo '</tr>';
-                    foreach ($result3 as $value):
+                    foreach ($result3 as $value) :
                         echo '<tr class="item-list">';
                         echo '<td>' . $value['job_name'] . '</td><td>' . $value['start_time'] . '~' . $value['end_time'] . '</td>';
                         echo '<td><form action=\'delete_schedule.php\' method=\'post\'>';
-                        echo '<input type=\'hidden\' name=\'job_date\' value=',$sel_formated_date,'>';
-                        echo '<input type=\'hidden\' name=\'job_name\' value=',$value['job_name'],'>';
-                        echo '<input type=\'hidden\' name=\'start_time\' value=',$value['start_time'],'>';                        
+                        echo '<input type=\'hidden\' name=\'job_date\' value=', $sel_formated_date, '>';
+                        echo '<input type=\'hidden\' name=\'job_name\' value=', $value['job_name'], '>';
+                        echo '<input type=\'hidden\' name=\'start_time\' value=', $value['start_time'], '>';
                         echo '<input type="submit" value="×" class="button-del"></form></td>';
                         echo '</tr>';
                     endforeach;
@@ -191,7 +205,7 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
                             <!-- <option>コンビニ</option>
                             <option>ニトリ</option> -->
                             <?php
-                            foreach ($result2 as $value):
+                            foreach ($result2 as $value) :
                                 echo '<option>' . $value['job_name'] . '</option>';
                             endforeach;
                             ?>

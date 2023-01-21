@@ -25,12 +25,26 @@ li {
   position: relative;
 }*/
 
-.side-menu {
+/* .side-menu {
   background-color: rgb(112, 105, 105);
   width: 90px;
   height: 100vh;
   position: fixed;
   z-index: 1;
+} */
+.move-side {
+  position: absolute;
+  left: 200px;
+  /* position: fixed; */
+}
+
+#side-menu {
+  background-color: rgb(112, 105, 105);
+  width: 90px;
+  height: 100vh;
+  position: fixed;
+  z-index: 1;
+  transition: 0.8s ease;
 }
 
 .navi {
