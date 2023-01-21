@@ -68,6 +68,8 @@ foreach ($amount_result as $amount_value) {
     </nav>
   </div>
 
+  <input class ='move-side' name='button' type='button' value='タスクバー表示切替' onclick="move_side_menu()"> 
+
   <div align="center">
     <input type="button" onClick="mode_m()" value="月" class="button month">
     <input type="button" onClick="mode_y()" value="年" class="button year">

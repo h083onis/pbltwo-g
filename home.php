@@ -68,7 +68,7 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
         function move_side_menu() {
             let side_inf =  document.getElementById("side-menu").getBoundingClientRect().left;
             if (side_inf >= 0) {
-                document.getElementById("side-menu").style.transform = 'translateX(-90px)';
+                document.getElementById("side-menu").style.transform = 'translateX(-61px)';
             } else {
                 document.getElementById("side-menu").style.transform = 'translateX(0px)';
             }
@@ -161,7 +161,7 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
             </div>
         </div>
 
-        <input class ='move-side' name='button' type='button' value='move' onclick="move_side_menu()"> 
+        <input class ='move-side' name='button' type='button' value='タスクバー表示切替' onclick="move_side_menu()"> 
 
         <div id="popup" class='overlay'>
             <div class='window'>

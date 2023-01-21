@@ -70,7 +70,7 @@ $db = null;
     function move_side_menu() {
       let side_inf = document.getElementById("side-menu").getBoundingClientRect().left;
       if (side_inf >= 0) {
-        document.getElementById("side-menu").style.transform = 'translateX(-90px)';
+        document.getElementById("side-menu").style.transform = 'translateX(-61px)';
       } else {
         document.getElementById("side-menu").style.transform = 'translateX(0px)';
       }
@@ -80,7 +80,7 @@ $db = null;
 
 <body>
 
-  <div id="side-menu">
+  <div id="side-menu"> 
     <nav>
       <ul>
         <li><a href='job_inf.php' class="navi info-icon"><img src="./img/information.svg" alt="個人情報" width="60px" height="35px" /></a></li>
@@ -91,6 +91,8 @@ $db = null;
       </ul>
     </nav>
   </div>
+
+  <input class ='move-side' name='button' type='button' value='タスクバー表示切替' onclick="move_side_menu()">
 
   <div class="inf">
     <div class="user-inf">

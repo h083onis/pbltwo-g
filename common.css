@@ -34,7 +34,7 @@ li {
 }  */
 .move-side {
   position: absolute;
-  left: 200px;
+  margin-left: 65px;
   position: fixed;
 }
 
@@ -92,11 +92,4 @@ li {
   top: 500px;
   left: 35%;
   transform: translate(-50%, -50%);
-}
-
-@media (max-width: 800){
-  .side-menu {
-    display: flex;
-  }
-
 }
