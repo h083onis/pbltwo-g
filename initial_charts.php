@@ -170,9 +170,9 @@ function getValue() {
   chartVal_income = [];
     <?php
     #データベースから給料見込みの情報を取得
-    // session_start();
-    // $id = $_SESSION['user_id'];
-    $user_id = 1; 
+    //session_start();
+    //$user_id = $_SESSION['user_id'];
+    //$user_id = 1; 
     $nowIncome_sum = 0;
     $nowIncome_per = 0;
     $db = new PDO("sqlite:part-time-job.db");
@@ -205,9 +205,9 @@ function getValue2() {
 
   <?php
     #データベースから給料見込みの情報を取得
-    // session_start();
-    // $id = $_SESSION['user_id'];
-    $user_id = 1; 
+    //session_start();
+    //$user_id = $_SESSION['user_id'];
+    //$user_id = 1; 
     $nowIncome_sum = [];
     $db = new PDO("sqlite:part-time-job.db");
     $now = date('Y');
