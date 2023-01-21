@@ -132,7 +132,7 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
                         $formated_date = date_format($sel_date, 'Y-m-d');
                         $result = $db->query("select * from job_schedule where user_id = '$user_id' and job_date = '$formated_date'");
                         foreach ($result as $value) :
-                            echo '<br><span class = text_style>' . $value['job_name'] .'<br>'. $value['start_time'] . '~' . $value['end_time'] . '</span><br>';
+                            echo '<br><span class = text_style>' . $value['job_name'] .'<br>'. $value['start_time'] . '~' . $value['end_time'] . '</span>';
                         endforeach;
                         echo "</td>";
                         if (date("w", mktime(0, 0, 0, $m, $d, $y)) == 6) {
