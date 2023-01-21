@@ -1,6 +1,9 @@
 <?php
 #データベースからバイトの情報を取得
 session_start();
+if (isset($_SESSION['user_id']) == 0) {
+  header("Location:index.php"); //ログイン画面に飛ばす
+}
 $user_id = $_SESSION['user_id'];
 header("refresh:1200;url=index.php");
 // $user_id = 1;

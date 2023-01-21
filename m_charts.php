@@ -1,6 +1,10 @@
 <?php
     #データベースからユーザーの目標金額を取得
     session_start();
+    if (isset($_SESSION['user_id']) == 0) {
+      header("Location:index.php"); //ログイン画面に飛ばす
+    }
+    header("refresh:1200;url=index.php");
     $user_id = $_SESSION['user_id'];
     // $user_id = 1; 
     $target_amount = 0;
