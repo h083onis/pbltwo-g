@@ -51,8 +51,8 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="home.css">
-    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/common.css">
     <title>スケジュール編集ページ</title>
     <script>
         function print_popup() {

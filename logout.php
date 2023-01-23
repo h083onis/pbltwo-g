@@ -11,8 +11,8 @@ header("refresh:1200;url=index.php");
 <!DOCTYPE html>
 <html lang="ja">
     <head>
-        <link rel="stylesheet" href="common.css">
-        <link rel="stylesheet" href="logout.css">
+        <link rel="stylesheet" href="css/common.css">
+        <link rel="stylesheet" href="css/logout.css">
         <title>ログアウト</title>
     </head>
     <script>

@@ -1,9 +1,9 @@
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="help.css">
+  <link rel="stylesheet" href="css/help.css">
   <script src="https://code.jquery.com/jquery.min.js"></script>
   <script src="help.js"></script>
-  <link rel="stylesheet" href="common.css">
+  <link rel="stylesheet" href="css/common.css">
   <script>
     function move_side_menu() {
       let side_inf =  document.getElementById("side-menu").getBoundingClientRect().left;

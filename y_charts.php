@@ -23,8 +23,8 @@ foreach ($amount_result as $amount_value) {
   <title>給与計算・グラフページ</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
-  <link rel="stylesheet" href="common.css">
-  <link rel="stylesheet" href="charts.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/charts.css">
   <script>
     window.onload = function() {
       var date = new Date();
