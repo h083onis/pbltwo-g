@@ -192,6 +192,9 @@ $db = null;
               echo '<input type=\'time\' name=\'end_mid_time\' style=\'width:80px\' step=\'60\' value=', $value['end_mid_time'], '>';
               echo '<input type=\'hidden\' name=\'job_name\'value=', $value['job_name'], '><br>';
             }
+            if (isset($_GET['e']) && $_GET['e'] == 5) {
+              echo '項目への入力が不十分です';
+            }
             ?>
             <br><input type='submit' value='変更' class="button button-change">
           </form>

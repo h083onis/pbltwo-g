@@ -23,6 +23,23 @@ $db = new PDO("sqlite:part-time-job.db");
 //   header("Location:job_inf.php?e=1"); //エラーを返す
 //   exit();
 // }
+if ($mid_wage != '' || $start_mid_time != '' || $end_mid_time != '') {
+  if ($start_mid_time == '' || $end_mid_time == '') {
+    $db = null;
+    header("Location:job_inf.php?e=5&sel_job=$job_name"); //エラーを返す
+    exit();
+  }
+  if ($mid_wage == '' || $end_mid_time == '') {
+    $db = null;
+    header("Location:job_inf.php?e=5&sel_job=$job_name"); //エラーを返す
+    exit();
+  }
+  if ($mid_wage == '' || $start_mid_time == '') {
+    $db = null;
+    header("Location:job_inf.php?e=5&sel_job=$job_name"); //エラーを返す
+    exit();
+  }
+}
 
 
 $sql = "update part_time_job_inf set user_id = :user_id, job_name = :job_name, hourly_wage = :hourly_wage, cutoff_day = :cutoff_day, payment_day=:payment_day, mid_wage=:mid_wage, start_mid_time=:start_mid_time, end_mid_time = :end_mid_time where user_id = :user_id and job_name = :job_name";
