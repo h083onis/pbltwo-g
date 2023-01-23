@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (isset($_SESSION['user_id']) == 0) {
-  header("Location:index.php"); //ログイン画面に飛ばす
+    header("Location:index.php"); //ログイン画面に飛ばす
 }
 $user_id = $_SESSION['user_id'];
 header("refresh:1200;url=index.php");
@@ -10,21 +10,22 @@ header("refresh:1200;url=index.php");
 
 <!DOCTYPE html>
 <html lang="ja">
-    <head>
-        <link rel="stylesheet" href="css/common.css">
-        <link rel="stylesheet" href="css/logout.css">
-        <title>ログアウト</title>
-    </head>
-    <script>
+
+<head>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/logout.css">
+    <title>ログアウト</title>
+</head>
+<script>
     function move_side_menu() {
-      let side_inf =  document.getElementById("side-menu").getBoundingClientRect().left;
-      if (side_inf >= 0) {
-          document.getElementById("side-menu").style.transform = 'translateX(-61px)';
-      } else {
-          document.getElementById("side-menu").style.transform = 'translateX(0px)';
-      }
+        let side_inf = document.getElementById("side-menu").getBoundingClientRect().left;
+        if (side_inf >= 0) {
+            document.getElementById("side-menu").style.transform = 'translateX(-61px)';
+        } else {
+            document.getElementById("side-menu").style.transform = 'translateX(0px)';
+        }
     }
-    </script>
+</script>
 
 <body>
     <div id="side-menu">
@@ -39,32 +40,33 @@ header("refresh:1200;url=index.php");
         </nav>
     </div>
 
-  <input class ='move-side' name='button' type='button' value='タスクバー表示切替' onclick="move_side_menu()">
+    <input class='move-side' name='button' type='button' value='タスクバー表示切替' onclick="move_side_menu()">
 
-<div class="logout-button">
-<?php
-$response = $_POST['judge'];
-//echo $response;
+    <div class="logout-button">
+        <?php
+        $response = "";
+        
+        if (isset($_POST['judge'])) {
+            $response = $_POST['judge'];
+        }
+        
+        if ($response == "はい") {
+            $_SESSION = array();
+            session_destroy();
+            header("Location:home.php");
+            exit();
+        } elseif ($response == "いいえ") {
+            header("Location:home.php");
+            exit();
+        } else {
+            echo 'ログアウトしますか？';
+            echo '<form action="logout.php" method="post">';
+            echo '<input type="submit" name="judge" value="はい" class="button">';
+            echo '<input type="submit" name="judge" value="いいえ" class="button"></form>';
+        }
 
-if($response == "はい"){
-    $_SESSION = array();
-    session_destroy();
-    header("Location:home.php");
-    exit();
-}elseif($response == "いいえ"){
-    header("Location:home.php");
-    exit();
-}
-else{
-    echo 'ログアウトしますか？';
-    echo '<form action="logout.php" method="post">';
-    echo '<input type="submit" name="judge" value="はい" class="button">';
-    echo '<input type="submit" name="judge" value="いいえ" class="button"></form>';
-    
-}
-
-?>
-</div>
+        ?>
+    </div>
 </body>
 
 </html>
