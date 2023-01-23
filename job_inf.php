@@ -86,7 +86,7 @@ $db = null;
         <li><a href='job_inf.php' class="navi info-icon"><img src="./img/information.svg" alt="個人情報" width="60px" height="35px" /></a></li>
         <li><a href='home.php' class="navi calender-icon"><img src="./img/calender.svg" alt="カレンダー" width="60px" height="35px" /></a></li>
         <li><a href='initial_charts.php' class="navi money-icon"><img src="./img/money.svg" alt="給料計算" width="60px" height="35px" /></a></li>
-        <li><a href='' class="navi question-icon"><img src="./img/question.svg" alt="ヘルプ" width="60px" height="35px" /></a></li>
+        <li><a href='help.php' class="navi question-icon"><img src="./img/question.svg" alt="ヘルプ" width="60px" height="35px" /></a></li>
         <li><a href='logout.php' class="navi logout-icon"><img src="./img/logout.svg" alt="ログアウト" width="60px" height="35px" /></a></li>
       </ul>
     </nav>
@@ -192,6 +192,9 @@ $db = null;
               echo '<input type=\'time\' name=\'end_mid_time\' style=\'width:80px\' step=\'60\' value=', $value['end_mid_time'], '>';
               echo '<input type=\'hidden\' name=\'job_name\'value=', $value['job_name'], '><br>';
             }
+            if (isset($_GET['e']) && $_GET['e'] == 5) {
+              echo '項目への入力が不十分です';
+            }
             ?>
             <br><input type='submit' value='変更' class="button button-change">
           </form>
@@ -209,8 +212,8 @@ $db = null;
           <form id='delete' action='delete_inf.php' method='post'>
             <input type='hidden' name='job_name' value=<?= $del_job ?>>
           </form>
-          <input type='button' value='いいえ' onclick="close_popup2()"><br>
-          <input type='submit' value='はい' form='delete'>
+          <input type='submit' value='はい' form='delete' class="button">
+          <input type='button' value='いいえ' onclick="close_popup2()" class="button">  
         </div>
       </div>
       <!-- パスワード編集用の画面 -->

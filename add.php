@@ -14,7 +14,7 @@ header("refresh:1200;url=index.php");
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="index.css">
 
-  <title>Document</title>
+  <title>新規登録</title>
 </head>
 
 <body class="picture">
