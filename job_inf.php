@@ -80,7 +80,7 @@ $db = null;
 
 <body>
 
-  <div id="side-menu"> 
+  <div id="side-menu">
     <nav>
       <ul>
         <li><a href='job_inf.php' class="navi info-icon"><img src="./img/information.svg" alt="個人情報" width="60px" height="35px" /></a></li>
@@ -92,7 +92,7 @@ $db = null;
     </nav>
   </div>
 
-  <input class ='move-side' name='button' type='button' value='タスクバー表示切替' onclick="move_side_menu()">
+  <input class='move-side' name='button' type='button' value='タスクバー表示切替' onclick="move_side_menu()">
 
   <div class="inf">
     <div class="user-inf">
@@ -177,59 +177,66 @@ $db = null;
       </form>
       <!-- 編集画面 -->
       <div id="popup1" class='overlay'>
-        <div class='window'>
+        <div class='window' align='center'>
           <label class='close' id="no" onclick="close_popup1()">×</label><br>
-          <form action='edit_inf.php' method='post'>
-            <?php
-            foreach ($result2 as $value) {
-              echo 'バイト名：' . $value['job_name'] . '<br>';
-              echo '時給：<input type=\'number\' name=\'hourly_wage\' min=\'0\' value=', $value['hourly_wage'], ' required><br>';
-              echo '締め日：<input type=\'number\' name=\'cutoff_day\' min=\'1\' max=\'29\' value=', $value['cutoff_day'], ' required><br>';
-              echo '給料日：<input type=\'number\' name=\'payment_day\' min=\'1\' max=\'31\' value=', $value['payment_day'], ' required><br>';
-              echo '深夜手当時給：<input type=\'number\' name=\'mid_wage\' min=\'0\' value=', $value['mid_wage'], '><br>';
-              echo '深夜手当時間：';
-              echo '<input type=\'time\' name=\'start_mid_time\' style=\'width:80px\' step=\'60\' value=', $value['start_mid_time'], '>~';
-              echo '<input type=\'time\' name=\'end_mid_time\' style=\'width:80px\' step=\'60\' value=', $value['end_mid_time'], '>';
-              echo '<input type=\'hidden\' name=\'job_name\'value=', $value['job_name'], '><br>';
-            }
-            if (isset($_GET['e']) && $_GET['e'] == 5) {
-              echo '項目への入力が不十分です';
-            }
-            ?>
-            <br><input type='submit' value='変更' class="button button-change">
+          <div class='edit-area'>
+            <form action='edit_inf.php' method='post'>
+              <?php
+              foreach ($result2 as $value) {
+                echo 'バイト名：' . $value['job_name'] . '<br>';
+                echo '時給：<input type=\'number\' name=\'hourly_wage\' min=\'0\' value=', $value['hourly_wage'], ' required><br>';
+                echo '締め日：<input type=\'number\' name=\'cutoff_day\' min=\'1\' max=\'29\' value=', $value['cutoff_day'], ' required><br>';
+                echo '給料日：<input type=\'number\' name=\'payment_day\' min=\'1\' max=\'31\' value=', $value['payment_day'], ' required><br>';
+                echo '深夜手当時給：<input type=\'number\' name=\'mid_wage\' min=\'0\' value=', $value['mid_wage'], '><br>';
+                echo '深夜手当時間：';
+                echo '<input type=\'time\' name=\'start_mid_time\' style=\'width:80px\' step=\'60\' value=', $value['start_mid_time'], '>~';
+                echo '<input type=\'time\' name=\'end_mid_time\' style=\'width:80px\' step=\'60\' value=', $value['end_mid_time'], '>';
+                echo '<input type=\'hidden\' name=\'job_name\'value=', $value['job_name'], '><br>';
+              }
+              if (isset($_GET['e']) && $_GET['e'] == 5) {
+                echo '項目への入力が不十分です';
+              }
+              ?>
+          </div>
+          <br><input type='submit' value='変更' class="button button-change">
           </form>
         </div>
       </div>
       <!-- 削除前の確認画面 -->
-      <div id="popup2" class='overlay'>
+      <div id="popup2" class='overlay' style='margin:auto'>
         <div class='window'>
           <?php
           foreach ($result3 as $value) :
             $del_job = $value['job_name'];
           endforeach;
           ?>
-          <span>バイト名：<?= $del_job ?>に関係する全ての情報が削除されますがよろしいでしょうか？</span>
+          <span>バイト名：<?= $del_job ?>の全ての情報が削除されますがよろしいでしょうか？</span><br><br>
           <form id='delete' action='delete_inf.php' method='post'>
             <input type='hidden' name='job_name' value=<?= $del_job ?>>
           </form>
-          <input type='submit' value='はい' form='delete' class="button">
-          <input type='button' value='いいえ' onclick="close_popup2()" class="button">  
+          <div class='del-area' align='center'>
+            <input type='button' value='いいえ' onclick="close_popup2()" class="button">
+            <input type='submit' value='はい' form='delete' class="button">
+          </div>
         </div>
       </div>
       <!-- パスワード編集用の画面 -->
       <div id="popup3" class='overlay'>
-        <div class='window'>
+        <div class='window' align='center'>
           <span>変更したいパスワードを2回入力してください</span>
+          <br><br>
           <?php
           if (isset($_GET['e']) && $_GET['e'] == 4) {
             echo '同じパスワードを入力してください';
           }
           ?>
-          <form id='edit_pass' action='edit_pass.php' method='post'>
-            <input type='password' name='first_pass' minlength='8' required></br>
-            <input type='password' name='second_pass' minlength='8' required>
-          </form>
-          <div class="button-pass">
+          <div align='center'>
+            <form id='edit_pass' action='edit_pass.php' method='post'>
+              1回目<input type='password' name='first_pass' minlength='8' required></br><br>
+              2回目<input type='password' name='second_pass' minlength='8' required>
+            </form>
+          </div>
+          <div class="button-pass" align='center'>
             <input type='button' value='やめる' onclick="close_popup3()" class="button cancel">
             <input type='submit' value='変更' form='edit_pass' class="button change">
           </div>

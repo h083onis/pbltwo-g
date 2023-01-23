@@ -59,6 +59,7 @@ input[type="text"] {
     border: #dcdcdc;
     margin-top: 70px;
     margin-bottom: 15px;
+    text-align: center
 }
 
 input[type="password"] {
@@ -68,6 +69,7 @@ input[type="password"] {
     border-radius: 20px;
     border: #dcdcdc;
     margin-bottom: 20px;
+    text-align: center
 }
 
 input[type="submit"] {
