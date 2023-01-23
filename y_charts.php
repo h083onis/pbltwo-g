@@ -41,7 +41,7 @@ foreach ($amount_result as $amount_value) {
     function move_side_menu() {
       let side_inf = document.getElementById("side-menu").getBoundingClientRect().left;
       if (side_inf >= 0) {
-        document.getElementById("side-menu").style.transform = 'translateX(-90px)';
+        document.getElementById("side-menu").style.transform = 'translateX(-61px)';
       } else {
         document.getElementById("side-menu").style.transform = 'translateX(0px)';
       }
@@ -63,7 +63,7 @@ foreach ($amount_result as $amount_value) {
         <li><a href='job_inf.php' class="navi info-icon"><img src="./img/information.svg" alt="個人情報" width="60px" height="35px" /></a></li>
         <li><a href='home.php' class="navi calender-icon"><img src="./img/calender.svg" alt="カレンダー" width="60px" height="35px" /></a></li>
         <li><a href='initial_charts.php' class="navi money-icon"><img src="./img/money.svg" alt="給料計算" width="60px" height="35px" /></a></li>
-        <li><a href='' class="navi question-icon"><img src="./img/question.svg" alt="ヘルプ" width="60px" height="35px" /></a></li>
+        <li><a href='help.php' class="navi question-icon"><img src="./img/question.svg" alt="ヘルプ" width="60px" height="35px" /></a></li>
         <li><a href='' class="navi logout-icon"><img src="./img/logout.svg" alt="ログアウト" width="60px" height="35px" /></a></li>
       </ul>
     </nav>

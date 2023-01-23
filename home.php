@@ -87,14 +87,12 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
                     <li><a href='job_inf.php' class="navi info-icon"><img src="./img/information.svg" alt="個人情報" width="60px" height="35px" /></a></li>
                     <li><a href='home.php' class="navi calender-icon"><img src="./img/calender.svg" alt="カレンダー" width="60px" height="35px" /></a></li>
                     <li><a href='initial_charts.php' class="navi money-icon"><img src="./img/money.svg" alt="給料計算" width="60px" height="35px" /></a></li>
-                    <li><a href='' class="navi question-icon"><img src="./img/question.svg" alt="ヘルプ" width="60px" height="35px" /></a></li>
+                    <li><a href='home.php' class="navi question-icon"><img src="./img/question.svg" alt="ヘルプ" width="60px" height="35px" /></a></li>
                     <li><a href='' class="navi logout-icon"><img src="./img/logout.svg" alt="ログアウト" width="60px" height="35px" /></a></li>
                 </ul>
             </nav>
         </div>
            
-        <br>
-        <br>
         <div class="area" align="center">
             <div class="calendar-outside">
                 <a href="?y=<?php echo $prev_y; ?>&m=<?php echo $m; ?>" class="move-mo">&lt;</a><span class="years"><?php echo $y; ?></span><a href="?y=<?php echo $next_y; ?>&m=<?php echo $m; ?>" class="move-mo">&gt;</a><br>
@@ -130,13 +128,11 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
                     $db = new PDO("sqlite:part-time-job.db");
                     for ($d = 1; $d <= $lastday; $d++) {
                         echo '<td class = "day"><a class="open" href="?y=' . $y . '&m=' . $m . '&sel_d=' . $d . '">' . $d . '</a>';
-                        /*echo '<br>';*/
-                        /*echo '<br>';*/
                         $sel_date = date_create(strval($y) . '-' . strval($m) . '-' . strval($d));
                         $formated_date = date_format($sel_date, 'Y-m-d');
                         $result = $db->query("select * from job_schedule where user_id = '$user_id' and job_date = '$formated_date'");
                         foreach ($result as $value) :
-                            echo '<br><span class = text_style>' . $value['job_name'] . $value['start_time'] . '~' . $value['end_time'] . '</span><br>';
+                            echo '<br><span class = text_style>' . $value['job_name'] .'<br>'. $value['start_time'] . '~' . $value['end_time'] . '</span>';
                         endforeach;
                         echo "</td>";
                         if (date("w", mktime(0, 0, 0, $m, $d, $y)) == 6) {

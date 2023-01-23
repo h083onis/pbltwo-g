@@ -1,0 +1,41 @@
+p{
+  text-align: center;
+}
+
+h1 {
+  text-align: center;
+}
+
+table th, table td {
+  border: solid 1px black;
+  /*実線 1px 黒*/
+}
+
+table {
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  width: 700px;
+}
+
+td {
+  padding: 15px 25px;
+  background-color: rgb(218, 227, 243);
+}
+
+th {
+  background-color: rgb(0, 176, 240);
+}
+
+.A,.C,.E,.G,.I,.K,.M,.O,.Q{
+  display: inline-block;
+  width: 600px;
+  background: #ffffff;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.B,.D,.F,.H,.J,.L,.N,.P,.R{
+  width: 600px;
+  background: #ffffff;
+  display:none;
+}
