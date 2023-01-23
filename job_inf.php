@@ -212,8 +212,8 @@ $db = null;
           <form id='delete' action='delete_inf.php' method='post'>
             <input type='hidden' name='job_name' value=<?= $del_job ?>>
           </form>
-          <input type='button' value='いいえ' onclick="close_popup2()"><br>
-          <input type='submit' value='はい' form='delete'>
+          <input type='submit' value='はい' form='delete' class="button">
+          <input type='button' value='いいえ' onclick="close_popup2()" class="button">  
         </div>
       </div>
       <!-- パスワード編集用の画面 -->
