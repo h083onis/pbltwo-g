@@ -27,8 +27,25 @@ create table job_schedule(
   end_time TIME NOT NULL,
   current_hourly_wage money UNSIGNED NOT NULL,
   current_mid_wage money UNSIGNED,
-  PRIMARY KEY(user_id,job_name,start_time),
+  PRIMARY KEY(user_id,job_name,jod_date,start_time),
   FOREIGN KEY(user_id,job_name)
   REFERENCES part_time_job_inf(user_id,job_name)
   ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+create table job_income_aggregation( 
+  user_id VARCHAR(8) NOT NULL, 
+  job_name TEXT NOT NULL, 
+  date DATE NOT NULL, 
+  current_hourly_wage money UNSIGNED NOT NULL, 
+  current_mid_wage money UNSIGNED, 
+  current_cutoff_day TINYINT UNSIGNED NOT NULL, 
+  current_start_mid_time TIME, 
+  current_end_mid_time TIME, 
+  predict_income MONEY UNSIGNED NOT NULL, 
+  actual_income MONEY UNSIGNED, 
+  PRIMARY KEY(user_id, job_name,date) 
+  FOREIGN KEY(user_id, job_name) 
+  REFERENCES part_time_job_inf(user_id, job_name) 
+  ON UPDATE CASCADE ON DELETE CASCADE 
+); 
