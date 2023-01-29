@@ -80,6 +80,7 @@ foreach ($amount_result as $amount_value) {
     <form method="post" action="m_charts.php">
       <input type="month" id="select_Ym" name="YYYY-mm" onchange="this.form.submit()">
     </form>
+    <div id="error"></div>
     <div class="chart_container">
       <canvas id="MyChart"></canvas>
     </div>
@@ -201,13 +202,24 @@ foreach ($amount_result as $amount_value) {
           $nowIncome_sum = 0;
         }
       }
-      $nowIncome_per = $nowIncome_sum / $target_amount * 100;
+
+      if($target_amount == null){
+        $nowIncome_per = 0;
+        $target_amount = 0;
+      } 
+      else {
+        $nowIncome_per = $nowIncome_sum / $target_amount * 100;
+      }
       ?>
       chartVal_target = <?php echo $target_amount ?>; //目標金額を代入
       chartVal_per = <?php echo $nowIncome_per ?>; //当月の目標金額達成度を代入
       chartVal_income = <?php echo $nowIncome_sum ?>; //当月の給料見込みを代入
       if (chartVal_per > 100) {
         chartVal_per = 100;
+      }
+      else if (chartVal_per == 0) {
+        var error = document.getElementById("error");
+        error.innerHTML = "目標金額を入力しないとグラフは正しく表示されません";
       }
     }
 
@@ -321,5 +333,4 @@ foreach ($amount_result as $amount_value) {
     }
   </script>
 </body>
-
 </html>
