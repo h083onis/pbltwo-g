@@ -1,0 +1,120 @@
+*,
+::before,
+::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.picture {
+    background-image: url(../img/login.jpg);
+    /* background-color: rgb(24, 230, 230); */
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    height: 100vh;
+}
+
+.form-login {
+    background-color: rgba(151, 151, 151, 0.8);
+    width: 550px;
+    height: 600px;
+    padding: 40px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+}
+
+.logo {
+    width: 20%;
+    height: auto;
+}
+
+.center{
+    text-align: center;
+}
+
+h1 {
+    font-size: 70px;
+}
+
+h2 {
+    /* color: rgb(24, 230, 230); */
+    font-size: 20px;
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+input[type="text"] {
+    background-color: #dcdcdc;
+    width: 400px;
+    height: 40px;
+    border-radius: 20px;
+    border: #dcdcdc;
+    margin-top: 70px;
+    margin-bottom: 15px;
+    text-align: center
+}
+
+input[type="password"] {
+    background-color: #dcdcdc;
+    width: 400px;
+    height: 40px;
+    border-radius: 20px;
+    border: #dcdcdc;
+    margin-bottom: 20px;
+    text-align: center
+}
+
+input[type="submit"] {
+    /* background-color: rgb(24, 230, 230); */
+    background-color: rgb(114, 224, 224);
+    width: 400px;
+    height: 40px;
+    border-radius: 20px;
+    border: rgb(114, 224, 224);
+    color: white;
+    margin-bottom: 15px;
+}
+
+div {
+    text-align: center;
+}
+
+p {
+    text-align: center;
+}
+
+.login {
+    /* font-weight: bold; */
+    font-size: 15px;
+}
+
+.login:hover {
+    background-color: rgb(19, 221, 221);
+}
+
+.sign-up {
+    font-size: 15px;
+    background-color: rgb(103, 113, 204);
+    width: 400px;
+    height: 40px;
+    border-radius: 20px;
+    border: rgb(103, 113, 204);
+    color: white;
+    margin-bottom: 15px;
+}
+
+.sign-up:hover {
+    background-color: rgb(34, 34, 167);
+}
+
+h3 {
+    font-size: 35px;
+}

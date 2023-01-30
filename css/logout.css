@@ -1,0 +1,19 @@
+@charset "utf-8";
+
+.button {
+  margin-left: 10px;
+  border-radius: 20px;
+  border: none;
+  background: rgb(114, 224, 224);
+  color: white;
+  font-size: 17px;
+  width: 130px;
+}
+
+.button:hover {
+  background-color: rgb(19, 221, 221);
+}
+
+.logout-button {
+  text-align: center;
+}
