@@ -1,7 +1,6 @@
 <?php
 session_start();
 $user_id = $_SESSION['user_id'];
-// $user_id = 1;
 $job_name = $_POST['job_name'];
 $hourly_wage = $_POST['hourly_wage'];
 $cutoff_day = $_POST['cutoff_day'];
@@ -12,17 +11,6 @@ $end_mid_time = $_POST['end_mid_time'];
 
 $db = new PDO("sqlite:part-time-job.db");
 
-#同じバイト名がある場合のエラーを考える
-// $job_count = $db->query("select count(*) from part_time_job_inf where user_id = '$user_id' and job_name = '$job_name'");
-// $now_num_rows = $job_count->fetchColumn();
-// $job_count = $db->query("select count(*) from part_time_job_inf where user_id = '$user_id' and job_name = '$pre_job'");
-// $pre_num_rows = $job_count->fetchColumn();
-// echo $num_rows;
-// if ($now_num_rows == 1 && ) {
-//   $db = null;
-//   header("Location:job_inf.php?e=1"); //エラーを返す
-//   exit();
-// }
 if ($mid_wage != '' || $start_mid_time != '' || $end_mid_time != '') {
   if ($start_mid_time == '' || $end_mid_time == '') {
     $db = null;

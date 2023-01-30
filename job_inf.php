@@ -6,7 +6,6 @@ if (isset($_SESSION['user_id']) == 0) {
 }
 $user_id = $_SESSION['user_id'];
 header("refresh:1200;url=index.php");
-// $user_id = 1;
 $db = new PDO("sqlite:part-time-job.db");
 $result = $db->query("select * from part_time_job_inf where user_id = '$user_id'");
 $count = $db->query("select count(*) from part_time_job_inf where user_id = '$user_id'");
@@ -97,7 +96,7 @@ $db = null;
   <div class="inf">
     <div class="user-inf">
       <span class="user"></span>
-      <span class="user-id"><?= $user_id ?></span>
+      <span class="user-id"><?= htmlspecialchars($user_id) ?></span>
     </div>
     <div class="user-pass">
       <?php
@@ -140,7 +139,7 @@ $db = null;
         echo '</tr>';
         foreach ($result as $value) {
           echo '<tr>';
-          echo '<td>' . $value['job_name'] . '</td><td>' . $value['hourly_wage'] . '</td><td>' . $value['cutoff_day'] . '</td><td>' . $value['payment_day'] . '</td>';
+          echo '<td>' . htmlspecialchars($value['job_name']) . '</td><td>' . $value['hourly_wage'] . '</td><td>' . $value['cutoff_day'] . '</td><td>' . $value['payment_day'] . '</td>';
           if ($value['mid_wage'] != 0) {
             echo '<td>' . $value['mid_wage'] . '</td><td>' . $value['start_mid_time'] . '~' . $value['end_mid_time'] . '</td>';
           } else {

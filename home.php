@@ -7,7 +7,6 @@ if (isset($_SESSION['user_id']) == 0) {
 //20分操作がされない場合にindex.phpに飛ばす
 header("refresh:1200;url=index.php");
 $user_id = $_SESSION['user_id'];
-// $user_id = 1;
 date_default_timezone_set('Asia/Tokyo'); //東京時間にする
 if (isset($_GET['y'])) {
     $y = $_GET['y'];
@@ -132,7 +131,7 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
                         $formated_date = date_format($sel_date, 'Y-m-d');
                         $result = $db->query("select * from job_schedule where user_id = '$user_id' and job_date = '$formated_date'");
                         foreach ($result as $value) :
-                            echo '<br><span class = text_style>' . $value['job_name'] .'<br>'. $value['start_time'] . '~' . $value['end_time'] . '</span>';
+                            echo '<br><span class = text_style>' . htmlspecialchars($value['job_name']) .'<br>'. $value['start_time'] . '~' . $value['end_time'] . '</span>';
                         endforeach;
                         echo "</td>";
                         if (date("w", mktime(0, 0, 0, $m, $d, $y)) == 6) {
@@ -198,8 +197,6 @@ $next_m = date('m', mktime(0, 0, 0, $m + 1, 1, $y));
                     <span class="select-time">バイト項目
                         <select name='job_name' required class="drop-down-job">
                             <option disabled selected>選択してください</option>
-                            <!-- <option>コンビニ</option>
-                            <option>ニトリ</option> -->
                             <?php
                             foreach ($result2 as $value) :
                                 echo '<option>' . $value['job_name'] . '</option>';

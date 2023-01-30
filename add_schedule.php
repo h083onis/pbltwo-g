@@ -1,10 +1,6 @@
 <?php
 session_start();
-// if (isset($_SESSION['idname']) == 0) {
-//     header("Location:index.php"); //ログイン画面に飛ばす
-// }
 $user_id = $_SESSION['user_id'];
-// $user_id = 1;
 $y = $_POST['year'];
 $m = $_POST['month'];
 $d = $_POST['day'];
@@ -38,12 +34,6 @@ foreach ($result as $value) {
     exit();
   }
 }
-
-// $current_wage = $db->query("select * from part_time_job_inf where user_id=$user_id and job_name='$job_name'");
-// foreach($current_wage as $value){
-//   $current_hourly_wage = $value['hourly_wage'];
-//   $current_mid_wage = $value['mid_wage'];
-// }
 
 $sql = "insert into job_schedule(user_id, job_name, job_date, start_time, end_time) values(:user_id, :job_name,:job_date, :start_time, :end_time)";
 if ($stmt = $db->prepare($sql)) {

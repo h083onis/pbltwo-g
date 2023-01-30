@@ -34,7 +34,6 @@ unset($_SESSION['pass']);
 		</form>
 	
 		<input type="button" value="新規登録" onclick="location.href='add.php'" class="sign-up">
-		<!-- <p><a href="add.php">新規登録はこちら</a></p> -->
 	</div>
 </body>
 

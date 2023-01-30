@@ -1,7 +1,6 @@
 <?php
 session_start();
 $user_id = $_SESSION['user_id'];
-// $user_id = 1;
 $job_name = $_POST['job_name'];
 
 $db = new PDO("sqlite:part-time-job.db");

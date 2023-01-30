@@ -3,7 +3,6 @@ session_start();
 header("refresh:1200;url=index.php");
 $user_id = $_SESSION['user_id'];
 $pass = $_SESSION['pass'];
-// $encryptedPw = password_hash($pass, PASSWORD_DEFAULT);
 $encryptedPw = md5($pass);
 $db = new PDO('sqlite:part-time-job.db');
 $sql = "insert into user_inf(user_id, pass) values(:user_id, :pass)"; //idはint型として代入

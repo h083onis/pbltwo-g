@@ -1,7 +1,6 @@
 <?php
 session_start();
 $user_id = $_SESSION['user_id'];
-// $user_id = 1;
 $y = $_GET['y'];
 $m = $_GET['m'];
 if (isset($_GET['d'])) {
@@ -16,10 +15,6 @@ $job_name = $_GET['job_name'];
 $db = new PDO("sqlite:part-time-job.db");
 $sel_date = date_create(strval($y) . '-' . strval($m));
 $sel_formated_date = date_format($sel_date, 'Y-m');
-
-
-//$sel_date = date_create(strval($tem_aft_y) . '-' . strval($tem_aft_m));
-//$sel_formated_date = date_format($sel_date, 'Y-m');
 
 $job_count = $db->query("select count(*) from job_income_aggregation where user_id = '$user_id' and job_name = '$job_name' and date = '$sel_formated_date'");
 $num_rows = $job_count->fetchColumn();
@@ -42,7 +37,6 @@ if ($num_rows == 0) {
         $end_mid_time = $value['current_end_mid_time'];
     }
 }
-// echo  $start_mid_time;
 
 $tem_pre_m = $m - 1;
 $tem_pre_y = $y;
@@ -85,8 +79,6 @@ $now_job_date = date_create(strval($tem_aft_y) . '-' . strval($tem_aft_m) . '-' 
 $formated_now_date = date_format($now_job_date, 'Y-m-d');
 $cutoff_month = date_create(strval($tem_aft_y) . '-' . strval($tem_aft_m));
 $format_cutoff_month = date_format($cutoff_month, 'Y-m');
-echo $formated_pre_date . 'から<br>';
-echo $formated_now_date . 'まで<br>';
 
 $result2 = $db->query("select * from job_schedule where user_id ='$user_id' and job_name ='$job_name' and job_date BETWEEN '$formated_pre_date' and '$formated_now_date'");
 $salary = 0;
@@ -225,11 +217,6 @@ foreach ($result2 as $value) {
         //echo '5<br>';
     }
 }
-
-//echo $salary;
-
-// echo gettype($start_mid_time);
-// echo $start_mid_time;
 
 $sql = "replace into job_income_aggregation(user_id,job_name,date,current_hourly_wage,current_mid_wage,current_cutoff_day,current_start_mid_time,current_end_mid_time,predict_income) values(:user_id,:job_name,:date,:current_hourly_wage,:current_mid_wage,:current_cutoff_day,:current_start_mid_time,:current_end_mid_time,:predict_income)";
 if ($stmt = $db->prepare($sql)) {
