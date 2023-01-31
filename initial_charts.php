@@ -216,7 +216,7 @@ foreach ($amount_result as $amount_value) {
       if (chartVal_per > 100) {
         chartVal_per = 100;
       }
-      else if (chartVal_per == 0) {
+      if (chartVal_target == 0) {
         var error = document.getElementById("error");
         error.innerHTML = "目標金額を入力しないとグラフは正しく表示されません";
       }
